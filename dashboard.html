@@ -10,392 +10,295 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root{
-      /* Dami brand palette */
       --orange:#F97316; --orange-dark:#EA580C; --orange-soft:rgba(249,115,22,.08); --orange-glow:rgba(249,115,22,.18);
       --navy:#0F172A; --navy-2:#1E293B; --navy-3:#334155;
       --muted:#64748B; --light:#94A3B8;
-      --border:#E2E8F0; --bg:#F8FAFC; --card:#FFFFFF;
+      --border:#E2E8F0; --bg:#F8FAFC; --card:#FFFFFF; --soft:#F1F5F9;
       --ok:#10B981; --ok-soft:rgba(16,185,129,.1);
       --warn:#F59E0B; --warn-soft:rgba(245,158,11,.1);
       --bad:#EF4444; --bad-soft:rgba(239,68,68,.1);
+      --info:#0EA5E9; --info-soft:rgba(14,165,233,.1);
+      --purple:#8B5CF6; --purple-soft:rgba(139,92,246,.1);
     }
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{
-      font-family:'Inter',-apple-system,sans-serif;
-      background:var(--bg);
-      color:var(--navy);
-      line-height:1.5;
-      -webkit-font-smoothing:antialiased;
-    }
-    .wrap{max-width:1320px;margin:0 auto;padding:28px 32px 80px;}
+    body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--navy);line-height:1.55;-webkit-font-smoothing:antialiased;}
+    .wrap{max-width:1320px;margin:0 auto;padding:32px 36px 80px;}
 
     /* === Header === */
-    .hdr{
-      display:flex;justify-content:space-between;align-items:center;
-      gap:16px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:20px;
-      border-bottom:1px solid var(--border);
-    }
-    .hdr-l{display:flex;align-items:center;gap:16px;}
-    .logo-box{
-      width:52px;height:52px;
-      background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);
-      border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      color:#fff;font-weight:900;font-size:22px;letter-spacing:-.04em;
-      box-shadow:0 8px 24px var(--orange-glow);
-    }
-    .h-title{font-size:22px;font-weight:800;letter-spacing:-.02em;color:var(--navy);}
-    .h-sub{font-size:13px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-    .pill{
-      display:inline-flex;align-items:center;gap:5px;
-      padding:4px 10px;border-radius:999px;
-      font-size:11px;font-weight:700;
-      background:var(--warn-soft);color:#a96c00;
-    }
+    .hdr{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--border);}
+    .hdr-l{display:flex;align-items:center;gap:18px;}
+    .logo-box{width:56px;height:56px;background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:24px;letter-spacing:-.04em;box-shadow:0 8px 24px var(--orange-glow);}
+    .h-title{font-size:24px;font-weight:800;letter-spacing:-.02em;color:var(--navy);}
+    .h-sub{font-size:13px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;background:var(--warn-soft);color:#a96c00;}
     .pill.ok{background:var(--ok-soft);color:#0d6b44;}
-    .pill.bad{background:var(--bad-soft);color:#a02f28;}
     .pill.brand{background:var(--orange-soft);color:var(--orange-dark);}
-    .btn{
-      background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);
-      color:#fff;border:none;padding:10px 18px;border-radius:11px;
-      font-weight:700;cursor:pointer;font-family:inherit;font-size:13px;
-      box-shadow:0 4px 14px var(--orange-glow);
-      transition:transform .15s ease,box-shadow .15s ease;
-    }
+    .btn{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);color:#fff;border:none;padding:11px 20px;border-radius:12px;font-weight:700;cursor:pointer;font-family:inherit;font-size:13px;box-shadow:0 4px 14px var(--orange-glow);transition:all .15s;}
     .btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px var(--orange-glow);}
-    .btn-ghost{
-      background:#fff;color:var(--navy);
-      border:1px solid var(--border);box-shadow:none;
-    }
+    .btn-ghost{background:#fff;color:var(--navy);border:1px solid var(--border);box-shadow:none;}
     .btn-ghost:hover{background:var(--bg);border-color:var(--navy-3);box-shadow:none;}
 
-    /* === Hero AI banner === */
-    .ai-hero{
-      background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
-      color:#fff;
-      padding:28px 30px;border-radius:20px;
-      margin-bottom:24px;
-      position:relative;overflow:hidden;
-      background-image:
-        radial-gradient(circle at 90% 20%,var(--orange-glow) 0%,transparent 50%),
-        radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
-      background-size:100% 100%,32px 32px,100% 100%;
-    }
-    .ai-label{
-      font-size:11px;font-weight:800;letter-spacing:.12em;
-      color:var(--orange);text-transform:uppercase;margin-bottom:10px;
-      display:flex;align-items:center;gap:8px;
-    }
-    .ai-body{font-size:16px;line-height:1.65;font-weight:500;max-width:920px;}
-    .ai-body b{color:var(--orange);font-weight:700;}
-    .ai-body i{color:#fff;font-style:normal;background:rgba(249,115,22,.18);padding:2px 8px;border-radius:6px;font-weight:600;}
-    .ai-body code{background:rgba(255,255,255,.1);padding:2px 8px;border-radius:6px;font-size:13.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+    /* === How to read this dashboard (laikova privítavka) === */
+    .how-card{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:28px 32px;border-radius:20px;margin-bottom:28px;position:relative;overflow:hidden;background-image:radial-gradient(circle at 92% 18%,var(--orange-glow) 0%,transparent 55%),radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);background-size:100% 100%,32px 32px,100% 100%;}
+    .how-eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--orange);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+    .how-title{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;}
+    .how-body{font-size:15px;line-height:1.7;max-width:880px;color:rgba(255,255,255,.85);}
+    .how-body b{color:var(--orange);}
+    .how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;}
+    .how-step{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;backdrop-filter:blur(8px);}
+    .how-step-num{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--orange);text-transform:uppercase;margin-bottom:4px;}
+    .how-step b{display:block;color:#fff;font-size:13.5px;margin-bottom:4px;}
+    .how-step span{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5;}
 
     /* === Tabs === */
-    .tabs{
-      display:flex;gap:4px;
-      background:var(--card);border:1px solid var(--border);
-      border-radius:14px;padding:5px;
-      margin-bottom:24px;overflow-x:auto;
-      scrollbar-width:none;
-    }
+    .tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:6px;margin-bottom:28px;overflow-x:auto;scrollbar-width:none;}
     .tabs::-webkit-scrollbar{display:none;}
-    .tabs button{
-      background:transparent;border:none;
-      padding:10px 18px;border-radius:10px;
-      font-size:13px;font-weight:600;color:var(--muted);
-      cursor:pointer;font-family:inherit;white-space:nowrap;
-      transition:all .15s ease;
-    }
-    .tabs button.active{
-      background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);
-      color:#fff;
-      box-shadow:0 4px 12px var(--orange-glow);
-    }
+    .tabs button{background:transparent;border:none;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
+    .tabs button.active{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);color:#fff;box-shadow:0 4px 12px var(--orange-glow);}
     .tabs button:not(.active):hover{background:var(--orange-soft);color:var(--orange-dark);}
     .tab-pane{display:none;}
     .tab-pane.active{display:block;animation:fade .25s ease;}
     @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 
-    /* === KPI cards with sparklines === */
-    .kpi-grid{
-      display:grid;grid-template-columns:repeat(4,1fr);
-      gap:14px;margin-bottom:28px;
-    }
-    .kpi-card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;padding:18px 20px;
-      position:relative;overflow:hidden;
-      transition:border-color .15s ease,transform .15s ease;
-    }
-    .kpi-card:hover{border-color:var(--orange);transform:translateY(-2px);}
-    .kpi-card.feature::before{
-      content:"";position:absolute;top:0;left:0;right:0;height:3px;
-      background:linear-gradient(90deg,var(--orange) 0%,var(--orange-dark) 100%);
-    }
-    .kpi-label{
-      font-size:11px;font-weight:700;letter-spacing:.06em;
-      color:var(--muted);text-transform:uppercase;
-    }
-    .kpi-value{
-      font-size:32px;font-weight:800;color:var(--navy);
-      margin:6px 0 4px;font-variant-numeric:tabular-nums;
-      letter-spacing:-.03em;line-height:1;
-    }
-    .kpi-delta{font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:4px;}
-    .kpi-delta.up{color:var(--ok);}
-    .kpi-delta.down{color:var(--bad);}
-    .kpi-delta.flat{color:var(--muted);}
-    .kpi-spark{
-      position:absolute;right:14px;bottom:14px;
-      width:80px;height:32px;opacity:.85;
-    }
+    /* === Section intro tip === */
+    .tip{display:grid;grid-template-columns:48px 1fr;gap:16px;background:linear-gradient(135deg,#fff8e7 0%,#fff 100%);border:1px solid #fde4a8;border-left:5px solid var(--warn);border-radius:14px;padding:16px 20px;margin-bottom:24px;}
+    .tip-icon{width:48px;height:48px;background:var(--warn);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;flex-shrink:0;}
+    .tip h3{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+    .tip h3 small{font-size:11px;font-weight:700;color:var(--warn);letter-spacing:.08em;text-transform:uppercase;background:var(--warn-soft);padding:2px 8px;border-radius:6px;}
+    .tip p{font-size:13.5px;color:var(--navy-3);line-height:1.6;}
+    .tip p b{color:var(--navy);}
 
     /* === Section heads === */
-    h2.sect{
-      font-size:18px;font-weight:800;color:var(--navy);
-      margin:32px 0 4px;letter-spacing:-.02em;
-      display:flex;align-items:center;gap:10px;
-    }
-    h2.sect::before{
-      content:"";display:inline-block;width:5px;height:22px;
-      background:linear-gradient(180deg,var(--orange) 0%,var(--orange-dark) 100%);
-      border-radius:3px;
-    }
-    .sect-sub{font-size:13.5px;color:var(--muted);margin:0 0 16px 15px;}
+    h2.sect{font-size:20px;font-weight:800;color:var(--navy);margin:36px 0 6px;letter-spacing:-.02em;display:flex;align-items:center;gap:12px;}
+    h2.sect .sect-icon{width:32px;height:32px;border-radius:10px;background:var(--orange-soft);color:var(--orange-dark);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+    .sect-sub{font-size:14px;color:var(--muted);margin:0 0 18px 44px;max-width:780px;line-height:1.6;}
 
-    /* === Action cards === */
-    .actions{display:grid;grid-template-columns:1fr;gap:12px;}
-    .act-card{
-      background:var(--card);border:1px solid var(--border);
-      border-radius:16px;padding:16px 20px;
-      display:grid;grid-template-columns:42px 1fr auto;
-      gap:14px;align-items:center;
-      transition:all .15s ease;cursor:default;
-    }
-    .act-card:hover{border-color:var(--orange);box-shadow:0 8px 24px rgba(249,115,22,.12);transform:translateY(-1px);}
-    .act-num{
-      background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);
-      color:#fff;width:42px;height:42px;border-radius:12px;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:16px;
-      box-shadow:0 4px 12px var(--orange-glow);
-    }
-    .act-num.p2{background:linear-gradient(135deg,#0EA5E9 0%,#0284C7 100%);box-shadow:0 4px 12px rgba(14,165,233,.3);}
-    .act-num.p3{background:linear-gradient(135deg,var(--warn) 0%,#D97706 100%);box-shadow:0 4px 12px rgba(245,158,11,.3);}
-    .act-num.p4{background:linear-gradient(135deg,var(--ok) 0%,#059669 100%);box-shadow:0 4px 12px rgba(16,185,129,.3);}
-    .act-num.p5{background:linear-gradient(135deg,#8B5CF6 0%,#7C3AED 100%);box-shadow:0 4px 12px rgba(139,92,246,.3);}
-    .act-body b{display:block;font-size:15px;color:var(--navy);margin-bottom:4px;font-weight:700;}
-    .act-body .act-detail{font-size:12.5px;color:var(--muted);line-height:1.55;}
-    .act-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right;min-width:130px;}
-    .act-impact{
-      font-size:12.5px;font-weight:700;
-      color:var(--ok);white-space:nowrap;
-      background:var(--ok-soft);padding:4px 10px;border-radius:8px;
-    }
-    .act-effort{font-size:11px;color:var(--muted);font-weight:500;}
+    /* === Big KPI cards · with explanation === */
+    .kpi-big{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:28px;}
+    .kpi-big .kpi{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 24px;position:relative;overflow:hidden;transition:all .15s;}
+    .kpi-big .kpi:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 12px 32px rgba(15,23,42,.08);}
+    .kpi-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px;}
+    .kpi-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+    .kpi-icon.brand{background:var(--orange-soft);color:var(--orange-dark);}
+    .kpi-icon.info{background:var(--info-soft);color:#0c7ab4;}
+    .kpi-icon.ok{background:var(--ok-soft);color:#0d6b44;}
+    .kpi-icon.warn{background:var(--warn-soft);color:#a96c00;}
+    .kpi-icon.purple{background:var(--purple-soft);color:#6d28d9;}
+    .kpi-icon.bad{background:var(--bad-soft);color:#a02f28;}
+    .kpi-meta{flex:1;}
+    .kpi-name{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+    .kpi-plain{font-size:13px;color:var(--navy-3);line-height:1.5;}
+    .kpi-stat{display:flex;align-items:baseline;gap:12px;margin-top:10px;flex-wrap:wrap;}
+    .kpi-num{font-size:38px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums;letter-spacing:-.03em;line-height:1;}
+    .kpi-delta{font-size:13px;font-weight:700;padding:5px 10px;border-radius:8px;display:inline-flex;align-items:center;gap:4px;}
+    .kpi-delta.up{background:var(--ok-soft);color:var(--ok);}
+    .kpi-delta.down{background:var(--bad-soft);color:var(--bad);}
+    .kpi-delta.flat{background:var(--soft);color:var(--muted);}
+    .kpi-spark{margin-top:10px;}
+    .kpi-explain{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px;padding-top:18px;border-top:1px dashed var(--border);}
+    .kpi-explain .ex{background:var(--soft);border-radius:10px;padding:10px 12px;}
+    .kpi-explain .ex-l{font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;display:flex;align-items:center;gap:4px;}
+    .kpi-explain .ex-b{font-size:12px;color:var(--navy);line-height:1.5;}
+    .kpi-explain .ex-b b{color:var(--navy);font-weight:700;}
+
+    /* === Charts === */
+    .chart-row{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-bottom:28px;}
+    .chart-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 24px;}
+    .chart-card h3{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+    .chart-card .ch-sub{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
+    .bar-chart{display:flex;flex-direction:column;gap:10px;}
+    .bar-row{display:grid;grid-template-columns:160px 1fr 56px;gap:12px;align-items:center;font-size:12.5px;}
+    .bar-label{font-weight:600;color:var(--navy);}
+    .bar-track{height:10px;background:var(--border);border-radius:5px;overflow:hidden;}
+    .bar-fill{height:100%;background:linear-gradient(90deg,var(--orange) 0%,var(--orange-dark) 100%);border-radius:5px;transition:width .4s;}
+    .bar-val{font-variant-numeric:tabular-nums;font-weight:700;color:var(--navy);text-align:right;}
+    .donut-wrap{display:flex;align-items:center;gap:20px;}
+    .donut-svg{width:160px;height:160px;flex-shrink:0;}
+    .donut-legend{display:flex;flex-direction:column;gap:10px;flex:1;}
+    .donut-legend-row{display:flex;align-items:center;gap:10px;font-size:12.5px;}
+    .donut-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+    .donut-legend-label{flex:1;color:var(--navy);font-weight:600;}
+    .donut-legend-val{color:var(--muted);font-variant-numeric:tabular-nums;font-weight:700;}
+
+    /* === Action cards with full detail === */
+    .actions{display:grid;grid-template-columns:1fr;gap:14px;}
+    .act-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px 24px;display:grid;grid-template-columns:56px 1fr 180px;gap:18px;align-items:center;transition:all .15s;}
+    .act-card:hover{border-color:var(--orange);box-shadow:0 12px 32px rgba(249,115,22,.12);transform:translateY(-1px);}
+    .act-num{color:#fff;width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;}
+    .act-num.p1{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);box-shadow:0 4px 14px var(--orange-glow);}
+    .act-num.p2{background:linear-gradient(135deg,#0EA5E9 0%,#0284C7 100%);box-shadow:0 4px 14px rgba(14,165,233,.3);}
+    .act-num.p3{background:linear-gradient(135deg,var(--warn) 0%,#D97706 100%);box-shadow:0 4px 14px rgba(245,158,11,.3);}
+    .act-num.p4{background:linear-gradient(135deg,var(--ok) 0%,#059669 100%);box-shadow:0 4px 14px rgba(16,185,129,.3);}
+    .act-num.p5{background:linear-gradient(135deg,var(--purple) 0%,#7C3AED 100%);box-shadow:0 4px 14px rgba(139,92,246,.3);}
+    .act-body b{display:block;font-size:16px;color:var(--navy);margin-bottom:5px;font-weight:700;}
+    .act-body .act-detail{font-size:13px;color:var(--navy-3);line-height:1.6;}
+    .act-meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right;}
+    .act-impact{font-size:13px;font-weight:700;color:var(--ok);white-space:nowrap;background:var(--ok-soft);padding:6px 12px;border-radius:10px;display:inline-flex;align-items:center;gap:5px;}
+    .act-effort{font-size:11.5px;color:var(--muted);font-weight:500;display:inline-flex;align-items:center;gap:4px;}
+
+    /* === Detail card for each section explanation === */
+    .section-detail{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+    .detail-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;}
+    .detail-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px;}
+    .detail-icon.q{background:var(--info-soft);color:#0c7ab4;}
+    .detail-icon.w{background:var(--orange-soft);color:var(--orange-dark);}
+    .detail-icon.h{background:var(--ok-soft);color:#0d6b44;}
+    .detail-card h4{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em;}
+    .detail-card p{font-size:13px;color:var(--navy-3);line-height:1.6;}
+    .detail-card p b{color:var(--navy);}
 
     /* === Tables === */
-    .tbl{
-      background:var(--card);border:1px solid var(--border);
-      border-radius:16px;overflow:hidden;
-    }
-    .tbl-head, .tbl-row{
-      display:grid;align-items:center;
-      padding:14px 18px;font-size:13px;gap:10px;
-    }
-    .tbl-head{
-      background:var(--bg);
-      font-size:11px;font-weight:700;letter-spacing:.06em;
-      color:var(--muted);text-transform:uppercase;
-    }
+    .tbl{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;}
+    .tbl-head,.tbl-row{display:grid;align-items:center;padding:16px 22px;font-size:13px;gap:12px;}
+    .tbl-head{background:var(--bg);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;}
     .tbl-row{border-top:1px solid var(--border);transition:background .12s;}
     .tbl-row:hover{background:var(--bg);}
-    .tbl-query{font-weight:700;color:var(--navy);font-size:13.5px;}
-    .tbl-page{
-      font-size:11.5px;color:var(--muted);
-      font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-    }
+    .tbl-query{font-weight:700;color:var(--navy);font-size:14px;}
+    .tbl-page{font-size:11.5px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
     .tbl-num{font-variant-numeric:tabular-nums;font-weight:600;color:var(--navy);}
-    .row-action{font-size:11.5px;color:var(--muted);line-height:1.5;}
+    .row-action{font-size:12.5px;color:var(--navy-3);line-height:1.55;}
     .row-action b{color:var(--navy);}
+    .qw-grid{grid-template-columns:2.2fr 1.5fr 60px 70px 100px 1.6fr;}
+    .ctr-grid{grid-template-columns:2fr 60px 110px 100px 2fr;}
+    .fall-grid{grid-template-columns:2fr 100px 100px 2.5fr;}
+    .rise-grid{grid-template-columns:2fr 80px 100px 1.5fr 2fr;}
+    .cro-grid{grid-template-columns:1.8fr 60px 80px 80px 2fr 130px;}
 
-    /* Column grids */
-    .qw-grid{grid-template-columns:2.2fr 1.5fr 60px 70px 90px 1.5fr;}
-    .ctr-grid{grid-template-columns:2fr 60px 100px 90px 2fr;}
-    .fall-grid{grid-template-columns:2fr 90px 90px 2.5fr;}
-    .rise-grid{grid-template-columns:2fr 80px 90px 1.5fr 2fr;}
-    .cro-grid{grid-template-columns:1.8fr 60px 80px 80px 2fr 120px;}
-
-    /* Priority bar */
-    .priority-bar{
-      display:inline-block;width:40px;height:5px;
-      background:var(--border);border-radius:3px;
-      overflow:hidden;vertical-align:middle;margin-right:6px;
-    }
-    .priority-bar span{
-      display:block;height:100%;
-      background:linear-gradient(90deg,var(--orange) 0%,var(--ok) 100%);
-    }
-
-    /* Chip badges */
-    .chip{
-      display:inline-block;padding:3px 9px;border-radius:6px;
-      font-size:10.5px;font-weight:700;letter-spacing:.02em;
-    }
+    /* Chips */
+    .chip{display:inline-block;padding:4px 10px;border-radius:8px;font-size:11.5px;font-weight:700;}
     .chip.bad{background:var(--bad-soft);color:#a02f28;}
     .chip.warn{background:var(--warn-soft);color:#a96c00;}
     .chip.ok{background:var(--ok-soft);color:#0d6b44;}
     .chip.brand{background:var(--orange-soft);color:var(--orange-dark);}
+    .suggested-title{background:linear-gradient(135deg,var(--orange-soft) 0%,#fff 100%);border:1px dashed var(--orange);border-radius:10px;padding:8px 12px;font-size:12px;color:var(--navy);font-weight:600;font-style:italic;line-height:1.5;}
 
-    /* Suggested title box */
-    .suggested-title{
-      background:linear-gradient(135deg,var(--orange-soft) 0%,#fff 100%);
-      border:1px dashed var(--orange);border-radius:8px;
-      padding:6px 10px;font-size:11.5px;color:var(--navy);font-weight:600;
-      font-style:italic;
-    }
-
-    /* === Chart styles === */
-    .chart-card{
-      background:var(--card);border:1px solid var(--border);
-      border-radius:16px;padding:18px 20px;
-    }
-    .chart-row{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:24px;}
-    @media (max-width:980px){.chart-row{grid-template-columns:1fr;}}
-
-    /* Bar chart */
-    .bar-chart{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
-    .bar-row{display:grid;grid-template-columns:140px 1fr 50px;gap:10px;align-items:center;font-size:12px;}
-    .bar-label{font-weight:600;color:var(--navy);font-size:12.5px;}
-    .bar-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden;position:relative;}
-    .bar-fill{
-      height:100%;
-      background:linear-gradient(90deg,var(--orange) 0%,var(--orange-dark) 100%);
-      border-radius:4px;
-      transition:width .4s ease;
-    }
-    .bar-val{font-variant-numeric:tabular-nums;font-weight:700;color:var(--navy);text-align:right;}
-
-    /* Donut chart container */
-    .donut-wrap{display:flex;align-items:center;gap:18px;}
-    .donut-svg{width:140px;height:140px;flex-shrink:0;}
-    .donut-legend{display:flex;flex-direction:column;gap:8px;flex:1;}
-    .donut-legend-row{display:flex;align-items:center;gap:8px;font-size:12.5px;}
-    .donut-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-    .donut-legend-label{flex:1;color:var(--navy);font-weight:600;}
-    .donut-legend-val{color:var(--muted);font-variant-numeric:tabular-nums;font-weight:700;}
-
-    /* Tech CWV cards */
-    .tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
-    .cwv-card{
-      background:var(--card);border:1px solid var(--border);
-      border-radius:16px;padding:18px 20px;
-      position:relative;overflow:hidden;
-    }
-    .cwv-card::before{
-      content:"";position:absolute;top:0;left:0;right:0;height:4px;
-    }
+    /* === CWV cards === */
+    .tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+    .cwv-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 24px;position:relative;overflow:hidden;}
+    .cwv-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;}
     .cwv-card.good::before{background:var(--ok);}
     .cwv-card.needs_improvement::before{background:var(--warn);}
     .cwv-card.poor::before{background:var(--bad);}
-    .cwv-name{
-      font-size:11px;font-weight:700;letter-spacing:.06em;
-      color:var(--muted);text-transform:uppercase;
-    }
-    .cwv-value{font-size:34px;font-weight:800;margin:8px 0 6px;font-variant-numeric:tabular-nums;letter-spacing:-.03em;color:var(--navy);}
-    .cwv-status{
-      font-size:11px;font-weight:700;
-      padding:4px 10px;border-radius:999px;display:inline-block;
-    }
+    .cwv-top{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+    .cwv-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+    .cwv-card.good .cwv-icon{background:var(--ok-soft);color:#0d6b44;}
+    .cwv-card.needs_improvement .cwv-icon{background:var(--warn-soft);color:#a96c00;}
+    .cwv-card.poor .cwv-icon{background:var(--bad-soft);color:#a02f28;}
+    .cwv-name{font-size:13px;font-weight:800;color:var(--navy);}
+    .cwv-name small{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:2px;text-transform:none;letter-spacing:0;}
+    .cwv-value{font-size:42px;font-weight:800;margin:8px 0;font-variant-numeric:tabular-nums;letter-spacing:-.03em;color:var(--navy);line-height:1;}
+    .cwv-status{font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:999px;display:inline-block;}
     .cwv-status.good{background:var(--ok-soft);color:#0d6b44;}
     .cwv-status.needs_improvement{background:var(--warn-soft);color:#a96c00;}
     .cwv-status.poor{background:var(--bad-soft);color:#a02f28;}
-    .cwv-note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5;}
+    .cwv-explain{margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);}
+    .cwv-explain .cwv-what{font-size:12px;color:var(--navy-3);line-height:1.6;margin-bottom:8px;}
+    .cwv-explain .cwv-what b{color:var(--navy);}
+    .cwv-explain .cwv-tip{font-size:11.5px;color:var(--muted);line-height:1.5;display:flex;align-items:flex-start;gap:6px;}
 
-    /* Audit rows */
-    .audit-row{
-      display:grid;grid-template-columns:1fr 100px 100px;
-      gap:10px;padding:14px 18px;border-top:1px solid var(--border);
-      font-size:13px;align-items:center;
-    }
+    /* === Audit table === */
+    .audit-row{display:grid;grid-template-columns:36px 1fr 100px 100px;gap:12px;padding:16px 22px;border-top:1px solid var(--border);font-size:13px;align-items:center;}
     .audit-row:first-child{border-top:0;background:var(--bg);font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;}
+    .audit-icon{width:36px;height:36px;border-radius:10px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:16px;}
     .audit-row b{color:var(--navy);font-weight:700;}
+    .audit-row small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;font-weight:500;}
     .audit-val{font-weight:800;font-variant-numeric:tabular-nums;text-align:center;}
     .audit-val.ok{color:var(--ok);}
     .audit-val.warn{color:var(--warn);}
     .audit-val.bad{color:var(--bad);}
 
-    /* Footer */
-    .ftr{
-      margin-top:40px;padding-top:20px;
-      border-top:1px solid var(--border);
-      font-size:11.5px;color:var(--muted);text-align:center;line-height:1.7;
-    }
+    /* === Footer === */
+    .ftr{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:11.5px;color:var(--muted);text-align:center;line-height:1.7;}
     .ftr a{color:var(--orange-dark);font-weight:600;}
 
     /* Responsive */
-    @media (max-width:980px){
-      .kpi-grid{grid-template-columns:repeat(2,1fr);}
-      .tech-grid{grid-template-columns:1fr;}
-    }
+    @media (max-width:1100px){.kpi-big{grid-template-columns:1fr;}.kpi-explain{grid-template-columns:1fr;}.how-steps{grid-template-columns:repeat(2,1fr);}.section-detail{grid-template-columns:1fr;}}
+    @media (max-width:980px){.chart-row{grid-template-columns:1fr;}.tech-grid{grid-template-columns:1fr;}}
     @media (max-width:720px){
-      .wrap{padding:18px 16px 60px;}
-      .kpi-grid{grid-template-columns:1fr 1fr;gap:10px;}
-      .kpi-value{font-size:24px;}
-      .ai-hero{padding:20px 22px;}
-      .ai-body{font-size:14px;}
+      .wrap{padding:20px 16px 60px;}
+      .h-title{font-size:18px;}
+      .how-card{padding:22px;}
+      .how-steps{grid-template-columns:1fr;}
+      .act-card{grid-template-columns:48px 1fr;}
+      .act-meta{grid-column:1/-1;flex-direction:row;justify-content:space-between;margin-top:8px;}
       .qw-grid,.ctr-grid,.fall-grid,.rise-grid,.cro-grid{grid-template-columns:1fr;gap:6px;}
       .tbl-head{display:none;}
-      .tbl-row{padding:14px 16px;border-top:8px solid var(--bg);}
-      .act-card{grid-template-columns:42px 1fr;}
-      .act-meta{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center;margin-top:6px;}
+      .tbl-row{padding:14px 18px;border-top:8px solid var(--bg);}
     }
-
     @media print{
       body{background:#fff;}
       .tabs,.btn,.btn-ghost{display:none;}
       .tab-pane{display:block !important;page-break-after:always;}
-      .ai-hero{background:var(--navy) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
     }
   </style>
 </head>
 <body>
 <div class="wrap">
 
+  <!-- HEADER -->
   <header class="hdr">
     <div class="hdr-l">
       <div class="logo-box">D</div>
       <div>
-        <div class="h-title">SEO Dashboard <span style="color:var(--muted);font-weight:500;font-size:15px;">· dami-pracovne-odevy.sk</span></div>
+        <div class="h-title">SEO Dashboard <span style="color:var(--muted);font-weight:500;font-size:16px;">· dami-pracovne-odevy.sk</span></div>
         <div class="h-sub">
           <span data-bind="week">KW 21 · 18.5.–24.5.2026</span>
-          <span class="pill" id="statusPill">mock data · credentials pending</span>
-          <span class="pill brand">auto Mon 06:00 UTC</span>
+          <span class="pill" id="statusPill">📌 mock data · credentials pending</span>
+          <span class="pill brand">⏰ auto Mon 06:00 UTC</span>
         </div>
       </div>
     </div>
     <div style="display:flex;gap:10px;align-items:center;">
-      <button class="btn btn-ghost" onclick="window.print()">📄 Export PDF</button>
-      <button class="btn" onclick="location.reload()">⟳ Refresh</button>
+      <button class="btn btn-ghost" onclick="window.print()">📄 Stiahnuť PDF</button>
+      <button class="btn" onclick="location.reload()">⟳ Obnoviť</button>
     </div>
   </header>
 
-  <!-- AI Hero -->
-  <div class="ai-hero">
-    <div class="ai-label">🤖 Weekly Brief · Pondelok ráno</div>
-    <div class="ai-body" data-bind="aiSummary">
-      Týždeň priniesol <b>+14 % klikov</b> a <b>+9 % výnos</b>, ale konverzia mierne klesla o <b>0,3 pp</b>. Najsilnejší rast: query <i>zimné montérky pánske</i> (pos 6 → impressions +180). Najväčší risk: stránka <code>/produkt/m43-bunda</code> stratila <b>42 % klikov</b> WoW. Tri priority na tento týždeň: push quick win na zimné montérky, prepis title pre kategóriu rukavice (CTR 1,2 % @ pos 2), audit prepadnutej M43 bundy.
+  <!-- HOW TO READ -->
+  <div class="how-card">
+    <div class="how-eyebrow">📖 Ako čítať tento dashboard</div>
+    <div class="how-title">Týždenný prehľad pre netechnického majiteľa e-shopu</div>
+    <div class="how-body">
+      Dashboard ti každý <b>pondelok ráno</b> ukáže, čo sa na webe deje z pohľadu Google vyhľadávania. Žiadne grafy bez kontextu — pri každom čísle vysvetlím, čo znamená a čo s ním urobiť. Cieľom je <b>2–3 konkrétne akcie</b> na ďalší týždeň, ktoré ti privedú viac návštevníkov a viac objednávok.
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">01 · Pondelok ráno</div>
+        <b>Začni hore</b>
+        <span>Pozri AI brief — 3-vetný súhrn, čo sa deje. Nemusíš čítať čísla, len overiť že kampaň nemá problém.</span>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02 · Plán dňa</div>
+        <b>Klikni „Akcie"</b>
+        <span>Tab s 5 priorítami na týždeň. Každá má impact a effort — tak vieš čo má najviac zmysel.</span>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03 · Detail</div>
+        <b>Pozri konkrétne taby</b>
+        <span>Quick wins · CTR · Padajúce · Rising · CRO. Každá sekcia má vlastný tip „čo to znamená".</span>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">04 · Exekúcia</div>
+        <b>Stiahni PDF</b>
+        <span>Pošli si do telefónu alebo printni. Akcie zo zoznamu odškrtni počas týždňa.</span>
+      </div>
     </div>
   </div>
 
-  <!-- Tabs -->
+  <!-- AI BRIEF -->
+  <h2 class="sect"><span class="sect-icon">🤖</span>AI brief — čo sa udialo tento týždeň</h2>
+  <div class="sect-sub">3 vety v ľudskej reči. Ak je všetko zelené, môžeš ísť rovno na „Akcie".</div>
+  <div class="chart-card" style="background:linear-gradient(135deg,#fff 0%,var(--soft) 100%);">
+    <div style="font-size:16px;line-height:1.7;color:var(--navy);" data-bind="aiSummary">
+      Týždeň priniesol <b style="color:var(--ok);">+14 % klikov</b> a <b style="color:var(--ok);">+9 % výnos</b>, ale konverzia mierne klesla o <b style="color:var(--bad);">0,3 pp</b>. Najsilnejší rast: query <i>zimné montérky pánske</i> (pos 6 → impressions +180). Najväčší risk: stránka <code>/produkt/m43-bunda</code> stratila <b style="color:var(--bad);">42 % klikov</b> WoW. Tri priority na tento týždeň: push quick win na zimné montérky, prepis title pre kategóriu rukavice (CTR 1,2 % @ pos 2), audit prepadnutej M43 bundy.
+    </div>
+  </div>
+
+  <!-- TABS -->
   <div class="tabs" id="tabs">
-    <button class="active" data-tab="overview">📊 Overview</button>
+    <button class="active" data-tab="overview">📊 Prehľad</button>
     <button data-tab="actions">🎯 Akcie</button>
-    <button data-tab="quickwins">🚀 Quick wins</button>
+    <button data-tab="quickwins">🚀 Rýchle výhry</button>
     <button data-tab="ctr">📝 CTR</button>
     <button data-tab="falling">⚠️ Padajúce</button>
     <button data-tab="rising">✨ Rising</button>
@@ -403,28 +306,25 @@
     <button data-tab="tech">⚙️ Technické</button>
   </div>
 
-  <!-- TAB: Overview -->
+  <!-- TAB: OVERVIEW -->
   <div class="tab-pane active" id="tab-overview">
 
-    <div class="kpi-grid" id="kpiGrid"></div>
+    <h2 class="sect"><span class="sect-icon">📊</span>Hlavné čísla — 7 dní</h2>
+    <div class="sect-sub">Každá karta má 3 informačné polia: <b>čo to znamená</b>, <b>prečo to sleduješ</b> a <b>ako reagovať</b>. Šípka hore = lepšie, dole = horšie (okrem pozície, kde nižšie číslo = vyššia pozícia = lepšie).</div>
 
-    <!-- Charts row -->
+    <div class="kpi-big" id="kpiBig"></div>
+
+    <h2 class="sect"><span class="sect-icon">📈</span>Top dopyty &amp; zdroje návštev</h2>
+    <div class="sect-sub">Vľavo: 8 najsilnejších queries podľa klikov. Vpravo: odkiaľ ľudia chodia.</div>
     <div class="chart-row">
       <div class="chart-card">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-          <h2 class="sect" style="margin:0;font-size:15px;">Top 8 queries · clicks (28 d)</h2>
-          <span class="pill brand">GSC</span>
-        </div>
-        <div class="sect-sub" style="margin:4px 0 12px;">Najsilnejšie queries podľa klikov za posledných 28 dní.</div>
+        <h3>🔍 Top 8 queries podľa klikov</h3>
+        <div class="ch-sub">Slová, ktoré ľudia píšu do Google a klikajú na vašu stránku. Tieto sú tvoja hlavná organická návštevnosť.</div>
         <div class="bar-chart" id="topQueriesChart"></div>
       </div>
-
       <div class="chart-card">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-          <h2 class="sect" style="margin:0;font-size:15px;">Traffic mix</h2>
-          <span class="pill brand">GA4</span>
-        </div>
-        <div class="sect-sub" style="margin:4px 0 14px;">Zdroj návštevnosti za týždeň.</div>
+        <h3>🌐 Odkiaľ chodia návštevníci</h3>
+        <div class="ch-sub">Mix zdrojov. Cieľ pre e-shop: organic search ≥ 50 %, direct ≥ 15 %.</div>
         <div class="donut-wrap">
           <svg class="donut-svg" viewBox="0 0 42 42" id="donutChart"></svg>
           <div class="donut-legend" id="donutLegend"></div>
@@ -432,83 +332,188 @@
       </div>
     </div>
 
-    <h2 class="sect">🎯 Top 3 priority tento týždeň</h2>
-    <div class="sect-sub">Najlepší pomer impact / effort. Klikni „Akcie" pre celý todo-list.</div>
+    <h2 class="sect"><span class="sect-icon">🎯</span>Top 3 priority tento týždeň</h2>
+    <div class="sect-sub">Najlepší pomer prínosu k času. Klikni „Akcie" pre celý zoznam 5 priorít.</div>
     <div class="actions" id="topActionsPreview"></div>
   </div>
 
-  <!-- TAB: Actions -->
+  <!-- TAB: ACTIONS -->
   <div class="tab-pane" id="tab-actions">
-    <h2 class="sect">📋 Týždenný action plan</h2>
-    <div class="sect-sub">Akcie zoradené podľa priority — impact / effort + urgency. Vystavené ako todo-list pre pondelok ráno.</div>
+    <h2 class="sect"><span class="sect-icon">🎯</span>Tvoj týždenný todo-list</h2>
+    <div class="sect-sub">5 priorít zoradených podľa kombinácie <b>impact × effort</b>. Pri každej je odhad: koľko klikov / € to môže priniesť a koľko ti to zaberie.</div>
+
+    <div class="tip">
+      <div class="tip-icon">💡</div>
+      <div>
+        <h3>Tip: Začni s <b>P1</b> <small>najvyššia priorita</small></h3>
+        <p>Akcie sú zoradené od najlepšieho pomeru prínos / čas. <b>P1</b> ti zvyčajne zaberie hodinu a privedie desiatky klikov navyše. <b>P5</b> sú dlhšie investície (3+ hodín), ale otvoria nové trhy. Ak máš dnes len 30 minút, sprav P1 alebo P2.</p>
+      </div>
+    </div>
+
     <div class="actions" id="allActions"></div>
   </div>
 
-  <!-- TAB: Quick wins -->
+  <!-- TAB: QUICK WINS -->
   <div class="tab-pane" id="tab-quickwins">
-    <h2 class="sect">🚀 Quick wins · pozícia 4–15 s rastom</h2>
-    <div class="sect-sub">Queries kde už rankuješ na 1.–2. strane. Push content + interné linky a sú v top 3.</div>
+    <h2 class="sect"><span class="sect-icon">🚀</span>Rýchle výhry — stránky blízko vrcholu</h2>
+    <div class="sect-sub">Queries (slová), kde už <b>rankuješ medzi 4.–15. miestom</b> v Google. Drobný push (krátky text + interné linky) ich môže posunúť do top 3, kde sú väčšinou všetky kliky.</div>
+
+    <div class="section-detail">
+      <div class="detail-card">
+        <div class="detail-icon q">❓</div>
+        <h4>Čo to je</h4>
+        <p>Slová ako <b>„zimné montérky pánske"</b> alebo <b>„pracovné rukavice kožené"</b>, na ktoré si nájdený v Google na pozícii 4–15. Ľudia ťa vidia, ale málokto klikne, lebo si pod záhybom.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon w">🎯</div>
+        <h4>Prečo to sleduješ</h4>
+        <p>Pozícia 1–3 dostane <b>~60 % všetkých klikov</b>. Pozícia 5–10 už len ~15 %. Posunutie z 6. na 3. miesto môže <b>strojnásobiť kliky</b>. A je to lacnejšie ako rankovať od nuly.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon h">✅</div>
+        <h4>Ako reagovať</h4>
+        <p>1. Otvor stránku, ku ktorej query patrí.<br>2. <b>Pridaj 200–300 slov</b> textu k téme.<br>3. <b>Pridaj 2–3 interné linky</b> z najsilnejších stránok (homepage, top kategória).<br>4. Po 2 týždňoch skontroluj pozíciu.</p>
+      </div>
+    </div>
+
     <div class="tbl">
-      <div class="tbl-head qw-grid"><span>Query</span><span>Stránka</span><span>Pos</span><span>Impr</span><span>Potenciál</span><span>Akcia</span></div>
+      <div class="tbl-head qw-grid"><span>🔍 Query</span><span>🔗 Stránka</span><span>📍 Pos</span><span>👀 Impr</span><span>💰 Potenciál</span><span>✅ Akcia</span></div>
       <div id="qwRows"></div>
     </div>
   </div>
 
   <!-- TAB: CTR -->
   <div class="tab-pane" id="tab-ctr">
-    <h2 class="sect">📝 CTR optimalizácia · pos 1–3 s podpriemerným CTR</h2>
-    <div class="sect-sub">Rankuješ vysoko, ale title/meta nezaujme. 10-minútový rewrite = +50–200 klikov týždenne.</div>
+    <h2 class="sect"><span class="sect-icon">📝</span>CTR — stránky kde ťa vidia, ale neklikajú</h2>
+    <div class="sect-sub">Stránky na <b>top 3 pozíciách</b>, ale s podpriemerným <b>click-through rate</b>. Znamená to: title v Google nezaujme. <b>10-minútový rewrite</b> môže priniesť +50 až +200 klikov týždenne.</div>
+
+    <div class="section-detail">
+      <div class="detail-card">
+        <div class="detail-icon q">❓</div>
+        <h4>Čo je CTR</h4>
+        <p>Click-Through Rate = <b>koľko % ľudí klikne, keď nás vidia</b>. Napr. ak nás 100 ľudí vidí v Google a 5 klikne, CTR = 5 %. Pri pozícii 1 sa očakáva CTR ~28 %, pri pozícii 3 ~11 %.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon w">🎯</div>
+        <h4>Prečo to sleduješ</h4>
+        <p>Ak rankuješ na 2. mieste, ale CTR je 2 % (namiesto očakávaných 15 %), <b>vidíš ľudí ale nezískaš ich</b>. Problém nie je v ranku, ale v <b>title alebo meta description</b> — nezaujme.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon h">✅</div>
+        <h4>Ako reagovať</h4>
+        <p>1. Pozri si súčasný title — je to len názov produktu, alebo aj dôvod kliknúť?<br>2. Pridaj <b>výhody</b> (Skladom, Doprava zadarmo, do 24 h, akcia).<br>3. Pridaj <b>rok</b> (2026) — signál čerstvosti.<br>4. Skús variant a sleduj po 2 týždňoch.</p>
+      </div>
+    </div>
+
     <div class="tbl">
-      <div class="tbl-head ctr-grid"><span>Query / Stránka</span><span>Pos</span><span>CTR vs bench</span><span>Potenciál</span><span>Návrh title</span></div>
+      <div class="tbl-head ctr-grid"><span>🔍 Query / Stránka</span><span>📍 Pos</span><span>📉 CTR vs bench</span><span>💰 Potenciál</span><span>✏️ Návrh title</span></div>
       <div id="ctrRows"></div>
     </div>
   </div>
 
-  <!-- TAB: Falling -->
+  <!-- TAB: FALLING -->
   <div class="tab-pane" id="tab-falling">
-    <h2 class="sect">⚠️ Padajúce stránky · clicks ↓ WoW</h2>
-    <div class="sect-sub">Stránky, ktoré stratili >15 % klikov za týždeň. Sezónne poklesy sú označené ako „normal".</div>
+    <h2 class="sect"><span class="sect-icon">⚠️</span>Padajúce stránky — strácajú návštevníkov</h2>
+    <div class="sect-sub">Stránky, kde si <b>za týždeň stratil viac ako 15 % klikov</b>. Niekedy je to sezónne (zimné rukavice v máji), inokedy alarm (M43 bunda padla, lebo konkurent vyhral SERP).</div>
+
+    <div class="section-detail">
+      <div class="detail-card">
+        <div class="detail-icon q">❓</div>
+        <h4>Čo to znamená</h4>
+        <p>Stránka <b>stráca kliky týždeň od týždňa</b>. Sleduj rozdiel pozície (Δ): ak padla o 2+ miest, je to alarm. Ak ostala rovnaká, ale klikov je menej, môže byť dôvod sezónny alebo SERP layout (Google pridal feature snippet).</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon w">🎯</div>
+        <h4>Prečo to sleduješ</h4>
+        <p>Ak nezachytíš pokles skoro, môže pokračovať. <b>Stránka v top 5 vs v top 10 = 3× menej klikov</b>. Lepšie reagovať týždeň po, ako mesiac po, keď už je preč úplne.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon h">✅</div>
+        <h4>Ako reagovať</h4>
+        <p>1. Otvor query v Google a pozri top 3 výsledky.<br>2. <b>Porovnaj s tvojou stránkou</b>: čo majú navyše? (dlhší obsah, viac obrázkov, video?)<br>3. Doplň, čo chýba.<br>4. Skontroluj po 2 týždňoch.</p>
+      </div>
+    </div>
+
     <div class="tbl">
-      <div class="tbl-head fall-grid"><span>Stránka</span><span>Δ klikov</span><span>Δ pozícia</span><span>Príčina + akcia</span></div>
+      <div class="tbl-head fall-grid"><span>🔗 Stránka</span><span>📉 Δ klikov</span><span>📍 Δ pozícia</span><span>🔍 Príčina + akcia</span></div>
       <div id="fallRows"></div>
     </div>
   </div>
 
-  <!-- TAB: Rising -->
+  <!-- TAB: RISING -->
   <div class="tab-pane" id="tab-rising">
-    <h2 class="sect">✨ Rising queries · nové dopyty</h2>
-    <div class="sect-sub">Queries, ktoré minulý týždeň nemali signál a teraz rastú. Early-mover advantage.</div>
+    <h2 class="sect"><span class="sect-icon">✨</span>Rising — nové dopyty s rastom</h2>
+    <div class="sect-sub">Slová, ktoré <b>minulý týždeň nemali signál</b> a teraz na ne ľudia hľadajú. Early-mover advantage — kým si nevšimnú konkurenti, môžeš rýchlo obsadiť top 3.</div>
+
+    <div class="section-detail">
+      <div class="detail-card">
+        <div class="detail-icon q">❓</div>
+        <h4>Čo to je</h4>
+        <p>Query, na ktorý sa <b>impressions zdvojnásobili alebo viac</b> za týždeň. Napr. „antikorová obuv pre kuchárov" mala 0 → 56 impressions. Niekde sa o tom začalo hovoriť (TikTok? sezóna? nová norma?).</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon w">🎯</div>
+        <h4>Prečo to sleduješ</h4>
+        <p>Nový trend = <b>málo konkurencie zatiaľ</b>. Ak vytvoríš obsah teraz, máš 2–4 týždne kým ostatní zachytia. Po niche queries vieš obsadiť top 3 rýchlejšie ako pri zaužívaných termínoch.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon h">✅</div>
+        <h4>Ako reagovať</h4>
+        <p>1. Pozri, či query <b>vyhovuje tvojmu produktovému katalógu</b>.<br>2. Ak áno: <b>vytvor cieľovú stránku alebo PLP filter</b>.<br>3. Ak nie: poznač si do plánu na ďalšie produktové rozšírenie.<br>4. Daj 200+ slov, schema markup, interné linky.</p>
+      </div>
+    </div>
+
     <div class="tbl">
-      <div class="tbl-head rise-grid"><span>Query</span><span>Impr</span><span>Δ vs minulý</span><span>Stránka</span><span>Akcia</span></div>
+      <div class="tbl-head rise-grid"><span>🔍 Query</span><span>👀 Impr</span><span>📈 Δ vs minulý</span><span>🔗 Stránka</span><span>✅ Akcia</span></div>
       <div id="riseRows"></div>
     </div>
   </div>
 
   <!-- TAB: CRO -->
   <div class="tab-pane" id="tab-cro">
-    <h2 class="sect">💰 CRO opportunities · high traffic / low conversion</h2>
-    <div class="sect-sub">Stránky s vysokou návštevnosťou ale slabou konverziou. Zelený potenciál = priamy revenue uplift v €.</div>
+    <h2 class="sect"><span class="sect-icon">💰</span>CRO — kde návštevy neprinášajú objednávky</h2>
+    <div class="sect-sub">Stránky s <b>vysokou návštevnosťou</b>, ale <b>slabou konverziou</b>. Ľudia prichádzajú, ale odchádzajú bez nákupu. Tu nepotrebuješ viac SEO — potrebuješ <b>opraviť stránku</b>.</div>
+
+    <div class="section-detail">
+      <div class="detail-card">
+        <div class="detail-icon q">❓</div>
+        <h4>Čo je CRO</h4>
+        <p><b>Conversion Rate Optimization</b> — zlepšenie pomeru: koľko z návštev sa premení na objednávku. Priemer pre slovenský retail e-com je <b>1,5–3 %</b>. Ak máš pod 1 %, je problém v stránke, nie v návštevníkoch.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon w">🎯</div>
+        <h4>Prečo to sleduješ</h4>
+        <p>Privedieš 1000 ľudí, 10 kúpi = 1 %. Ak zlepšíš na 2 %, máš <b>2× toľko objednávok pri rovnakom rozpočte</b>. CRO je vždy lacnejšie ako akvizícia ďalšieho 1000 návštevníkov.</p>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon h">✅</div>
+        <h4>Ako reagovať</h4>
+        <p>1. <b>Vysoký bounce (>65 %)</b>: stránka neodpovedá očakávaniu. Skontroluj titulok vs obsah.<br>2. <b>Nízka konverzia + dlhá session</b>: ľudia hľadajú ale nenájdu. Pridaj filter / kvíz.<br>3. <b>Krátka session</b>: nezaujímavé. Pridaj social proof, recenzie, urgenciu.</p>
+      </div>
+    </div>
+
     <div class="tbl">
-      <div class="tbl-head cro-grid"><span>Stránka</span><span>Sess</span><span>Bounce</span><span>Conv</span><span>Hypotéza</span><span>Potenciál</span></div>
+      <div class="tbl-head cro-grid"><span>🔗 Stránka</span><span>👥 Sess</span><span>🚪 Bounce</span><span>🛒 Conv</span><span>💡 Hypotéza</span><span>💰 Potenciál</span></div>
       <div id="croRows"></div>
     </div>
   </div>
 
-  <!-- TAB: Technical -->
+  <!-- TAB: TECH -->
   <div class="tab-pane" id="tab-tech">
-    <h2 class="sect">⚙️ Core Web Vitals · p75</h2>
-    <div class="sect-sub">Z PageSpeed Insights API — reálne user data za posledných 28 dní.</div>
+    <h2 class="sect"><span class="sect-icon">⚡</span>Core Web Vitals — rýchlosť stránky</h2>
+    <div class="sect-sub">Tri metriky od Google, ktoré ovplyvňujú ranking aj user experience. Sú merané z reálnych návštevníkov, nie z laboratória.</div>
+
     <div class="tech-grid" id="cwvCards"></div>
 
-    <h2 class="sect">🔧 Site audit · on-page</h2>
-    <div class="sect-sub">Z týždenného crawlu sitemapy.</div>
+    <h2 class="sect"><span class="sect-icon">🔧</span>On-page audit</h2>
+    <div class="sect-sub">Týždenná kontrola sitemapy — či nie sú chyby v základoch (chýbajúce title, popisy, schema markup).</div>
+
     <div class="tbl" id="auditTable"></div>
   </div>
 
   <div class="ftr">
-    Generované GitHub Action každý pondelok 06:00 UTC ·
-    GSC + GA4 + PageSpeed Insights + rule-based opportunity engine ·
-    last update <span id="genTs">2026-05-25</span>
+    Generované GitHub Action každý pondelok 06:00 UTC · GSC + GA4 + PageSpeed Insights · last update <span id="genTs">2026-05-25</span><br>
+    🤖 Postavené ako case study v SEO automation portfolio
   </div>
 </div>
 
@@ -519,6 +524,7 @@
     const tab = e.target.dataset.tab;
     document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
+    window.scrollTo({top: 0, behavior: 'smooth'});
   });
 
   // === Formatters ===
@@ -526,12 +532,11 @@
   const fmtNum1 = n => n.toFixed(1).replace('.', ',');
   const fmtPct = n => (n >= 0 ? '+' : '') + n.toFixed(1).replace('.', ',') + ' %';
   const fmtEur = n => Math.round(n).toLocaleString('sk-SK').replace(/,/g, ' ') + ' €';
-  const arrow = n => n > 0 ? '▲' : n < 0 ? '▼' : '—';
 
-  // === Sparkline SVG generator ===
-  function sparkline(values, color) {
+  // === Sparkline ===
+  function sparkline(values, color, w=180, h=42) {
     if (!values || !values.length) return '';
-    const w = 80, h = 32, pad = 2;
+    const pad = 3;
     const min = Math.min(...values), max = Math.max(...values);
     const range = max - min || 1;
     const points = values.map((v, i) => {
@@ -541,97 +546,162 @@
     }).join(' ');
     const lastX = pad + (w - pad * 2);
     const lastY = h - pad - ((values[values.length-1] - min) / range) * (h - pad * 2);
-    return `<svg class="kpi-spark" viewBox="0 0 ${w} ${h}">
+    return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:${h}px;display:block;">
       <polyline fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${points}"/>
       <polyline fill="${color}" fill-opacity="0.12" stroke="none" points="${points} ${lastX},${h} ${pad},${h}"/>
-      <circle cx="${lastX}" cy="${lastY}" r="2.5" fill="${color}"/>
+      <circle cx="${lastX}" cy="${lastY}" r="3" fill="${color}"/>
     </svg>`;
   }
 
-  // === KPI render ===
+  // === KPI cards with explanation ===
+  const kpiConfig = [
+    {
+      key:'clicks', label:'Kliky z Google', icon:'🖱️', icoCls:'brand',
+      plain:'Koľkokrát ľudia klikli na tvoju stránku po vyhľadávaní v Google.',
+      what:'Reálne <b>návštevy z organického vyhľadávania</b> — bez reklám, bez direct trafficu. Čistá hodnota toho, čo prináša SEO.',
+      why:'Bez klikov nie sú objednávky. Toto je <b>najpriamejší ukazovateľ SEO úspechu</b>. Iné metriky (impressions, pozícia) sú len cesta sem.',
+      how:'Klesá? Pozri tab „Padajúce". Rastie? Pozri „Rising" — môže byť nový trend ktorý ešte nevyužívaš.'
+    },
+    {
+      key:'impressions', label:'Zobrazenia v Google', icon:'👀', icoCls:'info',
+      plain:'Koľkokrát sa tvoja stránka zobrazila ľuďom vo výsledkoch vyhľadávania.',
+      what:'Každý raz, keď ťa <b>niekto vidí v Google</b> (aj keby nepriklikol), sa počíta ako 1 impression. Indikuje viditeľnosť.',
+      why:'Rastie impressions, ale klesá CTR? Znamená že ľudia ťa vidia, ale <b>title nezaujme</b>. Pozri „CTR" tab.',
+      how:'Rastie? Skvelé — viac viditeľnosti. Klesá? Pozícia padá alebo Google zmenil layout. Pozri „Padajúce".'
+    },
+    {
+      key:'position', label:'Priemerná pozícia', icon:'📍', icoCls:'warn',
+      plain:'Priemerné poradie tvojich stránok vo výsledkoch Google. Nižšie = lepšie.',
+      what:'Ak <b>všetky</b> tvoje queries spriemeruješ, na akom mieste v Google si? Pozícia <b>1 = top</b>, 100 = na 10. strane.',
+      why:'Pozícia 1–3 dostane <b>~60 % klikov</b>, pozícia 11–20 len ~3 %. Drobné zlepšenie pozície = veľký nárast klikov.',
+      how:'Šípka dole = lepšia pozícia. Ak rastie pozícia (zhoršuje sa) zatiaľ čo klikov stúpa, znamená že nájdený si na nových slovách.'
+    },
+    {
+      key:'ctr', label:'CTR · click-through rate', icon:'🎯', icoCls:'purple',
+      plain:'Z koľkých zobrazení v Google ľudia kliknú. Vyššie = lepšie.',
+      what:'<b>Kliky / Impressions × 100</b>. Ak ťa 1000 ľudí vidí a 30 klikne, CTR = 3 %. Indikuje, ako veľmi tvoj title zaujme.',
+      why:'Vysoká pozícia + nízky CTR = <b>premárnená šanca</b>. Niekoho oslovíš v Google, ale title nepresvedčí kliknúť.',
+      how:'Pozri tab „CTR" — ukáže stránky kde rankuješ vysoko, ale CTR je pod benchmarkom. 10-min rewrite titulu môže veľa zmeniť.'
+    },
+    {
+      key:'sessions', label:'Organické návštevy (GA4)', icon:'👥', icoCls:'ok',
+      plain:'Reálne návštevy z Google ako ich vidí Google Analytics 4.',
+      what:'<b>Sessions</b> sú návštevy, ktoré GA4 zaznamenala. Mali by byť podobné ako kliky v Google Search Console (s malým rozdielom kvôli bot trafficu).',
+      why:'Toto je <b>vstup do tvojho lievika</b>. Bez session nie je conversion. Sleduj rast week-over-week.',
+      how:'Rastie? Skvelé. Klesá pri rovnakých klikoch v GSC? Možno problém s trackingom alebo redirect chain.'
+    },
+    {
+      key:'conv', label:'Konverzia návštev', icon:'🛒', icoCls:'brand',
+      plain:'Z koľkých návštev sa stane objednávka.',
+      what:'<b>Objednávky / Návštevy × 100</b>. Ak máš 1000 návštev a 20 objednávok, konverzia = 2 %.',
+      why:'Toto je <b>najpriamejší dopad SEO na biznis</b>. Viac návštev pri rovnakej konverzii = viac peňazí.',
+      how:'Klesá konverzia, hoci návštev rastie? Pozri „CRO" tab. Možno priťahuješ <b>nesprávnych návštevníkov</b> alebo stránka má UX problém.'
+    },
+    {
+      key:'revenue', label:'Atribuovaný výnos', icon:'💰', icoCls:'ok',
+      plain:'Tržby z objednávok, kde návštevník prišiel z organického vyhľadávania.',
+      what:'Suma všetkých objednávok, kde <b>posledný klik pred nákupom bol z Google search</b> (organic). Nie všetky tržby, len SEO-driven.',
+      why:'Toto je <b>tvoje SEO ROI v eurách</b>. Aj malé % zlepšenia konverzie alebo klikov sa premieta sem.',
+      how:'Rastie pomalšie ako kliky? Možno priemerný košík klesá. Pozri ktoré produkty dominujú.'
+    },
+    {
+      key:'indexed', label:'Indexované stránky', icon:'📚', icoCls:'info',
+      plain:'Koľko tvojich stránok Google reálne pozná a môže zobrazovať.',
+      what:'Z celkového počtu stránok v sitemape, koľko Google <b>skutočne indexuje</b>. Ideálne 95 %+. Rozdiel = stránky, ktoré Google ignoruje.',
+      why:'Stránka neindexovaná = <b>nikdy nedostane organický klik</b>. Aj keby bola perfektná. Indexácia je predpoklad.',
+      how:'Pomerne stabilné. Ak skok dole, skontroluj GSC „Coverage" report — môže byť problém so sitemapou alebo robots.txt.'
+    }
+  ];
+
   function renderKPI(D) {
     const k = D.kpi || {};
     const sparks = D._sparks || {
-      clicks: [820, 890, 920, 1050, 1090, 1140, 1247],
-      impressions: [32100, 33200, 34500, 35800, 36200, 37400, 38420],
-      avg_position: [13.5, 13.2, 13.0, 12.8, 12.6, 12.5, 12.3],
-      ctr: [2.55, 2.68, 2.71, 2.93, 3.01, 3.06, 3.24],
-      sessions: [890, 940, 980, 1020, 1080, 1110, 1184],
-      conv: [2.5, 2.41, 2.38, 2.31, 2.28, 2.41, 2.11],
-      revenue: [3100, 3340, 3580, 3720, 3920, 4010, 4380],
-      indexed: [1180, 1195, 1210, 1218, 1232, 1240, 1247]
+      clicks:[820,890,920,1050,1090,1140,1247], impressions:[32100,33200,34500,35800,36200,37400,38420],
+      position:[13.5,13.2,13.0,12.8,12.6,12.5,12.3], ctr:[2.55,2.68,2.71,2.93,3.01,3.06,3.24],
+      sessions:[890,940,980,1020,1080,1110,1184], conv:[2.5,2.41,2.38,2.31,2.28,2.41,2.11],
+      revenue:[3100,3340,3580,3720,3920,4010,4380], indexed:[1180,1195,1210,1218,1232,1240,1247]
     };
-    const cards = [
-      {label:'Clicks (7 dní)', val:fmtInt(k.clicks?.value||1247), delta:k.clicks?.wow_pct||14.2, fmt:'pct', spark:sparks.clicks, feature:true},
-      {label:'Impressions', val:fmtInt(k.impressions?.value||38420), delta:k.impressions?.wow_pct||8.1, fmt:'pct', spark:sparks.impressions},
-      {label:'Priem. pozícia', val:fmtNum1(k.avg_position?.value||12.3), delta:k.avg_position?.wow_delta||-0.8, fmt:'pos', spark:sparks.avg_position.slice().reverse()},
-      {label:'CTR', val:fmtNum1(k.ctr?.value||3.24)+' %', delta:k.ctr?.wow_delta||0.18, fmt:'pp', spark:sparks.ctr},
-      {label:'Organic sessions', val:fmtInt(k.sessions_organic?.value||1184), delta:k.sessions_organic?.wow_pct||12.8, fmt:'pct', spark:sparks.sessions},
-      {label:'Konverzia', val:fmtNum1(k.conversion_rate?.value||2.11)+' %', delta:k.conversion_rate?.wow_delta||-0.3, fmt:'pp', spark:sparks.conv},
-      {label:'Výnos (atrib.)', val:fmtEur(k.revenue_eur?.value||4380), delta:k.revenue_eur?.wow_pct||9.4, fmt:'pct', spark:sparks.revenue, feature:true},
-      {label:'Indexované str.', val:fmtInt(1247), delta:0, fmt:'flat', spark:sparks.indexed}
-    ];
-    document.getElementById('kpiGrid').innerHTML = cards.map(c => {
-      const isUp = c.fmt === 'pos' ? c.delta < 0 : c.delta > 0;
-      const isDown = c.fmt === 'pos' ? c.delta > 0 : c.delta < 0;
-      const cls = c.fmt === 'flat' ? 'flat' : isUp ? 'up' : isDown ? 'down' : 'flat';
+    const dataMap = {
+      clicks:{val:fmtInt(k.clicks?.value||1247), delta:k.clicks?.wow_pct||14.2, fmt:'pct', spark:sparks.clicks},
+      impressions:{val:fmtInt(k.impressions?.value||38420), delta:k.impressions?.wow_pct||8.1, fmt:'pct', spark:sparks.impressions},
+      position:{val:fmtNum1(k.avg_position?.value||12.3), delta:k.avg_position?.wow_delta||-0.8, fmt:'pos', spark:sparks.position.slice().reverse()},
+      ctr:{val:fmtNum1(k.ctr?.value||3.24)+' %', delta:k.ctr?.wow_delta||0.18, fmt:'pp', spark:sparks.ctr},
+      sessions:{val:fmtInt(k.sessions_organic?.value||1184), delta:k.sessions_organic?.wow_pct||12.8, fmt:'pct', spark:sparks.sessions},
+      conv:{val:fmtNum1(k.conversion_rate?.value||2.11)+' %', delta:k.conversion_rate?.wow_delta||-0.3, fmt:'pp', spark:sparks.conv},
+      revenue:{val:fmtEur(k.revenue_eur?.value||4380), delta:k.revenue_eur?.wow_pct||9.4, fmt:'pct', spark:sparks.revenue},
+      indexed:{val:fmtInt(1247), delta:0, fmt:'flat', spark:sparks.indexed}
+    };
+
+    document.getElementById('kpiBig').innerHTML = kpiConfig.map(c => {
+      const d = dataMap[c.key];
+      const isUp = c.key === 'position' ? d.delta < 0 : d.delta > 0;
+      const isDown = c.key === 'position' ? d.delta > 0 : d.delta < 0;
+      const cls = d.fmt === 'flat' ? 'flat' : isUp ? 'up' : isDown ? 'down' : 'flat';
       const color = cls === 'up' ? '#10B981' : cls === 'down' ? '#EF4444' : '#94A3B8';
       let deltaStr;
-      if (c.fmt === 'pct') deltaStr = fmtPct(c.delta) + ' WoW';
-      else if (c.fmt === 'pos') deltaStr = (c.delta < 0 ? '▼' : '▲') + ' ' + fmtNum1(Math.abs(c.delta)) + ' (' + (c.delta < 0 ? 'lepšia' : 'horšia') + ')';
-      else if (c.fmt === 'pp') deltaStr = (c.delta >= 0 ? '+' : '') + fmtNum1(c.delta) + ' pp';
-      else deltaStr = '— stabilne';
+      if (d.fmt === 'pct') deltaStr = (d.delta > 0 ? '▲' : d.delta < 0 ? '▼' : '—') + ' ' + fmtPct(d.delta) + ' WoW';
+      else if (d.fmt === 'pos') deltaStr = (d.delta < 0 ? '▲' : '▼') + ' ' + fmtNum1(Math.abs(d.delta)) + ' (' + (d.delta < 0 ? 'lepšia' : 'horšia') + ')';
+      else if (d.fmt === 'pp') deltaStr = (d.delta > 0 ? '▲' : d.delta < 0 ? '▼' : '—') + ' ' + (d.delta >= 0 ? '+' : '') + fmtNum1(d.delta) + ' pp';
+      else deltaStr = '— stabilné';
       return `
-        <div class="kpi-card ${c.feature ? 'feature' : ''}">
-          <div class="kpi-label">${c.label}</div>
-          <div class="kpi-value">${c.val}</div>
-          <div class="kpi-delta ${cls}">${cls !== 'flat' ? arrow(isUp ? 1 : -1) + ' ' : ''}${deltaStr}</div>
-          ${sparkline(c.spark, color)}
+        <div class="kpi">
+          <div class="kpi-head">
+            <div class="kpi-icon ${c.icoCls}">${c.icon}</div>
+            <div class="kpi-meta">
+              <div class="kpi-name">${c.label}</div>
+              <div class="kpi-plain">${c.plain}</div>
+            </div>
+          </div>
+          <div class="kpi-stat">
+            <span class="kpi-num">${d.val}</span>
+            <span class="kpi-delta ${cls}">${deltaStr}</span>
+          </div>
+          <div class="kpi-spark">${sparkline(d.spark, color, 460, 42)}</div>
+          <div class="kpi-explain">
+            <div class="ex"><div class="ex-l">❓ Čo to znamená</div><div class="ex-b">${c.what}</div></div>
+            <div class="ex"><div class="ex-l">🎯 Prečo sledovať</div><div class="ex-b">${c.why}</div></div>
+            <div class="ex"><div class="ex-l">✅ Ako reagovať</div><div class="ex-b">${c.how}</div></div>
+          </div>
         </div>`;
     }).join('');
   }
 
-  // === Top queries bar chart ===
-  function renderTopQueriesChart(D) {
-    const queries = (D.quick_wins || []).slice(0, 8).map(q => ({label: q.query, val: q.clicks + q.potential_clicks, current: q.clicks, potential: q.potential_clicks}));
+  // === Bar chart ===
+  function renderBarChart(D) {
+    const queries = (D.quick_wins||[]).slice(0,8).map(q=>({label:q.query,val:q.clicks+q.potential_clicks,current:q.clicks,potential:q.potential_clicks}));
     if (!queries.length) {
       queries.push(
-        {label:'pracovné odevy', val:340, current:340, potential:0},
-        {label:'pracovné rukavice', val:198, current:198, potential:0},
-        {label:'montérky pánske', val:142, current:142, potential:0},
-        {label:'pracovná obuv', val:118, current:118, potential:0},
-        {label:'reflexné vesty', val:88, current:46, potential:42},
-        {label:'zimné montérky', val:82, current:18, potential:64},
-        {label:'pracovné rukavice kožené', val:67, current:9, potential:58},
-        {label:'ochranné okuliare', val:54, current:5, potential:49}
+        {label:'pracovné odevy',val:340},{label:'pracovné rukavice',val:198},
+        {label:'montérky pánske',val:142},{label:'pracovná obuv',val:118},
+        {label:'reflexné vesty',val:88},{label:'zimné montérky',val:82},
+        {label:'rukavice kožené',val:67},{label:'ochranné okuliare',val:54}
       );
     }
-    const max = Math.max(...queries.map(q => q.val));
+    const max = Math.max(...queries.map(q=>q.val));
     document.getElementById('topQueriesChart').innerHTML = queries.map(q => {
-      const pct = (q.val / max) * 100;
-      return `
-        <div class="bar-row">
-          <span class="bar-label">${q.label}</span>
-          <div class="bar-track"><div class="bar-fill" style="width:${pct}%;"></div></div>
-          <span class="bar-val">${fmtInt(q.val)}</span>
-        </div>`;
+      const pct = (q.val/max)*100;
+      return `<div class="bar-row">
+        <span class="bar-label">${q.label}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;"></div></div>
+        <span class="bar-val">${fmtInt(q.val)}</span>
+      </div>`;
     }).join('');
   }
 
-  // === Donut chart for traffic mix ===
+  // === Donut ===
   function renderDonut() {
     const mix = [
-      {label:'Organic search', val:62, color:'#F97316'},
-      {label:'Direct', val:18, color:'#0EA5E9'},
-      {label:'Referral', val:11, color:'#10B981'},
-      {label:'Paid', val:6, color:'#8B5CF6'},
-      {label:'Social', val:3, color:'#F59E0B'}
+      {label:'Organic search',val:62,color:'#F97316'},
+      {label:'Direct',val:18,color:'#0EA5E9'},
+      {label:'Referral',val:11,color:'#10B981'},
+      {label:'Paid',val:6,color:'#8B5CF6'},
+      {label:'Social',val:3,color:'#F59E0B'}
     ];
-    const total = mix.reduce((s,m) => s+m.val, 0);
+    const total = mix.reduce((s,m)=>s+m.val,0);
     let offset = 0;
-    const slices = mix.map(m => {
-      const len = (m.val / total) * 100;
-      const slice = `<circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="${m.color}" stroke-width="6" stroke-dasharray="${len.toFixed(2)} ${(100-len).toFixed(2)}" stroke-dashoffset="${(-offset).toFixed(2)}" />`;
+    const slices = mix.map(m=>{
+      const len = (m.val/total)*100;
+      const slice = `<circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="${m.color}" stroke-width="6" stroke-dasharray="${len.toFixed(2)} ${(100-len).toFixed(2)}" stroke-dashoffset="${(-offset).toFixed(2)}"/>`;
       offset += len;
       return slice;
     }).join('');
@@ -640,7 +710,7 @@
       ${slices}
       <text x="21" y="20" text-anchor="middle" font-size="6" font-weight="800" fill="#0F172A">${mix[0].val} %</text>
       <text x="21" y="26" text-anchor="middle" font-size="3" fill="#64748B">Organic</text>`;
-    document.getElementById('donutLegend').innerHTML = mix.map(m => `
+    document.getElementById('donutLegend').innerHTML = mix.map(m=>`
       <div class="donut-legend-row">
         <span class="donut-dot" style="background:${m.color};"></span>
         <span class="donut-legend-label">${m.label}</span>
@@ -648,26 +718,25 @@
       </div>`).join('');
   }
 
-  // === Action cards ===
+  // === Actions ===
   function renderActions(arr, host) {
     host.innerHTML = arr.map(a => `
       <div class="act-card">
-        <div class="act-num p${a.priority || 1}">${a.priority || 1}</div>
+        <div class="act-num p${a.priority||1}">${a.priority||1}</div>
         <div class="act-body">
           <b>${a.title}</b>
           <div class="act-detail">${a.details}</div>
         </div>
         <div class="act-meta">
-          <span class="act-impact">${a.impact}</span>
+          <span class="act-impact">📈 ${a.impact}</span>
           <span class="act-effort">⏱ ${a.effort}</span>
         </div>
       </div>`).join('');
   }
 
-  // === Render tables ===
+  // === Tables ===
   function renderTables(D) {
-    // Quick wins
-    document.getElementById('qwRows').innerHTML = (D.quick_wins||[]).map(q => `
+    document.getElementById('qwRows').innerHTML = (D.quick_wins||[]).map(q=>`
       <div class="tbl-row qw-grid">
         <span class="tbl-query">${q.query}</span>
         <span class="tbl-page">${q.page}</span>
@@ -677,8 +746,7 @@
         <span class="row-action">${q.action}</span>
       </div>`).join('');
 
-    // CTR
-    document.getElementById('ctrRows').innerHTML = (D.ctr_underperformers||[]).map(c => `
+    document.getElementById('ctrRows').innerHTML = (D.ctr_underperformers||[]).map(c=>`
       <div class="tbl-row ctr-grid">
         <div><span class="tbl-query">${c.query}</span><div class="tbl-page">${c.page}</div></div>
         <span class="tbl-num">${fmtNum1(c.position)}</span>
@@ -687,31 +755,28 @@
         <span class="suggested-title">${c.suggested_title}</span>
       </div>`).join('');
 
-    // Falling
-    document.getElementById('fallRows').innerHTML = (D.falling_pages||[]).map(f => `
+    document.getElementById('fallRows').innerHTML = (D.falling_pages||[]).map(f=>`
       <div class="tbl-row fall-grid">
-        <span class="tbl-page" style="font-size:12.5px;">${f.page}</span>
-        <span><span class="chip bad">${f.wow_pct.toFixed(0)} %</span><div style="font-size:10.5px;color:var(--muted);margin-top:3px;">${f.clicks_prev}→${f.clicks_now}</div></span>
+        <span class="tbl-page" style="font-size:13px;">${f.page}</span>
+        <span><span class="chip bad">${f.wow_pct.toFixed(0)} %</span><div style="font-size:10.5px;color:var(--muted);margin-top:4px;">${f.clicks_prev}→${f.clicks_now}</div></span>
         <span class="tbl-num">${fmtNum1(f.position_now)} <small style="color:var(--muted);">(${fmtNum1(f.position_prev)})</small></span>
         <span class="row-action"><b>${f.likely_cause}</b><br>${f.action}</span>
       </div>`).join('');
 
-    // Rising
-    document.getElementById('riseRows').innerHTML = (D.rising_queries||[]).map(r => `
+    document.getElementById('riseRows').innerHTML = (D.rising_queries||[]).map(r=>`
       <div class="tbl-row rise-grid">
         <span class="tbl-query">${r.query}</span>
         <span class="tbl-num">${r.impressions_now}</span>
-        <span><span class="chip ok">${r.growth_pct ? '+'+r.growth_pct+' %' : 'nový'}</span><div style="font-size:10.5px;color:var(--muted);margin-top:3px;">${r.impressions_prev}→${r.impressions_now}</div></span>
+        <span><span class="chip ok">${r.growth_pct ? '+'+r.growth_pct+' %' : 'nový'}</span><div style="font-size:10.5px;color:var(--muted);margin-top:4px;">${r.impressions_prev}→${r.impressions_now}</div></span>
         <span class="tbl-page">${r.page_ranked || '— bez stránky'}</span>
         <span class="row-action">${r.action}</span>
       </div>`).join('');
 
-    // CRO
-    document.getElementById('croRows').innerHTML = (D.cro_opportunities||[]).map(c => `
+    document.getElementById('croRows').innerHTML = (D.cro_opportunities||[]).map(c=>`
       <div class="tbl-row cro-grid">
-        <span class="tbl-page" style="font-size:12.5px;">${c.page}</span>
+        <span class="tbl-page" style="font-size:13px;">${c.page}</span>
         <span class="tbl-num">${c.sessions}</span>
-        <span><span class="chip ${c.bounce_rate > 65 ? 'bad' : 'warn'}">${c.bounce_rate} %</span></span>
+        <span><span class="chip ${c.bounce_rate>65?'bad':'warn'}">${c.bounce_rate} %</span></span>
         <span class="tbl-num">${fmtNum1(c.conv_rate)} %</span>
         <span class="row-action"><b>${c.issue}</b><br>${c.hypothesis}</span>
         <span><span class="chip brand">${c.expected_lift}</span></span>
@@ -720,60 +785,65 @@
 
   // === Technical ===
   function renderTech(D) {
-    const cwv = (D.technical && D.technical.core_web_vitals) || {lcp_p75_ms:2840, cls_p75:0.08, inp_p75_ms:215, lcp_status:'needs_improvement', cls_status:'good', inp_status:'good'};
-    document.getElementById('cwvCards').innerHTML = `
-      <div class="cwv-card ${cwv.lcp_status}">
-        <div class="cwv-name">LCP · Largest Contentful Paint</div>
-        <div class="cwv-value">${(cwv.lcp_p75_ms/1000).toFixed(1).replace('.',',')} s</div>
-        <span class="cwv-status ${cwv.lcp_status}">${cwv.lcp_status === 'good' ? '✓ Good' : cwv.lcp_status === 'needs_improvement' ? '⚠ Needs work' : '✗ Poor'}</span>
-        <div class="cwv-note">Cieľ: &lt; 2,5 s. Najsilnejší obrázok by sa mal načítať rýchlejšie.</div>
-      </div>
-      <div class="cwv-card ${cwv.cls_status}">
-        <div class="cwv-name">CLS · Cumulative Layout Shift</div>
-        <div class="cwv-value">${cwv.cls_p75.toFixed(2).replace('.',',')}</div>
-        <span class="cwv-status ${cwv.cls_status}">${cwv.cls_status === 'good' ? '✓ Good' : cwv.cls_status === 'needs_improvement' ? '⚠ Needs work' : '✗ Poor'}</span>
-        <div class="cwv-note">Cieľ: &lt; 0,1. Stránka by sa nemala pri načítaní hýbať.</div>
-      </div>
-      <div class="cwv-card ${cwv.inp_status}">
-        <div class="cwv-name">INP · Interaction to Next Paint</div>
-        <div class="cwv-value">${cwv.inp_p75_ms} ms</div>
-        <span class="cwv-status ${cwv.inp_status}">${cwv.inp_status === 'good' ? '✓ Good' : cwv.inp_status === 'needs_improvement' ? '⚠ Needs work' : '✗ Poor'}</span>
-        <div class="cwv-note">Cieľ: &lt; 200 ms. Reakcia na kliknutie / scroll.</div>
-      </div>`;
+    const cwv = (D.technical && D.technical.core_web_vitals) || {lcp_p75_ms:2840,cls_p75:0.08,inp_p75_ms:215,lcp_status:'needs_improvement',cls_status:'good',inp_status:'good'};
+    const cwvDefs = [
+      {key:'lcp', name:'LCP', sub:'Largest Contentful Paint', icon:'🖼️', value:`${(cwv.lcp_p75_ms/1000).toFixed(1).replace('.',',')} s`, status:cwv.lcp_status,
+       what:'Ako rýchlo sa <b>načíta najväčší prvok</b> na stránke (väčšinou hero obrázok alebo veľký nadpis).',
+       tip:'💡 Cieľ: pod 2,5 s. Pomalý LCP = ľudia odchádzajú skôr, ako sa stránka načíta. Opraviť: optimalizovať veľkosť hero obrázku, lazy loading nižších blokov.'},
+      {key:'cls', name:'CLS', sub:'Cumulative Layout Shift', icon:'📐', value:cwv.cls_p75.toFixed(2).replace('.',','), status:cwv.cls_status,
+       what:'Koľko sa <b>obsah hýbe počas načítania</b>. Príklad zlého CLS: práve si chcel kliknúť na CTA, ale obrázok sa načítal a tlačidlo skočilo nižšie.',
+       tip:'💡 Cieľ: pod 0,1. Opraviť: nastaviť <code>width</code> a <code>height</code> na všetky obrázky a iframey, vyhradiť priestor pre reklamy.'},
+      {key:'inp', name:'INP', sub:'Interaction to Next Paint', icon:'⚡', value:`${cwv.inp_p75_ms} ms`, status:cwv.inp_status,
+       what:'Ako dlho <b>trvá reakcia stránky</b> na klik alebo scroll. Pomalá interakcia = stránka pôsobí pokazená.',
+       tip:'💡 Cieľ: pod 200 ms. Opraviť: optimalizovať JavaScript, odložiť non-critical scripts, použiť code splitting.'}
+    ];
+    document.getElementById('cwvCards').innerHTML = cwvDefs.map(c => `
+      <div class="cwv-card ${c.status}">
+        <div class="cwv-top">
+          <div class="cwv-icon">${c.icon}</div>
+          <div class="cwv-name">${c.name}<small>${c.sub}</small></div>
+        </div>
+        <div class="cwv-value">${c.value}</div>
+        <span class="cwv-status ${c.status}">${c.status === 'good' ? '✓ Good' : c.status === 'needs_improvement' ? '⚠ Potrebuje zlepšiť' : '✗ Poor'}</span>
+        <div class="cwv-explain">
+          <div class="cwv-what">${c.what}</div>
+          <div class="cwv-tip">${c.tip}</div>
+        </div>
+      </div>`).join('');
 
-    const t = D.technical || {indexed_pages:1247, sitemap_pages:1284, not_indexed:37, duplicate_titles:14, missing_meta_desc:28, missing_h1:6, missing_product_schema:42};
+    const t = D.technical || {indexed_pages:1247,sitemap_pages:1284,not_indexed:37,duplicate_titles:14,missing_meta_desc:28,missing_h1:6,missing_product_schema:42};
     const checks = [
-      {label:'Indexované stránky vs sitemap', val:`${fmtInt(t.indexed_pages)} / ${fmtInt(t.sitemap_pages)}`, status:t.not_indexed < 50 ? 'ok' : 'warn'},
-      {label:'Stránky neindexované v GSC', val:t.not_indexed, status:t.not_indexed === 0 ? 'ok' : t.not_indexed < 50 ? 'warn' : 'bad'},
-      {label:'Duplicate titles', val:t.duplicate_titles, status:t.duplicate_titles === 0 ? 'ok' : t.duplicate_titles < 20 ? 'warn' : 'bad'},
-      {label:'Chýba meta description', val:t.missing_meta_desc, status:t.missing_meta_desc === 0 ? 'ok' : t.missing_meta_desc < 30 ? 'warn' : 'bad'},
-      {label:'Chýba H1 nadpis', val:t.missing_h1, status:t.missing_h1 === 0 ? 'ok' : t.missing_h1 < 10 ? 'warn' : 'bad'},
-      {label:'Chýba Product schema', val:t.missing_product_schema, status:t.missing_product_schema === 0 ? 'ok' : t.missing_product_schema < 50 ? 'warn' : 'bad'},
+      {icon:'📚', label:'Indexované stránky vs sitemap', sub:'Koľko stránok Google reálne pozná', val:`${fmtInt(t.indexed_pages)} / ${fmtInt(t.sitemap_pages)}`, status:t.not_indexed<50?'ok':'warn'},
+      {icon:'🚫', label:'Stránky neindexované v GSC', sub:'Ak >50, je problém', val:t.not_indexed, status:t.not_indexed===0?'ok':t.not_indexed<50?'warn':'bad'},
+      {icon:'📑', label:'Duplicate titles', sub:'2+ stránky s rovnakým názvom — Google sa stratí', val:t.duplicate_titles, status:t.duplicate_titles===0?'ok':t.duplicate_titles<20?'warn':'bad'},
+      {icon:'📝', label:'Chýba meta description', sub:'Text pod nadpisom v Google výsledkoch', val:t.missing_meta_desc, status:t.missing_meta_desc===0?'ok':t.missing_meta_desc<30?'warn':'bad'},
+      {icon:'🔠', label:'Chýba H1 nadpis', sub:'Hlavný nadpis stránky', val:t.missing_h1, status:t.missing_h1===0?'ok':t.missing_h1<10?'warn':'bad'},
+      {icon:'🏷️', label:'Chýba Product schema', sub:'Štruktúrované dáta pre e-shop produkty', val:t.missing_product_schema, status:t.missing_product_schema===0?'ok':t.missing_product_schema<50?'warn':'bad'}
     ];
     document.getElementById('auditTable').innerHTML = `
-      <div class="audit-row"><span>Kontrola</span><span style="text-align:center;">Hodnota</span><span style="text-align:center;">Status</span></div>
+      <div class="audit-row"><span></span><span>Kontrola</span><span style="text-align:center;">Hodnota</span><span style="text-align:center;">Status</span></div>
       ${checks.map(c => `
         <div class="audit-row">
-          <b>${c.label}</b>
+          <span class="audit-icon">${c.icon}</span>
+          <div><b>${c.label}</b><small>${c.sub}</small></div>
           <span class="audit-val ${c.status}">${c.val}</span>
-          <span style="text-align:center;"><span class="cwv-status ${c.status === 'ok' ? 'good' : c.status === 'warn' ? 'needs_improvement' : 'poor'}">${c.status === 'ok' ? '✓' : c.status === 'warn' ? '⚠' : '✗'}</span></span>
+          <span style="text-align:center;"><span class="cwv-status ${c.status==='ok'?'good':c.status==='warn'?'needs_improvement':'poor'}">${c.status==='ok'?'✓':c.status==='warn'?'⚠':'✗'}</span></span>
         </div>`).join('')}`;
   }
 
-  // === Master render ===
   function render(D) {
     if (D.ai_summary && D.ai_summary.sk) document.querySelector('[data-bind="aiSummary"]').innerHTML = D.ai_summary.sk;
     if (D.week) document.querySelector('[data-bind="week"]').textContent = D.week;
     if (D._meta && D._meta.gsc_status === 'live') {
       const pill = document.getElementById('statusPill');
-      pill.textContent = 'Live · GSC + GA4 connected';
+      pill.textContent = '✓ Live · GSC + GA4 connected';
       pill.className = 'pill ok';
     }
     renderKPI(D);
-    renderTopQueriesChart(D);
+    renderBarChart(D);
     renderDonut();
     if (D.top_actions_this_week) {
-      renderActions(D.top_actions_this_week.slice(0, 3), document.getElementById('topActionsPreview'));
+      renderActions(D.top_actions_this_week.slice(0,3), document.getElementById('topActionsPreview'));
       renderActions(D.top_actions_this_week, document.getElementById('allActions'));
     }
     renderTables(D);
@@ -781,10 +851,9 @@
     if (D.lastUpdated) document.getElementById('genTs').textContent = D.lastUpdated;
   }
 
-  // === Load ===
   (async () => {
     try {
-      const res = await fetch('data.json?v=' + Date.now(), { cache: 'no-store' });
+      const res = await fetch('data.json?v=' + Date.now(), {cache:'no-store'});
       if (!res.ok) throw new Error('data.json ' + res.status);
       render(await res.json());
     } catch (e) {
