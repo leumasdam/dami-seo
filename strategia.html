@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Strategia rastu · dami-pracovne-odevy.sk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --orange:#F97316; --orange-dark:#EA580C; --orange-soft:rgba(249,115,22,.08); --orange-glow:rgba(249,115,22,.18);
+      --navy:#0F172A; --navy-2:#1E293B; --navy-3:#334155;
+      --muted:#64748B; --light:#94A3B8;
+      --border:#E2E8F0; --bg:#F8FAFC; --card:#FFFFFF; --soft:#F1F5F9;
+      --ok:#10B981; --ok-soft:rgba(16,185,129,.1);
+      --warn:#F59E0B; --warn-soft:rgba(245,158,11,.1);
+      --bad:#EF4444; --bad-soft:rgba(239,68,68,.1);
+      --info:#0EA5E9; --info-soft:rgba(14,165,233,.1);
+      --purple:#8B5CF6; --purple-soft:rgba(139,92,246,.1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased;}
+    .wrap{max-width:1280px;margin:0 auto;padding:32px 36px 80px;}
+
+    /* HEADER */
+    .hdr{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--border);}
+    .hdr-l{display:flex;align-items:center;gap:18px;}
+    .logo-box{width:56px;height:56px;background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:24px;box-shadow:0 8px 24px var(--orange-glow);}
+    .h-title{font-size:24px;font-weight:800;letter-spacing:-.02em;}
+    .h-sub{font-size:13px;color:var(--muted);margin-top:4px;}
+    .h-back{font-size:13px;color:var(--orange-dark);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;background:var(--orange-soft);}
+    .h-back:hover{background:var(--orange);color:#fff;}
+
+    /* HERO TL;DR */
+    .tldr{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:36px 40px;border-radius:24px;margin-bottom:32px;position:relative;overflow:hidden;background-image:radial-gradient(circle at 88% 15%,var(--orange-glow) 0%,transparent 55%),radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);background-size:100% 100%,32px 32px,100% 100%;}
+    .tldr-eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--orange);text-transform:uppercase;margin-bottom:14px;}
+    .tldr-title{font-size:30px;font-weight:900;letter-spacing:-.03em;margin-bottom:18px;line-height:1.2;}
+    .tldr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px;}
+    .tldr-cell{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 22px;backdrop-filter:blur(8px);}
+    .tldr-cell-h{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+    .tldr-cell-h.now{color:#94A3B8;}
+    .tldr-cell-h.target{color:var(--orange);}
+    .tldr-cell-h.path{color:var(--ok);}
+    .tldr-cell-b{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;}
+    .tldr-cell-s{font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.5;}
+
+    /* SECTIONS */
+    h2.sect{font-size:24px;font-weight:800;color:var(--navy);margin:48px 0 10px;letter-spacing:-.02em;display:flex;align-items:center;gap:12px;}
+    h2.sect .ico{width:40px;height:40px;border-radius:12px;background:var(--orange-soft);color:var(--orange-dark);display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .sect-sub{font-size:15px;color:var(--muted);margin:0 0 22px 52px;max-width:880px;line-height:1.7;}
+
+    /* Stat cards */
+    .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+    .stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+    .stat-label{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;}
+    .stat-value{font-size:28px;font-weight:800;color:var(--navy);margin:4px 0 6px;font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+    .stat-note{font-size:11.5px;color:var(--muted);line-height:1.5;}
+
+    /* Finding card */
+    .finding{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px 22px;display:grid;grid-template-columns:48px 1fr;gap:16px;margin-bottom:14px;}
+    .finding-ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+    .finding-ico.warn{background:var(--warn-soft);color:#a96c00;}
+    .finding-ico.ok{background:var(--ok-soft);color:#0d6b44;}
+    .finding-ico.info{background:var(--info-soft);color:#0c7ab4;}
+    .finding h4{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:6px;}
+    .finding p{font-size:13.5px;color:var(--navy-3);line-height:1.65;}
+    .finding p b{color:var(--navy);}
+
+    /* Phase card */
+    .phase{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 30px;margin-bottom:18px;position:relative;overflow:hidden;}
+    .phase::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;}
+    .phase.p1::before{background:linear-gradient(90deg,var(--orange) 0%,var(--orange-dark) 100%);}
+    .phase.p2::before{background:linear-gradient(90deg,#0EA5E9 0%,#0284C7 100%);}
+    .phase.p3::before{background:linear-gradient(90deg,var(--purple) 0%,#7C3AED 100%);}
+    .phase-head{display:flex;align-items:center;gap:18px;margin-bottom:16px;flex-wrap:wrap;}
+    .phase-num{color:#fff;width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;}
+    .phase.p1 .phase-num{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);box-shadow:0 6px 18px var(--orange-glow);}
+    .phase.p2 .phase-num{background:linear-gradient(135deg,#0EA5E9 0%,#0284C7 100%);box-shadow:0 6px 18px rgba(14,165,233,.35);}
+    .phase.p3 .phase-num{background:linear-gradient(135deg,var(--purple) 0%,#7C3AED 100%);box-shadow:0 6px 18px rgba(139,92,246,.35);}
+    .phase-name{flex:1;}
+    .phase-name h3{font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.02em;}
+    .phase-name .phase-time{font-size:13px;color:var(--muted);margin-top:2px;}
+    .phase-impact{padding:8px 14px;border-radius:10px;background:var(--ok-soft);color:var(--ok);font-weight:800;font-size:13px;white-space:nowrap;}
+
+    .phase-tactics{margin-top:14px;}
+    .phase-tactics h5{font-size:11.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+    .tactic{display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:flex-start;padding:11px 0;border-top:1px dashed var(--border);font-size:13.5px;}
+    .tactic:first-of-type{border-top:0;padding-top:0;}
+    .tactic-n{width:28px;height:28px;border-radius:8px;background:var(--soft);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
+    .tactic b{display:block;color:var(--navy);font-weight:700;margin-bottom:2px;}
+    .tactic p{color:var(--navy-3);font-size:13px;line-height:1.55;}
+    .tactic-effort{font-size:11.5px;color:var(--muted);font-weight:600;white-space:nowrap;background:var(--soft);padding:4px 10px;border-radius:6px;}
+
+    .phase-result{margin-top:18px;padding-top:18px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .phase-result-cell{background:var(--soft);border-radius:10px;padding:11px 14px;}
+    .phase-result-cell .lbl{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+    .phase-result-cell .val{font-size:14.5px;color:var(--navy);font-weight:700;}
+
+    /* Financial projection */
+    .fin-chart{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px 28px;margin-bottom:18px;}
+    .fin-bars{display:flex;gap:10px;height:240px;align-items:flex-end;margin-top:18px;}
+    .fin-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;}
+    .fin-bar-val{font-size:12.5px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums;}
+    .fin-bar-shape{width:100%;background:linear-gradient(180deg,var(--orange) 0%,var(--orange-dark) 100%);border-radius:8px 8px 2px 2px;min-height:8px;transition:height .4s;position:relative;}
+    .fin-bar-shape.future{background:linear-gradient(180deg,rgba(249,115,22,.4) 0%,rgba(234,88,12,.4) 100%);border:1px dashed var(--orange);}
+    .fin-bar-label{font-size:11px;color:var(--muted);font-weight:600;}
+    .fin-table{margin-top:24px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+    .fin-row{display:contents;}
+    .fin-cell{padding:12px 14px;font-size:13px;border-top:1px solid var(--border);}
+    .fin-cell.head{background:var(--bg);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-top:0;}
+    .fin-cell.month{font-weight:700;color:var(--navy);}
+    .fin-cell.num{font-variant-numeric:tabular-nums;font-weight:600;}
+    .fin-cell.range{color:var(--ok);font-weight:700;}
+
+    /* KPI tracker */
+    .kpi-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .kpi-line{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;}
+    .kpi-line-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+    .kpi-line-name{font-size:13.5px;font-weight:700;color:var(--navy);}
+    .kpi-line-trg{font-size:11.5px;font-weight:700;color:var(--ok);background:var(--ok-soft);padding:3px 8px;border-radius:6px;}
+    .kpi-line-prog{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-top:8px;}
+    .kpi-line-fill{height:100%;background:linear-gradient(90deg,var(--orange) 0%,var(--orange-dark) 100%);border-radius:4px;}
+    .kpi-line-meta{font-size:11.5px;color:var(--muted);margin-top:6px;display:flex;justify-content:space-between;}
+
+    /* Risk card */
+    .risk{background:linear-gradient(135deg,#fff8e7 0%,#fff 100%);border:1px solid #fde4a8;border-left:5px solid var(--warn);border-radius:14px;padding:18px 22px;margin-bottom:14px;display:grid;grid-template-columns:40px 1fr;gap:14px;}
+    .risk-ico{width:40px;height:40px;border-radius:10px;background:var(--warn);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;}
+    .risk h4{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+    .risk p{font-size:13px;color:var(--navy-3);line-height:1.6;}
+
+    /* Recommendation */
+    .recommend{background:linear-gradient(135deg,var(--orange-soft) 0%,#fff 100%);border:2px solid var(--orange);border-radius:20px;padding:28px 32px;margin-top:24px;}
+    .recommend-eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--orange-dark);text-transform:uppercase;margin-bottom:10px;}
+    .recommend h3{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:14px;color:var(--navy);}
+    .recommend p{font-size:14.5px;color:var(--navy-3);line-height:1.7;margin-bottom:10px;}
+    .recommend p b{color:var(--navy);}
+    .recommend .cta{margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);color:#fff;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 4px 14px var(--orange-glow);}
+    .recommend .cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px var(--orange-glow);}
+
+    /* Footer */
+    .ftr{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:11.5px;color:var(--muted);text-align:center;line-height:1.7;}
+    .ftr a{color:var(--orange-dark);font-weight:600;}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .stat-grid{grid-template-columns:1fr 1fr;}
+      .tldr-grid{grid-template-columns:1fr;}
+      .kpi-list{grid-template-columns:1fr;}
+      .fin-table{grid-template-columns:1fr;}
+      .fin-cell{border-left:0;}
+    }
+    @media (max-width:720px){
+      .wrap{padding:20px 16px 60px;}
+      .tldr{padding:24px 22px;}
+      .tldr-title{font-size:22px;}
+      .phase{padding:22px 24px;}
+      .phase-result{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="hdr">
+    <div class="hdr-l">
+      <div class="logo-box">D</div>
+      <div>
+        <div class="h-title">Strategický plán rastu</div>
+        <div class="h-sub">dami-pracovne-odevy.sk · 12-mesačná roadmap postavená na reálnych GSC + GA4 dátach</div>
+      </div>
+    </div>
+    <a class="h-back" href="dashboard.html">← Späť na dashboard</a>
+  </header>
+
+  <!-- TL;DR -->
+  <div class="tldr">
+    <div class="tldr-eyebrow">⚡ TL;DR · Stručne</div>
+    <div class="tldr-title">Z 19 klikov týždenne na 500+ za 12 mesiacov — realistický plán</div>
+    <p style="font-size:15.5px;line-height:1.7;max-width:880px;color:rgba(255,255,255,.85);">
+      Tvoj web má <b style="color:var(--orange);">solídnu viditeľnosť</b> v Google (1 242 zobrazení za 28 dní), ale <b style="color:var(--orange);">slabú konverziu klikov</b> (CTR 1,53 % vs retail priemer 3–5 %). To je <b style="color:var(--orange);">priestor na rast</b>. Pri 3 fázach optimalizácie a investícii <b style="color:var(--orange);">~3 hodín týždenne</b> sa dá za rok dosiahnuť organic revenue na úrovni <b style="color:var(--orange);">700–1 500 € mesačne</b>.
+    </p>
+    <div class="tldr-grid">
+      <div class="tldr-cell">
+        <div class="tldr-cell-h now">📍 Teraz</div>
+        <div class="tldr-cell-b">19 klikov</div>
+        <div class="tldr-cell-s">za 28 dní · 70 organic sessions · 0 € atribuovaný výnos · pozícia 9,3</div>
+      </div>
+      <div class="tldr-cell">
+        <div class="tldr-cell-h target">🎯 Cieľ za 12 mes.</div>
+        <div class="tldr-cell-b">500+ klikov</div>
+        <div class="tldr-cell-s">za 28 dní · ~1 500 sessions · 700–1 500 € / mesiac · pozícia 5–6</div>
+      </div>
+      <div class="tldr-cell">
+        <div class="tldr-cell-h path">🛣️ Cesta</div>
+        <div class="tldr-cell-b">3 fázy</div>
+        <div class="tldr-cell-s">Quick wins (1-2 mes) → Content (2-4 mes) → Authority (4-12 mes)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1 — KDE SME -->
+  <h2 class="sect"><span class="ico">📍</span>Kde sme dnes</h2>
+  <div class="sect-sub">Reálne čísla z Google Search Console a Google Analytics za posledných 28 dní (do 25. 5. 2026). Toto je východiskový bod.</div>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="stat-label">Kliky z Google</div>
+      <div class="stat-value">19</div>
+      <div class="stat-note">za 28 dní · cca <b>5 klikov / týždeň</b></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Zobrazenia v Google</div>
+      <div class="stat-value">1 242</div>
+      <div class="stat-note">dobrá viditeľnosť — Google ťa pozná</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">CTR</div>
+      <div class="stat-value" style="color:var(--bad);">1,53 %</div>
+      <div class="stat-note">retail priemer 3–5 % · <b>opportunity</b></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Priem. pozícia</div>
+      <div class="stat-value">9,3</div>
+      <div class="stat-note">medzi 1. a 2. stranou Google · priestor</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Organic návštevy</div>
+      <div class="stat-value">70</div>
+      <div class="stat-note">cca <b>2,5 / deň</b> z vyhľadávania</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Konverzia</div>
+      <div class="stat-value" style="color:var(--bad);">0 %</div>
+      <div class="stat-note">žiadna z 70 návštev nekúpila</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Atribuovaný výnos</div>
+      <div class="stat-value" style="color:var(--bad);">0 €</div>
+      <div class="stat-note">SEO zatiaľ neprináša revenue</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Detegované opportunities</div>
+      <div class="stat-value" style="color:var(--ok);">3 + 2</div>
+      <div class="stat-note">3 quick wins + 2 CTR fixes</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:800;color:var(--navy);margin:24px 0 12px;">Kľúčové zistenia</h3>
+
+  <div class="finding">
+    <div class="finding-ico ok">✓</div>
+    <div>
+      <h4>Visibility existuje — Google ťa pozná</h4>
+      <p>1 242 zobrazení za mesiac znamená že Google indexuje tvoj web a ukazuje ho na relevantné dopyty. <b>Nemusíme začínať od nuly</b> — máme čo optimalizovať.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-ico warn">⚠</div>
+    <div>
+      <h4>Brand „dami" — 133 zobrazení, 0 klikov</h4>
+      <p>Ľudia hľadajú priamo tvoj brand, ale neklikajú. Si na pozícii 5,2 — to znamená že nad tebou je 4-5 iných výsledkov (možno mapy, recenzie, konkurent). <b>Toto je #1 priorita</b>: opraviť toto a získaš ~+14 klikov mesačne ihneď.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-ico warn">⚠</div>
+    <div>
+      <h4>CTR 1,53 % vs retail priemer 3–5 %</h4>
+      <p>Zo všetkých zobrazení klikne menej ako 2 % ľudí. Pri <b>zdvojnásobení CTR</b> na 3 % by si pri rovnakej viditeľnosti mal <b>~38 klikov</b> namiesto 19 — bez ďalšej SEO práce, len lepším title/meta description.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-ico info">i</div>
+    <div>
+      <h4>Stránka „pracovná obuv" stratila 80 % klikov</h4>
+      <p>Konkrétny problém na riešenie. Buď konkurent obsadil pozíciu, alebo content stagnoval. Audit + úprava obsahu = stop ďalšieho prepadu.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 2 — PHASES -->
+  <h2 class="sect"><span class="ico">🛣️</span>3-fázový plán rastu</h2>
+  <div class="sect-sub">Postupný plán optimalizácie. Každá fáza stavia na predošlej. Časový rámec je orientačný — výsledky závisia od konzistencie práce a Google indexing latency.</div>
+
+  <!-- PHASE 1 -->
+  <div class="phase p1">
+    <div class="phase-head">
+      <div class="phase-num">1</div>
+      <div class="phase-name">
+        <h3>Quick Wins · Rýchle optimalizácie</h3>
+        <div class="phase-time">⏱ Mesiac 1–2 · <b>8–12 hodín spolu</b></div>
+      </div>
+      <div class="phase-impact">+400–500 % klikov</div>
+    </div>
+    <p style="font-size:14px;color:var(--navy-3);line-height:1.7;">Cieľom je rýchlo využiť existujúcu viditeľnosť. Stránky čo už rankujú v top 20 dostanú malý push do top 5. Title/meta description rewrites priťahajú viac klikov pri rovnakých zobrazeniach.</p>
+
+    <div class="phase-tactics">
+      <h5>Konkrétne tactics</h5>
+      <div class="tactic">
+        <div class="tactic-n">1</div>
+        <div>
+          <b>Title rewrite homepage</b>
+          <p>Súčasný title nemá dôvod kliknúť. Nový návrh: „Pracovné odevy a montérky | Doprava zadarmo nad 50 € | Dami". Pridáva výhody, signalizuje akciu. <b>Očakávaný impact: CTR z 1,2 % na 4–6 % @ pos 2</b> = +50 klikov/mesiac.</p>
+        </div>
+        <span class="tactic-effort">15 min</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">2</div>
+        <div>
+          <b>Push query „dami menu" z pos 4,6 do top 3</b>
+          <p>79 impressions, 0 klikov. Brand query — perfektný kandidát. Pridať internal link z homepage + jasný menu link v navigácii.</p>
+        </div>
+        <span class="tactic-effort">30 min</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">3</div>
+        <div>
+          <b>Optimalizácia „pracovné odevy piešťany"</b>
+          <p>Pozícia 11,8 — page 2. Geo query s vysokým buyer intent. Vytvoriť landing page „Pracovné odevy Piešťany" alebo dedikovanú sekciu s mestom v meta description.</p>
+        </div>
+        <span class="tactic-effort">2 h</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">4</div>
+        <div>
+          <b>Audit padajúcej stránky „pracovná obuv"</b>
+          <p>−80 % klikov za mesiac. Pozrieť SERP top 3, porovnať s našou stránkou, doplniť chýbajúci obsah (popis bezpečnostných tried S1/S1P/S3/S5).</p>
+        </div>
+        <span class="tactic-effort">1,5 h</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">5</div>
+        <div>
+          <b>Title rewrites top 5 kategórií</b>
+          <p>Pridať USP: „Skladom · Doručenie do 24 h · 2026" patterny. Cieľ: dvojnásobiť CTR na top kategóriach (rukavice, obuv, montérky).</p>
+        </div>
+        <span class="tactic-effort">2 h</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">6</div>
+        <div>
+          <b>Internal linking audit</b>
+          <p>Homepage musí linkovať na top 5 kategórií v hlavnom obsahu (nie len v menu). Z každej kategórie musia byť linky na 3 najpredávanejšie produkty. Šíri ranking authority.</p>
+        </div>
+        <span class="tactic-effort">2–3 h</span>
+      </div>
+    </div>
+
+    <div class="phase-result">
+      <div class="phase-result-cell">
+        <div class="lbl">Východisko</div>
+        <div class="val">19 klikov / 28 dní</div>
+      </div>
+      <div class="phase-result-cell">
+        <div class="lbl">Po Phase 1 (cca mes. 2)</div>
+        <div class="val">80–120 klikov / 28 dní</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase p2">
+    <div class="phase-head">
+      <div class="phase-num">2</div>
+      <div class="phase-name">
+        <h3>Content Expansion · Rozšírenie obsahu</h3>
+        <div class="phase-time">⏱ Mesiac 2–4 · <b>25–40 hodín spolu</b></div>
+      </div>
+      <div class="phase-impact">2–3× viac klikov</div>
+    </div>
+    <p style="font-size:14px;color:var(--navy-3);line-height:1.7;">Po quick wins potrebujeme nový obsah pre nové queries. Rising queries a niche dopyty (HoReCa, antikorová obuv, termoaktívne tričká) sú prázdne pre konkurenciu — first mover advantage.</p>
+
+    <div class="phase-tactics">
+      <h5>Konkrétne tactics</h5>
+      <div class="tactic">
+        <div class="tactic-n">1</div>
+        <div>
+          <b>Long-form text na top 8 kategóriach</b>
+          <p>300+ slov pod product listing — kupujúci sprievodca, certifikácie, materiály, čo si vybrať. Google odmeňuje obsah za content depth, používatelia oceňujú expertízu.</p>
+        </div>
+        <span class="tactic-effort">8 h</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">2</div>
+        <div>
+          <b>Schema markup · Product + Offer + Review</b>
+          <p>Pridať štruktúrované dáta na všetkých 200+ produktoch. Google vie zobraziť cenu, hodnotenie, dostupnosť priamo vo výsledkoch — vyšší CTR a kvalifikovanejší klik.</p>
+        </div>
+        <span class="tactic-effort">4–6 h</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">3</div>
+        <div>
+          <b>FAQ sekcia na top 10 PDPs</b>
+          <p>5 najčastejších otázok pri každom produkte (veľkosť, materiál, certifikácia, garancia). FAQ schema markup → featured snippets v Google.</p>
+        </div>
+        <span class="tactic-effort">5 h</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">4</div>
+        <div>
+          <b>Nové podkategórie pre rising queries</b>
+          <p>Vytvoriť stránky pre: „antikorová obuv pre kuchárov", „termoaktívne pracovné tričká", „pracovný overal jednorázový". Niche segmenty s buyer intent + nízka konkurencia.</p>
+        </div>
+        <span class="tactic-effort">6–8 h</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">5</div>
+        <div>
+          <b>Blog/Guide sekcia</b>
+          <p>1 článok / 2 týždne. Témy: „Ako vybrať pracovnú obuv pre svoj odbor", „Ochrana sluchu na stavbe — kompletný sprievodca", „Pracovné odevy pre zimu". Long-tail SEO + linkbuilding magnet.</p>
+        </div>
+        <span class="tactic-effort">3 h / článok</span>
+      </div>
+    </div>
+
+    <div class="phase-result">
+      <div class="phase-result-cell">
+        <div class="lbl">Po Phase 1</div>
+        <div class="val">80–120 klikov / 28 dní</div>
+      </div>
+      <div class="phase-result-cell">
+        <div class="lbl">Po Phase 2 (cca mes. 4)</div>
+        <div class="val">250–450 klikov / 28 dní</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase p3">
+    <div class="phase-head">
+      <div class="phase-num">3</div>
+      <div class="phase-name">
+        <h3>Authority Building · Budovanie autority</h3>
+        <div class="phase-time">⏱ Mesiac 4–12 · <b>60–100 hodín za 8 mesiacov</b></div>
+      </div>
+      <div class="phase-impact">+1 000+ klikov</div>
+    </div>
+    <p style="font-size:14px;color:var(--navy-3);line-height:1.7;">Long-term práca. Backlinks, brand awareness, reviews a partnerships. Tu sa rozhoduje, či sa dostaneš nad konkurentov ako ramirent.sk a pracovne-odevy.sk, alebo zostaneš v ich tieni.</p>
+
+    <div class="phase-tactics">
+      <h5>Konkrétne tactics</h5>
+      <div class="tactic">
+        <div class="tactic-n">1</div>
+        <div>
+          <b>Backlink outreach</b>
+          <p>3–5 nových brand mentions / mesiac. Stavebné/HoReCa/priemyselné blogy, branžové portály (stavebne-noviny.sk, dovahkovstro.sk, atď.), B2B katalógy. Cieľ za rok: 30–50 kvalitných backlinkov.</p>
+        </div>
+        <span class="tactic-effort">6 h / mes.</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">2</div>
+        <div>
+          <b>PR a partnerstvá s odbornými školami</b>
+          <p>Spolupráca s priemyselnými strednými školami (poskytovať produkty na praktickú výučbu výmenou za zmienku). Sezónne kampane — „dovybavenie študentov pre prax".</p>
+        </div>
+        <span class="tactic-effort">4 h / kampaň</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">3</div>
+        <div>
+          <b>Reviews acquisition system</b>
+          <p>Automatický follow-up email 7 dní po doručení s žiadosťou o recenziu. Cieľ: 100+ recenzií za rok. Schema review → hviezdičky v Google + dôvera.</p>
+        </div>
+        <span class="tactic-effort">1 h setup</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">4</div>
+        <div>
+          <b>B2B landing pages</b>
+          <p>Workwear má silný B2B segment (firemné odbery, dotácie pre zamestnancov). Vytvoriť dedikované B2B stránky: „Firemné odbery", „Bezpečnosť práce", „Cenové ponuky pre firmy". B2B query = vysoká hodnota lead.</p>
+        </div>
+        <span class="tactic-effort">8 h</span>
+      </div>
+      <div class="tactic">
+        <div class="tactic-n">5</div>
+        <div>
+          <b>Brand expansion · YouTube + Instagram</b>
+          <p>1 video / mesiac (sprievodca produktom). Instagram Reels s real-life použitím produktov. Social signals → indirect SEO benefit, plus direct sales channel.</p>
+        </div>
+        <span class="tactic-effort">10 h / mes.</span>
+      </div>
+    </div>
+
+    <div class="phase-result">
+      <div class="phase-result-cell">
+        <div class="lbl">Po Phase 2</div>
+        <div class="val">250–450 klikov / 28 dní</div>
+      </div>
+      <div class="phase-result-cell">
+        <div class="lbl">Cieľ za 12 mes.</div>
+        <div class="val">500–1 200+ klikov / 28 dní</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 — FINANCIE -->
+  <h2 class="sect"><span class="ico">💰</span>Finančná projekcia</h2>
+  <div class="sect-sub">Konzervatívny odhad organic revenue z mesiaca 1 do 12. Predpoklady: priemerný košík <b>60 €</b>, konverzia <b>1,5–2,5 %</b> (rastie s CRO prácou), 75 % click-to-session rate.</div>
+
+  <div class="fin-chart">
+    <h3 style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:6px;">Mesačný organic revenue · očakávaná trajektória</h3>
+    <div style="font-size:12.5px;color:var(--muted);margin-bottom:14px;">Mesiace 1–4 sú plné čiary (Phase 1+2 výsledky), mesiace 5+ sú projekcia Phase 3 (čiarkovaná).</div>
+    <div class="fin-bars">
+      <div class="fin-bar-col"><span class="fin-bar-val">0 €</span><div class="fin-bar-shape" style="height:1%;"></div><span class="fin-bar-label">M1</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">15 €</span><div class="fin-bar-shape" style="height:3%;"></div><span class="fin-bar-label">M2</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">45 €</span><div class="fin-bar-shape" style="height:8%;"></div><span class="fin-bar-label">M3</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">90 €</span><div class="fin-bar-shape" style="height:16%;"></div><span class="fin-bar-label">M4</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">140 €</span><div class="fin-bar-shape future" style="height:25%;"></div><span class="fin-bar-label">M5</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">220 €</span><div class="fin-bar-shape future" style="height:38%;"></div><span class="fin-bar-label">M6</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">320 €</span><div class="fin-bar-shape future" style="height:54%;"></div><span class="fin-bar-label">M7</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">450 €</span><div class="fin-bar-shape future" style="height:72%;"></div><span class="fin-bar-label">M8</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">600 €</span><div class="fin-bar-shape future" style="height:80%;"></div><span class="fin-bar-label">M9</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">780 €</span><div class="fin-bar-shape future" style="height:88%;"></div><span class="fin-bar-label">M10</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">980 €</span><div class="fin-bar-shape future" style="height:94%;"></div><span class="fin-bar-label">M11</span></div>
+      <div class="fin-bar-col"><span class="fin-bar-val">1200 €</span><div class="fin-bar-shape future" style="height:100%;"></div><span class="fin-bar-label">M12</span></div>
+    </div>
+
+    <div class="fin-table">
+      <div class="fin-cell head">Obdobie</div>
+      <div class="fin-cell head">Kliky / 28 dní</div>
+      <div class="fin-cell head">Sessions</div>
+      <div class="fin-cell head">Organic revenue (mes.)</div>
+
+      <div class="fin-cell month">M1–M2 · Phase 1</div>
+      <div class="fin-cell num">19 → 80</div>
+      <div class="fin-cell num">70 → 200</div>
+      <div class="fin-cell range">0 → 15 €</div>
+
+      <div class="fin-cell month">M3–M4 · Phase 2</div>
+      <div class="fin-cell num">80 → 250</div>
+      <div class="fin-cell num">200 → 600</div>
+      <div class="fin-cell range">45–90 €</div>
+
+      <div class="fin-cell month">M5–M6 · Phase 3 začiatok</div>
+      <div class="fin-cell num">250 → 400</div>
+      <div class="fin-cell num">600 → 1000</div>
+      <div class="fin-cell range">140–220 €</div>
+
+      <div class="fin-cell month">M7–M9 · Phase 3</div>
+      <div class="fin-cell num">400 → 700</div>
+      <div class="fin-cell num">1000 → 1500</div>
+      <div class="fin-cell range">320–600 €</div>
+
+      <div class="fin-cell month">M10–M12 · ciel</div>
+      <div class="fin-cell num">700 → 1200</div>
+      <div class="fin-cell num">1500 → 2500</div>
+      <div class="fin-cell range">700–1500 €</div>
+    </div>
+
+    <div style="margin-top:18px;padding:14px 16px;background:var(--soft);border-radius:10px;font-size:12.5px;color:var(--navy-3);line-height:1.65;">
+      <b style="color:var(--navy);">📌 Plus B2B leads navyše:</b> workwear má silný biznis segment. Pri Phase 3 očakávame 1–3 B2B inquiries / mesiac z organic (firma hľadá veľkoodber). Jeden B2B lead = <b>500–2 000 € hodnota objednávky</b>. Konzervatívne dodatočne <b>+300–1 000 € / mesiac</b> v M9+.
+    </div>
+  </div>
+
+  <!-- SECTION 4 — KPIs -->
+  <h2 class="sect"><span class="ico">📊</span>KPI ktoré budeme sledovať týždenne</h2>
+  <div class="sect-sub">Tieto čísla v dashboarde budú indikovať, či ideme správnym tempom. Cieľové hodnoty pre 6-mesačný horizont.</div>
+
+  <div class="kpi-list">
+    <div class="kpi-line">
+      <div class="kpi-line-h">
+        <span class="kpi-line-name">CTR (z Google)</span>
+        <span class="kpi-line-trg">cieľ 3,0 %</span>
+      </div>
+      <div class="kpi-line-prog"><div class="kpi-line-fill" style="width:51%;"></div></div>
+      <div class="kpi-line-meta"><span>Teraz: 1,53 %</span><span>51 % k cieľu</span></div>
+    </div>
+    <div class="kpi-line">
+      <div class="kpi-line-h">
+        <span class="kpi-line-name">Priemerná pozícia</span>
+        <span class="kpi-line-trg">cieľ 5–6</span>
+      </div>
+      <div class="kpi-line-prog"><div class="kpi-line-fill" style="width:35%;"></div></div>
+      <div class="kpi-line-meta"><span>Teraz: 9,3</span><span>35 % k cieľu</span></div>
+    </div>
+    <div class="kpi-line">
+      <div class="kpi-line-h">
+        <span class="kpi-line-name">Organic sessions (mes.)</span>
+        <span class="kpi-line-trg">cieľ +20 % MoM</span>
+      </div>
+      <div class="kpi-line-prog"><div class="kpi-line-fill" style="width:5%;"></div></div>
+      <div class="kpi-line-meta"><span>Teraz: 70 / 28d</span><span>baseline</span></div>
+    </div>
+    <div class="kpi-line">
+      <div class="kpi-line-h">
+        <span class="kpi-line-name">Conversion rate</span>
+        <span class="kpi-line-trg">cieľ 1,5 %</span>
+      </div>
+      <div class="kpi-line-prog"><div class="kpi-line-fill" style="width:0%;"></div></div>
+      <div class="kpi-line-meta"><span>Teraz: 0 %</span><span>0 % k cieľu</span></div>
+    </div>
+    <div class="kpi-line">
+      <div class="kpi-line-h">
+        <span class="kpi-line-name">Quick wins detegované / týždeň</span>
+        <span class="kpi-line-trg">cieľ 3–5</span>
+      </div>
+      <div class="kpi-line-prog"><div class="kpi-line-fill" style="width:75%;"></div></div>
+      <div class="kpi-line-meta"><span>Teraz: 3</span><span>75 % k cieľu</span></div>
+    </div>
+    <div class="kpi-line">
+      <div class="kpi-line-h">
+        <span class="kpi-line-name">Organic revenue / mesiac</span>
+        <span class="kpi-line-trg">cieľ 220 €+ @ M6</span>
+      </div>
+      <div class="kpi-line-prog"><div class="kpi-line-fill" style="width:0%;"></div></div>
+      <div class="kpi-line-meta"><span>Teraz: 0 €</span><span>baseline</span></div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 — RISKS -->
+  <h2 class="sect"><span class="ico">⚠️</span>Riziká a predpoklady</h2>
+  <div class="sect-sub">Plán predpokladá konzistentnú prácu. Tieto faktory ho môžu spomaliť — dobré vedieť dopredu.</div>
+
+  <div class="risk">
+    <div class="risk-ico">⚠</div>
+    <div>
+      <h4>Predpoklad: konzistentná práca</h4>
+      <p>Plán predpokladá <b>3–6 hodín týždenne</b> dedikovanej SEO práce počas celého roka. Pri nárazovej práci (mesiac áno, dva mesiace nie) sa progress výrazne spomalí — Google ranking je flywheel, treba ho roztočiť a udržiavať v pohybe.</p>
+    </div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-ico">⚠</div>
+    <div>
+      <h4>Konkurencia</h4>
+      <p>Hlavní hráči: <b>pracovne-odevy.sk, ramirent, sortimo, bezpec.sk</b>. Niektorí majú etablované domain authority. Pre top 3 na konkurenčné queries („pracovné odevy") to nebude rok — skôr 18–24 mesiacov. Plán cieli na <b>nikóvejšie a long-tail queries</b>, kde sú reálne šance.</p>
+    </div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-ico">⚠</div>
+    <div>
+      <h4>Google algorithm changes</h4>
+      <p>Google robí updates 4–6× ročne, väčšina menších. Občas pošlú core update, ktorý preráža rankings. Niečo sa nedá kontrolovať — preto staviame na <b>multiple signals</b> (content + linkbuilding + UX + brand), nie len jeden faktor.</p>
+    </div>
+  </div>
+
+  <div class="risk">
+    <div class="risk-ico">⚠</div>
+    <div>
+      <h4>Sezónnosť workwear</h4>
+      <p>Workwear má prirodzené peaky: <b>jar/leto (apríl–jún)</b> a <b>jeseň (september–november)</b> pre zimné odevy. Letné mesiace môžu byť slabšie pre niektoré kategórie. Plán ráta s priemerom — počítaj s lokálnymi výkyvmi.</p>
+    </div>
+  </div>
+
+  <!-- RECOMMENDATION -->
+  <div class="recommend">
+    <div class="recommend-eyebrow">💡 Odporúčanie</div>
+    <h3>Začni Phase 1 hneď. Najlepší ROI z prvých 8 hodín za celý rok.</h3>
+    <p>
+      Quick wins (title rewrites, internal linking, audit padajúcich stránok) sú <b>najlacnejšia a najrýchlejšia časť celého plánu</b>. Hodina práce = ~10 klikov navyše. Po 4–6 týždňoch budú výsledky viditeľné v dashboarde, podľa toho vyladíme Phase 2.
+    </p>
+    <p>
+      <b>Celkový pohľad:</b> investícia ~150 hodín za rok (cca <b>3 h týždenne</b>) má potenciál priniesť <b>8–18 000 € v atribuovanom organic revenue</b> + 3–10 000 € v B2B leads. ROI je výrazne pozitívny, hlavne keď uvážime že infraštruktúra (dashboard, automatizácia) je už hotová.
+    </p>
+    <a class="cta" href="dashboard.html">Pozri tento týždeň priority →</a>
+  </div>
+
+  <div class="ftr">
+    Plán postavený na reálnych GSC + GA4 dátach z 26. 5. 2026 · aktualizovaný týždenne pondelok 06:00 UTC<br>
+    <a href="dashboard.html">← Späť na dashboard</a> · <a href="https://github.com/leumasdam/dami-seo" target="_blank">GitHub repo</a>
+  </div>
+
+</div>
+</body>
+</html>

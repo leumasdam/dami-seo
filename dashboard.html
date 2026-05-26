@@ -207,6 +207,51 @@
     .audit-val.warn{color:var(--warn);}
     .audit-val.bad{color:var(--bad);}
 
+    /* === Tooltip system === */
+    .term{
+      display:inline-block;
+      border-bottom:1.5px dotted var(--orange);
+      cursor:help;
+      color:inherit;
+      position:relative;
+      font-weight:inherit;
+    }
+    .term:hover{color:var(--orange-dark);}
+    /* Popup modal */
+    .term-popup{
+      position:fixed;
+      top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:24px 28px;
+      box-shadow:0 20px 60px rgba(15,23,42,.25);
+      max-width:420px;width:90%;
+      z-index:1000;
+      opacity:0;visibility:hidden;
+      transition:opacity .2s ease,transform .2s ease,visibility .2s ease;
+    }
+    .term-popup.active{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
+    .term-popup-overlay{
+      position:fixed;inset:0;
+      background:rgba(15,23,42,.45);
+      backdrop-filter:blur(3px);
+      z-index:999;
+      opacity:0;visibility:hidden;
+      transition:opacity .2s,visibility .2s;
+    }
+    .term-popup-overlay.active{opacity:1;visibility:visible;}
+    .term-popup-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+    .term-popup-tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-dark);background:var(--orange-soft);padding:4px 10px;border-radius:6px;}
+    .term-popup-close{background:none;border:none;font-size:24px;color:var(--muted);cursor:pointer;line-height:1;padding:0;width:28px;height:28px;border-radius:6px;}
+    .term-popup-close:hover{background:var(--soft);color:var(--navy);}
+    .term-popup h4{font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-bottom:8px;}
+    .term-popup p{font-size:14px;color:var(--navy-3);line-height:1.65;margin-bottom:12px;}
+    .term-popup p:last-child{margin-bottom:0;}
+    .term-popup p b{color:var(--navy);}
+    .term-popup-example{background:var(--soft);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--navy);line-height:1.55;margin-top:12px;}
+    .term-popup-example .lbl{font-size:11px;font-weight:800;letter-spacing:.05em;color:var(--muted);text-transform:uppercase;margin-bottom:4px;display:block;}
+
     /* === Footer === */
     .ftr{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:11.5px;color:var(--muted);text-align:center;line-height:1.7;}
     .ftr a{color:var(--orange-dark);font-weight:600;}
@@ -513,8 +558,19 @@
 
   <div class="ftr">
     Generované GitHub Action každý pondelok 06:00 UTC · GSC + GA4 + PageSpeed Insights · last update <span id="genTs">2026-05-25</span><br>
-    🤖 Postavené ako case study v SEO automation portfolio
+    📈 Pre dlhodobý <a href="strategia.html" style="color:var(--orange-dark);font-weight:600;">strategický plán rastu →</a>
   </div>
+</div>
+
+<!-- Tooltip popup -->
+<div class="term-popup-overlay" id="termOverlay"></div>
+<div class="term-popup" id="termPopup">
+  <div class="term-popup-head">
+    <span class="term-popup-tag" id="termTag">Pojem</span>
+    <button class="term-popup-close" id="termClose">×</button>
+  </div>
+  <h4 id="termTitle">Termín</h4>
+  <div id="termBody"></div>
 </div>
 
 <script>
@@ -860,7 +916,208 @@
       console.warn('[data.json] load failed, rendering with defaults:', e);
       render({});
     }
+    // Po render-i wrap-ni termíny (chvíľu počkáme, kým sa DOM ustáli)
+    setTimeout(wrapTerms, 100);
   })();
+
+  // === Slovník termínov pre laikov ===
+  const TERMS = {
+    'WoW': {
+      tag: 'Skratka',
+      title: 'WoW · Week over Week',
+      body: '<p><b>WoW</b> znamená <i>Week over Week</i> — porovnanie <b>tento týždeň</b> oproti <b>minulému týždňu</b>.</p><p>Pomáha vidieť, či sa veci zlepšujú alebo zhoršujú v krátkom horizonte. Pri sezónnych biznisoch je niekedy lepšie porovnávať mesiac vs mesiac (MoM).</p>',
+      example: 'Kliky +14 % WoW = tento týždeň o 14 % viac klikov ako minulý týždeň.'
+    },
+    'MoM': {
+      tag: 'Skratka',
+      title: 'MoM · Month over Month',
+      body: '<p><b>MoM</b> = <i>Month over Month</i> — porovnanie <b>tento mesiac</b> oproti <b>minulému mesiacu</b>.</p><p>Stabilnejšie ako WoW (vyhladí kratšodobé výkyvy), ale neukazuje rýchle zmeny.</p>',
+      example: 'Sessions +20 % MoM = tento mesiac o 20 % viac návštev ako predošlý mesiac.'
+    },
+    'pp': {
+      tag: 'Skratka',
+      title: 'pp · Percentuálne body',
+      body: '<p><b>pp</b> (percentuálne body) je <b>absolútny rozdiel medzi dvoma percentami</b>. Nie je to isté ako %!</p><p>Príklad: ak CTR vyrastie z <b>2 % na 3 %</b>, hovoríme „<b>+1 pp</b>". Ak by sme povedali „+50 %", znamenalo by to relatívny nárast (z 2 na 3 = +50 % relatívne).</p>',
+      example: 'CTR +0,18 pp = vyrástlo z 1,53 % na 1,71 %. Absolútny rozdiel je 0,18 percent.'
+    },
+    'CTR': {
+      tag: 'Pojem',
+      title: 'CTR · Click-Through Rate',
+      body: '<p><b>CTR</b> = <i>Click-Through Rate</i>. Hovorí: <b>z koľko ľudí, čo ťa videli v Google, kliklo k tebe</b>.</p><p>Vzorec: <b>Kliky ÷ Zobrazenia × 100</b>.</p><p>Pre retail eshop je dobré CTR <b>3–5 %</b>. Ak máš pod 2 %, znamená že titulok v Google nezaujme.</p>',
+      example: '1242 zobrazení, 19 klikov = CTR 1,53 %. Pre porovnanie na pozícii 1 by si očakával CTR ~28 %.'
+    },
+    'CTOR': {
+      tag: 'Pojem',
+      title: 'CTOR · Click-To-Open Rate',
+      body: '<p><b>CTOR</b> je iné než CTR. Hovorí: <b>z ľudí, čo ti otvorili e-mail, koľko kliklo</b>.</p><p>Vzorec: <b>Kliky ÷ Otvorenia × 100</b>.</p><p>Používa sa hlavne pri e-mail marketingu, nie pri SEO.</p>',
+      example: 'E-mail otvorilo 1000 ľudí, 50 kliklo = CTOR 5 %.'
+    },
+    'CWV': {
+      tag: 'Pojem',
+      title: 'CWV · Core Web Vitals',
+      body: '<p><b>Core Web Vitals</b> sú 3 metriky od Google, ktoré <b>merajú rýchlosť a komfort tvojej stránky</b> z pohľadu reálneho užívateľa.</p><p>Tri zložky:<br>• <b>LCP</b> — ako rýchlo sa načíta hlavný obrázok<br>• <b>CLS</b> — či sa obsah hýbe počas načítania<br>• <b>INP</b> — ako rýchlo reaguje na klik</p><p>Google ich používa ako <b>ranking factor</b> — pomalá stránka klesá v Google.</p>',
+      example: 'Cieľ: LCP pod 2,5 s, CLS pod 0,1, INP pod 200 ms.'
+    },
+    'LCP': {
+      tag: 'Skratka',
+      title: 'LCP · Largest Contentful Paint',
+      body: '<p><b>LCP</b> meria, <b>ako rýchlo sa načíta najväčší prvok</b> na stránke (väčšinou hero obrázok alebo veľký nadpis).</p><p>Cieľ: <b>pod 2,5 sekundy</b>. Pomalý LCP = ľudia odchádzajú skôr, ako sa stránka načíta.</p><p><b>Ako opraviť:</b> optimalizovať veľkosť hero obrázka, lazy loading pre menej dôležitý obsah.</p>',
+      example: 'LCP 2,8 s = needs improvement. LCP 1,5 s = good.'
+    },
+    'CLS': {
+      tag: 'Skratka',
+      title: 'CLS · Cumulative Layout Shift',
+      body: '<p><b>CLS</b> meria, <b>ako sa obsah hýbe počas načítania</b>.</p><p>Príklad zlého CLS: chceš kliknúť na CTA, ale obrázok sa načítal a tlačidlo skočilo nižšie. Klikneš na zlé miesto.</p><p>Cieľ: <b>pod 0,1</b>. Opraviť: nastaviť <code>width</code> a <code>height</code> na obrázky a iframey.</p>',
+      example: 'CLS 0,05 = dobré. CLS 0,3 = stránka skáče, používateľ frustrovaný.'
+    },
+    'INP': {
+      tag: 'Skratka',
+      title: 'INP · Interaction to Next Paint',
+      body: '<p><b>INP</b> meria, <b>ako dlho trvá reakcia stránky na klik alebo scroll</b>.</p><p>Pomalá interakcia = stránka pôsobí pokazená, hoci sa už načítala.</p><p>Cieľ: <b>pod 200 ms</b>. Opraviť: optimalizovať JavaScript, odložiť non-critical scripts.</p>',
+      example: 'INP 150 ms = dobré, plynulé. INP 500 ms = laggy, irritujúce.'
+    },
+    'CRO': {
+      tag: 'Pojem',
+      title: 'CRO · Conversion Rate Optimization',
+      body: '<p><b>CRO</b> = <i>Conversion Rate Optimization</i>. Je to <b>zlepšenie pomeru: koľko z návštev sa stane objednávkou</b>.</p><p>Príklad: ak máš 1000 návštev a 10 kúpi, konverzia je <b>1 %</b>. Ak po CRO práci máš 20 kúpi pri rovnakých 1000 návštevách, konverzia je <b>2 %</b> = dvojnásobok bez novej akvizície.</p><p>CRO je vždy <b>lacnejšie ako akvizícia ďalšieho 1000 návštevníkov</b>.</p>',
+      example: 'Retail eshop priemer v SR: 1,5–3 % konverzia.'
+    },
+    'AOV': {
+      tag: 'Skratka',
+      title: 'AOV · Average Order Value',
+      body: '<p><b>AOV</b> = <i>Average Order Value</i> — <b>priemerná hodnota jednej objednávky</b>.</p><p>Vzorec: <b>Celkové tržby ÷ Počet objednávok</b>.</p><p>Cesta k vyššiemu AOV: cross-sell („pridajte aj toto"), upsell („premium verzia"), bundles, doprava zadarmo nad X €.</p>',
+      example: 'Pre dami-pracovne-odevy.sk odhadovaný AOV ~50–70 € (workwear).'
+    },
+    'ROAS': {
+      tag: 'Skratka',
+      title: 'ROAS · Return on Ad Spend',
+      body: '<p><b>ROAS</b> = <i>Return on Ad Spend</i> — <b>koľko € tržieb dostaneš za 1 € minutý na reklamu</b>.</p><p>Vzorec: <b>Tržby z reklamy ÷ Náklady na reklamu</b>.</p><p>Dobrý retail ROAS: <b>4× a viac</b> (1 € minuté = 4 € tržieb).</p>',
+      example: 'Minul si 100 € na Google Ads, priniesli 800 € tržieb = ROAS 8×.'
+    },
+    'GSC': {
+      tag: 'Nástroj',
+      title: 'GSC · Google Search Console',
+      body: '<p><b>Google Search Console</b> je <b>bezplatný nástroj od Google</b>, ktorý ti hovorí, ako sa tvoj web správa v Google vyhľadávaní.</p><p>Ukazuje: koľko ľudí ťa videlo, koľko kliklo, na akých slovách ťa nájdu, aké pozície máš, či má Google problém s indexáciou.</p>',
+      example: 'GSC = oči do Google. Dashboard ťahá dáta práve z GSC API.'
+    },
+    'GA4': {
+      tag: 'Nástroj',
+      title: 'GA4 · Google Analytics 4',
+      body: '<p><b>Google Analytics 4</b> je <b>najnovšia verzia Google Analytics</b> — analytický nástroj pre webstránky.</p><p>Ukazuje: koľko návštev máš, odkiaľ chodia, čo robia na stránke, koľko nakúpia, atď. Predchodca <i>Universal Analytics</i> bol vypnutý v 2023.</p>',
+      example: 'GA4 ukazuje organic návštevy, ich konverzie, atribuovaný výnos.'
+    },
+    'SERP': {
+      tag: 'Skratka',
+      title: 'SERP · Search Engine Results Page',
+      body: '<p><b>SERP</b> = stránka výsledkov vyhľadávania v Google.</p><p>Obsahuje: 10 modrých linkov, reklamy hore aj dole, mapy, featured snippets, „People also ask", obrázky, videá, atď.</p>',
+      example: 'Keď napíšeš „pracovné odevy" do Google, výsledná stránka = SERP.'
+    },
+    'SEO': {
+      tag: 'Pojem',
+      title: 'SEO · Search Engine Optimization',
+      body: '<p><b>SEO</b> = <i>Search Engine Optimization</i> — <b>optimalizácia pre vyhľadávače</b>.</p><p>Aktivity, ktorými sa snažíme, aby Google ukázal náš web vyššie pri relevantných otázkach. Tri piliere: <b>technické SEO</b>, <b>obsah</b>, <b>linkbuilding</b>.</p>',
+      example: 'Tento dashboard je celý o SEO — sledovaní a zlepšovaní pozícií v Google.'
+    },
+    'PSI': {
+      tag: 'Nástroj',
+      title: 'PSI · PageSpeed Insights',
+      body: '<p><b>PageSpeed Insights</b> je bezplatný nástroj od Google, ktorý <b>meria rýchlosť tvojej stránky</b> a vracia Core Web Vitals (LCP, CLS, INP).</p><p>Hodnotí stránku známkou 0-100 (mobil + desktop). Cieľ: <b>nad 90</b>.</p>',
+      example: 'Dashboard ťahá CWV metriky z PSI API každý pondelok.'
+    },
+    'PLP': {
+      tag: 'Skratka',
+      title: 'PLP · Product Listing Page',
+      body: '<p><b>PLP</b> = <i>Product Listing Page</i> — <b>stránka kategórie</b> s viacerými produktmi (napr. „Pracovné rukavice").</p><p>Opozitum: PDP (Product Detail Page) = stránka jedného konkrétneho produktu.</p>',
+      example: 'dami-pracovne-odevy.sk/kategoria/pracovne-rukavice = PLP.'
+    },
+    'PDP': {
+      tag: 'Skratka',
+      title: 'PDP · Product Detail Page',
+      body: '<p><b>PDP</b> = <i>Product Detail Page</i> — <b>stránka jedného konkrétneho produktu</b> (s názvom, cenou, popisom, fotkami).</p><p>Opozitum: PLP (Product Listing Page) = stránka kategórie.</p>',
+      example: 'dami-pracovne-odevy.sk/produkt/m43-bunda = PDP.'
+    },
+    'impressions': {
+      tag: 'Pojem',
+      title: 'Impressions · Zobrazenia',
+      body: '<p><b>Zobrazenia</b> (impressions) = <b>koľkokrát sa tvoja stránka zobrazila vo výsledkoch Google</b>.</p><p>Každý raz, keď tvoj link uvidí používateľ (aj keď naňho neklikne), sa počíta ako 1 impression.</p><p>Pozn.: ak je tvoja stránka na pozícii 7 ale používateľ scrolluje len na 5. miesto, neráta sa to ako impression. Iba ak skutočne uvidel tvoj výsledok.</p>',
+      example: '1242 impressions za 28 dní = stránka sa ukázala 1242×.'
+    },
+    'bounce': {
+      tag: 'Pojem',
+      title: 'Bounce rate · Miera odchodu',
+      body: '<p><b>Bounce rate</b> = <b>koľko % návštevníkov odíde bez ďalšej akcie</b>.</p><p>V GA4 to znamená: navštívili stránku, ale neklikli na nič ďalšie, neskrollovali, alebo odišli do 10 sekúnd.</p><p>Cieľ: <b>pod 55 %</b> pre retail eshop. Nad 65 % = stránka neodpovedá očakávaniu používateľa.</p>',
+      example: 'Bounce 68 % = z 100 návštevníkov 68 hneď odíde.'
+    },
+    'session': {
+      tag: 'Pojem',
+      title: 'Session · Návšteva',
+      body: '<p><b>Session</b> v GA4 je <b>jedna návšteva webu od jedného používateľa</b>. Začína keď príde na stránku, končí po 30 minútach neaktivity alebo zatvorením tabu.</p><p>Jeden používateľ môže mať <b>viacero sessions</b> (príde dnes, vráti sa zajtra).</p>',
+      example: '70 organic sessions / 28 dní = 70 návštev z Google za mesiac.'
+    },
+    'schema': {
+      tag: 'Pojem',
+      title: 'Schema markup',
+      body: '<p><b>Schema</b> sú <b>špeciálne značky v HTML</b>, ktoré hovoria Google: „toto je produkt, toto je cena, toto je recenzia".</p><p>Google s tým môže vo výsledkoch zobraziť: cenu, hodnotenie hviezdičkami, dostupnosť, FAQ — priamo v SERP. Vyšší CTR.</p>',
+      example: 'Product schema = Google vidí cenu produktu pred kliknutím.'
+    }
+  };
+
+  function showTerm(key) {
+    const t = TERMS[key];
+    if (!t) return;
+    document.getElementById('termTag').textContent = t.tag;
+    document.getElementById('termTitle').textContent = t.title;
+    let body = t.body;
+    if (t.example) {
+      body += `<div class="term-popup-example"><span class="lbl">Príklad</span>${t.example}</div>`;
+    }
+    document.getElementById('termBody').innerHTML = body;
+    document.getElementById('termPopup').classList.add('active');
+    document.getElementById('termOverlay').classList.add('active');
+  }
+
+  function hideTerm() {
+    document.getElementById('termPopup').classList.remove('active');
+    document.getElementById('termOverlay').classList.remove('active');
+  }
+
+  document.getElementById('termClose').addEventListener('click', hideTerm);
+  document.getElementById('termOverlay').addEventListener('click', hideTerm);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTerm(); });
+
+  // Auto-wrap termíny v texte. Hľadá whole-word matches a obalí ich do <span class="term">.
+  // Pozor: beží IBA na vybraných sekciách (nie na celý body, aby sa neporušili input fields atď.).
+  function wrapTerms() {
+    const targets = document.querySelectorAll('.ai-body, .kpi-label, .kpi-plain, .ex-b, .sect-sub, .row-action, .cwv-name, .cwv-explain, .cwv-tip, .cwv-what, .ftr, .act-detail, .ch-sub, .audit-row small, .h-sub');
+    const termKeys = Object.keys(TERMS).sort((a,b) => b.length - a.length); // dlhšie najprv (aby "CTR" prebilo "CT")
+
+    targets.forEach(el => {
+      if (el.dataset.termsWrapped) return;
+      let html = el.innerHTML;
+
+      termKeys.forEach(key => {
+        // Word-boundary regex. Citlivé na malé/veľké iba pre lowercase keys.
+        const isUpper = key === key.toUpperCase();
+        const flags = isUpper ? 'g' : 'gi';
+        // Escape special regex chars (none in our keys)
+        const re = new RegExp(`(?<![A-Za-z0-9])(${key})(?![A-Za-z0-9])`, flags);
+        // Nahradíme len výskyt MIMO HTML tagov — jednoduchý prístup: split by tags
+        html = html.replace(re, `<span class="term" data-term="${key}">$1</span>`);
+      });
+      el.innerHTML = html;
+      el.dataset.termsWrapped = '1';
+    });
+
+    // Bind click handlery na všetky wrap-nuté termy
+    document.querySelectorAll('.term[data-term]').forEach(el => {
+      if (el.dataset.bound) return;
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        showTerm(el.dataset.term);
+      });
+      el.dataset.bound = '1';
+    });
+  }
 </script>
 </body>
 </html>
