@@ -1,45 +1,71 @@
 #!/usr/bin/env python3
 """
-fetch_ga4.py — stiahne GA4 dáta cez Data API.
+fetch_ga4.py — stiahne GA4 dáta cez OAuth.
 
 Vyžaduje:
-  - GOOGLE_APPLICATION_CREDENTIALS = path k service account JSON
-  - GA4_PROPERTY_ID = numerické ID property (napr. '123456789')
-
-Vracia per-page metriky: sessions, conversions, conversion_rate, revenue,
-bounce_rate, avg_session_duration — za posledný a predošlý týždeň.
+  - oauth-token.json (vygenerovaný cez oauth_setup.py)
+  - GA4_PROPERTY_ID env var
 """
 
 import os
 import sys
+import json
 from datetime import date, timedelta
+from pathlib import Path
 
 try:
     from google.analytics.data_v1beta import BetaAnalyticsDataClient
     from google.analytics.data_v1beta.types import (
         DateRange, Dimension, Metric, RunReportRequest, FilterExpression, Filter
     )
-    from google.oauth2 import service_account
+    from google.oauth2.credentials import Credentials
+    from google.auth.transport.requests import Request
     GA4_AVAILABLE = True
 except ImportError:
     GA4_AVAILABLE = False
 
 PROPERTY_ID = os.environ.get("GA4_PROPERTY_ID", "")
-CREDS_PATH = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
+CREDS_DIR = Path(os.environ.get("DAMI_CREDS_DIR", r"C:\Users\samue\dami-seo-credentials"))
+TOKEN_FILE = CREDS_DIR / "oauth-token.json"
+
+
+def get_credentials():
+    if not GA4_AVAILABLE:
+        print("  ⚠ Chýba google-analytics-data — pip install -r requirements.txt", file=sys.stderr)
+        return None
+
+    token_json_env = os.environ.get("OAUTH_TOKEN_JSON", "").strip()
+    if token_json_env:
+        try:
+            token_data = json.loads(token_json_env)
+        except json.JSONDecodeError as e:
+            print(f"  ⚠ OAUTH_TOKEN_JSON nie je platný JSON: {e}", file=sys.stderr)
+            return None
+    elif TOKEN_FILE.exists():
+        token_data = json.loads(TOKEN_FILE.read_text(encoding="utf-8"))
+    else:
+        print(f"  ⚠ Nemôžem nájsť OAuth token. Spusti: python oauth_setup.py", file=sys.stderr)
+        return None
+
+    creds = Credentials.from_authorized_user_info(token_data, token_data.get("scopes"))
+
+    if creds.expired and creds.refresh_token:
+        try:
+            creds.refresh(Request())
+        except Exception as e:
+            print(f"  ⚠ Token refresh zlyhal: {e}", file=sys.stderr)
+            return None
+    return creds
 
 
 def get_client():
-    """Inicializuj GA4 Data API klienta."""
-    if not GA4_AVAILABLE:
-        print("  ⚠ google-analytics-data nie je nainštalovaný — pip install -r requirements.txt", file=sys.stderr)
+    if not PROPERTY_ID:
+        print("  ⚠ GA4_PROPERTY_ID nie je nastavený", file=sys.stderr)
         return None
-    if not PROPERTY_ID or not CREDS_PATH or not os.path.exists(CREDS_PATH):
-        print(f"  ⚠ GA4 credentials chýbajú (PROPERTY_ID alebo creds) — používa mock", file=sys.stderr)
+    creds = get_credentials()
+    if not creds:
         return None
     try:
-        creds = service_account.Credentials.from_service_account_file(
-            CREDS_PATH, scopes=["https://www.googleapis.com/auth/analytics.readonly"]
-        )
         return BetaAnalyticsDataClient(credentials=creds)
     except Exception as e:
         print(f"  ⚠ GA4 client init zlyhal: {e}", file=sys.stderr)
@@ -47,7 +73,6 @@ def get_client():
 
 
 def run_report(client, start: str, end: str, channel="Organic Search"):
-    """Vráti per-landing-page metriky za daný interval."""
     request = RunReportRequest(
         property=f"properties/{PROPERTY_ID}",
         dimensions=[Dimension(name="landingPagePlusQueryString")],
@@ -87,7 +112,6 @@ def run_report(client, start: str, end: str, channel="Organic Search"):
 
 
 def fetch_weeks():
-    """Current + previous week organic landing-page metrics."""
     client = get_client()
     if not client:
         return None
@@ -109,7 +133,10 @@ def fetch_weeks():
 if __name__ == "__main__":
     data = fetch_weeks()
     if data is None:
-        print("\n✗ GA4 fetch zlyhal alebo credentials chýbajú.", file=sys.stderr)
+        print("\n✗ GA4 fetch zlyhal alebo token/property chýba.", file=sys.stderr)
         sys.exit(1)
-    import json
-    print(json.dumps(data, indent=2, ensure_ascii=False))
+    print(f"\n✓ GA4 OK")
+    print(f"  Current week: {len(data['current_week'])} landing pages")
+    print(f"  Top 5 podľa návštev:")
+    for r in sorted(data["current_week"], key=lambda x: -x["sessions"])[:5]:
+        print(f"    {r['sessions']:>4} sess · {r['conversions']:.0f} conv · {r['revenue']:.0f} € · {r['landing_page']}")

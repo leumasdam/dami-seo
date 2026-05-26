@@ -1,44 +1,73 @@
 #!/usr/bin/env python3
 """
-fetch_gsc.py — stiahne Search Console dáta cez Google API.
+fetch_gsc.py — stiahne Search Console dáta cez OAuth.
 
 Vyžaduje:
-  - GOOGLE_APPLICATION_CREDENTIALS = path k service account JSON
-  - SITE_URL = napr. 'sc-domain:dami-pracovne-odevy.sk' alebo 'https://www.dami-pracovne-odevy.sk/'
+  - oauth-token.json (vygenerovaný cez oauth_setup.py)
+  - GSC_SITE_URL env var, default 'https://www.dami-pracovne-odevy.sk/'
 
-Volaná z generate_dashboard.py. Vracia dict s queries + pages za posledný
-a predošlý týždeň (na WoW porovnanie).
-
-Bez credentials: vráti None — generate_dashboard použije mock dáta.
+Bez tokenu: vráti None — generate_dashboard použije mock dáta.
 """
 
 import os
 import sys
+import json
 from datetime import date, timedelta
+from pathlib import Path
 
 try:
-    from google.oauth2 import service_account
+    from google.oauth2.credentials import Credentials
+    from google.auth.transport.requests import Request
     from googleapiclient.discovery import build
     GOOGLE_AVAILABLE = True
 except ImportError:
     GOOGLE_AVAILABLE = False
 
-SITE_URL = os.environ.get("GSC_SITE_URL", "sc-domain:dami-pracovne-odevy.sk")
-CREDS_PATH = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
+SITE_URL = os.environ.get("GSC_SITE_URL", "https://www.dami-pracovne-odevy.sk/")
+
+# Token: lokálne v ~/dami-seo-credentials/, na CI z env var OAUTH_TOKEN_JSON
+CREDS_DIR = Path(os.environ.get("DAMI_CREDS_DIR", r"C:\Users\samue\dami-seo-credentials"))
+TOKEN_FILE = CREDS_DIR / "oauth-token.json"
+
+
+def get_credentials():
+    """Načíta OAuth credentials z disku alebo z env var OAUTH_TOKEN_JSON (pre CI)."""
+    if not GOOGLE_AVAILABLE:
+        print("  ⚠ Chýba google-api-python-client — pip install -r requirements.txt", file=sys.stderr)
+        return None
+
+    token_json_env = os.environ.get("OAUTH_TOKEN_JSON", "").strip()
+    if token_json_env:
+        try:
+            token_data = json.loads(token_json_env)
+        except json.JSONDecodeError as e:
+            print(f"  ⚠ OAUTH_TOKEN_JSON nie je platný JSON: {e}", file=sys.stderr)
+            return None
+    elif TOKEN_FILE.exists():
+        token_data = json.loads(TOKEN_FILE.read_text(encoding="utf-8"))
+    else:
+        print(f"  ⚠ Nemôžem nájsť OAuth token. Spusti najprv: python oauth_setup.py", file=sys.stderr)
+        return None
+
+    creds = Credentials.from_authorized_user_info(token_data, token_data.get("scopes"))
+
+    # Refresh ak je expirovaný
+    if creds.expired and creds.refresh_token:
+        try:
+            creds.refresh(Request())
+        except Exception as e:
+            print(f"  ⚠ Token refresh zlyhal: {e}", file=sys.stderr)
+            return None
+
+    return creds
 
 
 def get_service():
-    """Inicializuj GSC API klienta. Vráti None ak credentials chýbajú."""
-    if not GOOGLE_AVAILABLE:
-        print("  ⚠ google-api-python-client nie je nainštalovaný — pip install -r requirements.txt", file=sys.stderr)
-        return None
-    if not CREDS_PATH or not os.path.exists(CREDS_PATH):
-        print(f"  ⚠ GOOGLE_APPLICATION_CREDENTIALS nie sú nastavené — používa mock", file=sys.stderr)
+    """GSC API klient."""
+    creds = get_credentials()
+    if not creds:
         return None
     try:
-        creds = service_account.Credentials.from_service_account_file(
-            CREDS_PATH, scopes=["https://www.googleapis.com/auth/webmasters.readonly"]
-        )
         return build("searchconsole", "v1", credentials=creds, cache_discovery=False)
     except Exception as e:
         print(f"  ⚠ GSC service init zlyhal: {e}", file=sys.stderr)
@@ -46,7 +75,7 @@ def get_service():
 
 
 def query_gsc(service, start_date: str, end_date: str, dimensions=None, row_limit=1000):
-    """Spustí GSC searchanalytics.query."""
+    """Spustí searchanalytics.query."""
     dimensions = dimensions or ["query", "page"]
     body = {
         "startDate": start_date,
@@ -63,18 +92,16 @@ def query_gsc(service, start_date: str, end_date: str, dimensions=None, row_limi
 
 
 def fetch_weeks():
-    """Stiahne current week (last 7 dní) + previous week (7-14 dní späť)
-    a vráti dict so štrukturovanými dátami.
-    """
+    """Vráti GSC dáta za posledný + predošlý týždeň."""
     service = get_service()
     if not service:
         return None
 
     today = date.today()
-    cur_end = today - timedelta(days=1)         # včera
-    cur_start = today - timedelta(days=7)       # 7 dní späť
-    prev_end = today - timedelta(days=8)        # 8 dní späť
-    prev_start = today - timedelta(days=14)     # 14 dní späť
+    cur_end = today - timedelta(days=1)
+    cur_start = today - timedelta(days=7)
+    prev_end = today - timedelta(days=8)
+    prev_start = today - timedelta(days=14)
 
     print(f"  → GSC fetch: {cur_start} → {cur_end} (current)")
     cur = query_gsc(service, cur_start.isoformat(), cur_end.isoformat())
@@ -93,7 +120,6 @@ def fetch_weeks():
 
 
 def parse_rows(response):
-    """Z GSC odpovedi vráti list dict {query, page, clicks, impressions, ctr, position}."""
     out = []
     for row in response.get("rows", []):
         keys = row.get("keys", [])
@@ -111,7 +137,11 @@ def parse_rows(response):
 if __name__ == "__main__":
     data = fetch_weeks()
     if data is None:
-        print("\n✗ GSC fetch zlyhal alebo credentials chýbajú.", file=sys.stderr)
+        print("\n✗ GSC fetch zlyhal alebo token chýba.", file=sys.stderr)
         sys.exit(1)
-    import json
-    print(json.dumps(data, indent=2, ensure_ascii=False))
+    print(f"\n✓ GSC OK")
+    print(f"  Current week: {len(data['current_week'])} riadkov")
+    print(f"  Previous week: {len(data['previous_week'])} riadkov")
+    print(f"  Top 5 queries (current):")
+    for r in sorted(data["current_week"], key=lambda x: -x["clicks"])[:5]:
+        print(f"    {r['clicks']:>4} clicks · {r['impressions']:>5} impr · pos {r['position']:.1f} · {r['query']}")
