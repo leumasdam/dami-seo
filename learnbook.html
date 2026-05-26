@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SEO Learnbook · dami-seo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --orange:#F97316; --orange-dark:#EA580C; --orange-soft:rgba(249,115,22,.08); --orange-glow:rgba(249,115,22,.18);
+      --navy:#0F172A; --navy-2:#1E293B; --navy-3:#334155;
+      --muted:#64748B; --light:#94A3B8;
+      --border:#E2E8F0; --bg:#F8FAFC; --card:#FFFFFF; --soft:#F1F5F9;
+      --ok:#10B981; --ok-soft:rgba(16,185,129,.1);
+      --warn:#F59E0B; --warn-soft:rgba(245,158,11,.1);
+      --bad:#EF4444; --bad-soft:rgba(239,68,68,.1);
+      --info:#0EA5E9; --info-soft:rgba(14,165,233,.1);
+      --purple:#8B5CF6; --purple-soft:rgba(139,92,246,.1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased;}
+    .wrap{max-width:1280px;margin:0 auto;padding:32px 36px 80px;}
+
+    /* HEADER */
+    .hdr{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--border);}
+    .hdr-l{display:flex;align-items:center;gap:18px;}
+    .logo-box{width:56px;height:56px;background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:24px;box-shadow:0 8px 24px var(--orange-glow);}
+    .h-title{font-size:24px;font-weight:800;letter-spacing:-.02em;}
+    .h-sub{font-size:13px;color:var(--muted);margin-top:4px;}
+    .h-back{font-size:13px;color:var(--orange-dark);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;background:var(--orange-soft);}
+    .h-back:hover{background:var(--orange);color:#fff;}
+
+    /* HERO */
+    .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff;padding:36px 40px;border-radius:24px;margin-bottom:32px;position:relative;overflow:hidden;background-image:radial-gradient(circle at 90% 18%,var(--orange-glow) 0%,transparent 55%),radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);background-size:100% 100%,32px 32px,100% 100%;}
+    .hero-eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--orange);text-transform:uppercase;margin-bottom:12px;}
+    .hero-title{font-size:30px;font-weight:900;letter-spacing:-.03em;margin-bottom:14px;line-height:1.2;}
+    .hero-sub{font-size:15.5px;color:rgba(255,255,255,.85);line-height:1.7;max-width:840px;}
+    .hero-sub b{color:var(--orange);}
+
+    /* TOC navigation */
+    .toc{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0 32px;}
+    .toc-link{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;text-decoration:none;color:var(--navy);transition:all .15s;display:block;}
+    .toc-link:hover{border-color:var(--orange);transform:translateY(-2px);box-shadow:0 8px 20px rgba(249,115,22,.12);}
+    .toc-link-ico{font-size:24px;margin-bottom:6px;}
+    .toc-link-name{font-weight:800;font-size:14px;}
+    .toc-link-sub{font-size:11.5px;color:var(--muted);margin-top:2px;}
+
+    /* SECTIONS */
+    h2.sect{font-size:24px;font-weight:800;color:var(--navy);margin:48px 0 6px;letter-spacing:-.02em;display:flex;align-items:center;gap:12px;scroll-margin-top:20px;}
+    h2.sect .ico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+    .ico.on{background:var(--orange-soft);color:var(--orange-dark);}
+    .ico.off{background:var(--info-soft);color:#0c7ab4;}
+    .ico.local{background:var(--ok-soft);color:#0d6b44;}
+    .ico.tech{background:var(--purple-soft);color:#6d28d9;}
+    .ico.content{background:var(--warn-soft);color:#a96c00;}
+    .ico.mobile{background:rgba(236,72,153,.1);color:#be185d;}
+    .ico.intl{background:rgba(99,102,241,.1);color:#4338ca;}
+    .ico.commerce{background:rgba(20,184,166,.1);color:#0f766e;}
+    .sect-sub{font-size:15px;color:var(--muted);margin:6px 0 22px 54px;max-width:880px;line-height:1.7;}
+
+    /* Pillar card */
+    .pillar{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:18px;position:relative;overflow:hidden;}
+    .pillar.on::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--orange) 0%,var(--orange-dark) 100%);}
+    .pillar.off::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#0EA5E9 0%,#0284C7 100%);}
+    .pillar.local::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--ok) 0%,#059669 100%);}
+    .pillar.tech::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--purple) 0%,#7C3AED 100%);}
+
+    /* What is it / Why / How */
+    .what-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+    .what-card{background:var(--soft);border-radius:12px;padding:14px 16px;}
+    .what-card-h{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+    .what-card-b{font-size:13px;color:var(--navy-3);line-height:1.65;}
+    .what-card-b b{color:var(--navy);}
+
+    /* Tactics grid */
+    .tactics{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px;}
+    .tactic-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;}
+    .tactic-card-ico{width:32px;height:32px;border-radius:8px;background:var(--orange-soft);color:var(--orange-dark);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+    .tactic-card b{display:block;font-size:13.5px;color:var(--navy);margin-bottom:4px;}
+    .tactic-card p{font-size:12.5px;color:var(--navy-3);line-height:1.55;}
+
+    /* Example boxes */
+    .example{margin-top:18px;background:linear-gradient(135deg,var(--orange-soft) 0%,#fff 100%);border:1px dashed var(--orange);border-radius:12px;padding:14px 18px;font-size:13.5px;color:var(--navy-3);line-height:1.65;}
+    .example-l{font-size:11px;font-weight:800;color:var(--orange-dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+    .example b{color:var(--navy);}
+    .example code{background:rgba(0,0,0,.06);padding:1px 6px;border-radius:4px;font-size:12.5px;}
+
+    /* Comparison table */
+    .comp-table{margin-top:24px;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+    .comp-row{display:grid;grid-template-columns:160px 1fr 1fr 1fr 1fr;gap:0;font-size:13px;}
+    .comp-cell{padding:12px 14px;border-top:1px solid var(--border);border-left:1px solid var(--border);}
+    .comp-cell:first-child{border-left:0;}
+    .comp-row:first-child .comp-cell{border-top:0;background:var(--bg);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
+    .comp-cell.label{font-weight:700;color:var(--navy);background:var(--soft);}
+    .comp-cell.ico-cell{font-size:18px;text-align:center;}
+
+    /* Did you know box */
+    .didyou{background:var(--card);border:1px solid var(--border);border-left:5px solid var(--info);border-radius:14px;padding:18px 22px;margin-top:18px;display:grid;grid-template-columns:40px 1fr;gap:14px;}
+    .didyou-ico{width:40px;height:40px;border-radius:10px;background:var(--info-soft);color:#0c7ab4;display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .didyou h4{font-size:14.5px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+    .didyou p{font-size:13px;color:var(--navy-3);line-height:1.65;}
+
+    /* Footer */
+    .ftr{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);text-align:center;line-height:1.7;}
+    .ftr a{color:var(--orange-dark);font-weight:600;}
+
+    @media (max-width:980px){
+      .toc{grid-template-columns:repeat(2,1fr);}
+      .what-grid{grid-template-columns:1fr;}
+      .tactics{grid-template-columns:1fr;}
+      .comp-row{grid-template-columns:1fr;}
+      .comp-cell{border-left:0;}
+    }
+    @media (max-width:720px){
+      .wrap{padding:20px 16px 60px;}
+      .hero{padding:24px 22px;}
+      .hero-title{font-size:22px;}
+      .pillar{padding:22px 24px;}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="hdr">
+    <div class="hdr-l">
+      <div class="logo-box">D</div>
+      <div>
+        <div class="h-title">SEO Learnbook</div>
+        <div class="h-sub">Všetko, čo treba vedieť o SEO — graficky, ľudsky, s príkladmi z praxe</div>
+      </div>
+    </div>
+    <a class="h-back" href="dashboard.html">← Späť na dashboard</a>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">📖 Učebnica</div>
+    <div class="hero-title">SEO je trojnožka: <b style="color:var(--orange);">obsah</b> + <b style="color:var(--orange);">technika</b> + <b style="color:var(--orange);">autorita</b></div>
+    <div class="hero-sub">
+      Keď ti niekto povie „SEO", zvyčajne myslí jednu z 8 disciplín. Tu je každá vysvetlená: <b>čo je</b>, <b>prečo na nej záleží</b>, <b>aké taktiky obsahuje</b> a <b>konkrétny príklad z workwear eshopu</b>. Žiadne všeobecné poučky — len to, čo skutočne posúva ranking a tržby.
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <a class="toc-link" href="#on-page"><div class="toc-link-ico">📝</div><div class="toc-link-name">On-page SEO</div><div class="toc-link-sub">obsah, štruktúra, kľúčové slová</div></a>
+    <a class="toc-link" href="#off-page"><div class="toc-link-ico">🔗</div><div class="toc-link-name">Off-page SEO</div><div class="toc-link-sub">backlinks, brand, social</div></a>
+    <a class="toc-link" href="#technical"><div class="toc-link-ico">⚙️</div><div class="toc-link-name">Technical SEO</div><div class="toc-link-sub">rýchlosť, indexácia, schema</div></a>
+    <a class="toc-link" href="#local"><div class="toc-link-ico">📍</div><div class="toc-link-name">Local SEO</div><div class="toc-link-sub">Google Maps, recenzie</div></a>
+    <a class="toc-link" href="#content"><div class="toc-link-ico">✍️</div><div class="toc-link-name">Content SEO</div><div class="toc-link-sub">blog, guides, video</div></a>
+    <a class="toc-link" href="#mobile"><div class="toc-link-ico">📱</div><div class="toc-link-name">Mobile SEO</div><div class="toc-link-sub">mobile-first, responsive</div></a>
+    <a class="toc-link" href="#ecommerce"><div class="toc-link-ico">🛍️</div><div class="toc-link-name">E-commerce SEO</div><div class="toc-link-sub">product pages, schema</div></a>
+    <a class="toc-link" href="#intl"><div class="toc-link-ico">🌍</div><div class="toc-link-name">International SEO</div><div class="toc-link-sub">hreflang, geo targeting</div></a>
+  </div>
+
+  <!-- ON-PAGE -->
+  <h2 class="sect" id="on-page"><span class="ico on">📝</span>On-page SEO · Optimalizácia tvojej stránky</h2>
+  <div class="sect-sub">Všetko, čo môžeš upravovať <b>priamo na svojej stránke</b>. Najprístupnejšia kategória — máš plnú kontrolu, výsledky vidieť za týždne až mesiace.</div>
+
+  <div class="pillar on">
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-h">❓ Čo to je</div>
+        <div class="what-card-b">Optimalizácia <b>obsahu, HTML štruktúry a metadata</b> jednotlivých stránok. Title, headings (H1-H6), URL štruktúra, kľúčové slová, alt texty obrázkov, internal linking.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">🎯 Prečo na ňom záleží</div>
+        <div class="what-card-b">Google číta stránku ako text. Ak <b>nezrozumie čo je stránka o</b>, neukáže ju na relevantné queries. On-page hovorí Googlu „toto je stránka o pracovných rukaviciach".</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">✅ Ako začať</div>
+        <div class="what-card-b">Identifikuj <b>target keyword</b> pre každú stránku → uisti sa, že je v title, H1, URL, prvom odstavci a alt texte hero obrázka. Pridaj <b>300+ slov originálneho textu</b>.</div>
+      </div>
+    </div>
+
+    <div class="tactics">
+      <div class="tactic-card"><div class="tactic-card-ico">🏷️</div><div><b>Title tags</b><p>50–60 znakov, target keyword na začiatku + USP (Doprava zadarmo, Skladom, 2026).</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📄</div><div><b>Meta descriptions</b><p>120–155 znakov, „predaj klik" — povedz čo používateľ získa.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📑</div><div><b>Heading hierarchy</b><p>Jeden H1 na stránku. H2 podsekcie. H3 detaily. Logicky vnorené.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🔗</div><div><b>Internal linking</b><p>Z homepage linkuj na top kategórie. Z kategórií na top 3 produkty. Šíri authority.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🖼️</div><div><b>Alt texty obrázkov</b><p>Popis pre slepých čitateľov + Google. „Pracovná bunda M43 zimná, čierna".</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🌐</div><div><b>URL štruktúra</b><p>Krátka, čitateľná, s kľúčovým slovom: <code>/kategoria/pracovne-rukavice</code>.</p></div></div>
+    </div>
+
+    <div class="example">
+      <div class="example-l">💡 Príklad z dami-pracovne-odevy.sk</div>
+      <p style="margin-bottom:8px;"><b>Pred:</b> Title „Pracovné rukavice — Dami". H1 chýba. Žiadny popis kategórie.</p>
+      <p><b>Po on-page optimalizácii:</b> Title <code>Pracovné rukavice 2026 — Skladom · Doručenie do 24 h</code>. H1 <code>Pracovné rukavice pre každú profesiu</code>. Pod produktmi 300 slov o typoch (mechanická ochrana EN 388, chemická EN 374, tepelná EN 407) + interný link na kategóriu Bezpečnosť práce.</p>
+    </div>
+
+    <div class="didyou">
+      <div class="didyou-ico">💡</div>
+      <div>
+        <h4>Vedel si že…</h4>
+        <p>Google v 2024 oficiálne potvrdil, že <b>title je top 3 ranking factor</b>. Drobná zmena title (pridanie roka, USP) môže priniesť +20-50 % klikov bez akejkoľvek zmeny obsahu stránky.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFF-PAGE -->
+  <h2 class="sect" id="off-page"><span class="ico off">🔗</span>Off-page SEO · Budovanie autority mimo tvojej stránky</h2>
+  <div class="sect-sub">Všetko čo <b>nehráva na tvojej stránke</b> — najmä spätné odkazy (backlinks), zmienky brandu, social media. Najťažšia kategória, ale s najdlhšodobejším efektom.</div>
+
+  <div class="pillar off">
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-h">❓ Čo to je</div>
+        <div class="what-card-b">Aktivity mimo tvojho webu: <b>backlinks</b> (odkazy z iných stránok na teba), <b>brand mentions</b> (zmienky tvojho brandu), <b>recenzie</b>, social media signály.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">🎯 Prečo na ňom záleží</div>
+        <div class="what-card-b">Google ti dôveruje, keď ti dôverujú <b>iné weby</b>. Backlinks sú „hlasy dôvery" — každý link je signál „toto je dobrá stránka".</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">✅ Ako začať</div>
+        <div class="what-card-b">Vytváraj <b>obsah hodný odkazu</b> (guides, originálne dáta, štatistiky). Outreach na branžové blogy. Buduj <b>partnerships</b>. Recenzie od zákazníkov.</div>
+      </div>
+    </div>
+
+    <div class="tactics">
+      <div class="tactic-card"><div class="tactic-card-ico">🔗</div><div><b>Backlink outreach</b><p>Píš branžovým blogom, navrhni guest post, ponúkni expertízu. 3-5 / mes.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📊</div><div><b>Original data/štúdie</b><p>Niečo, čo si zistil ty a iní budú citovať. „Cenník workwear 2026" alebo bezpečnostná štúdia.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🏆</div><div><b>HARO / press</b><p>Reaguj na novinárske dopyty (Help a Reporter Out, journorequests). Backlink z denníka = gold.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🤝</div><div><b>Partnerships</b><p>Spolupráca s priemyselnými školami, profesijnými združeniami, B2B portálmi.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">⭐</div><div><b>Reviews acquisition</b><p>Automatický follow-up po nákupe s prosbou o recenziu. 100+ recenzií = trust + schema.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📢</div><div><b>Brand mentions</b><p>Aj nelinkované zmienky (bez href) Google počíta. Sleduj brand mentions v médiách.</p></div></div>
+    </div>
+
+    <div class="example">
+      <div class="example-l">💡 Príklad z dami-pracovne-odevy.sk</div>
+      <p><b>Konkrétny outreach plán pre rok 1:</b> 3 backlinky / mesiac od slovenských stavebných a bezpečnostných portálov (napr. stavebne-noviny.sk, bozp-portal.sk, profihnedlee.sk). Forma: <b>guest post</b> „Ako vybrať bezpečnostnú obuv pre staveniská" s linkom späť na kategóriu Pracovná obuv. <b>Cieľ za rok: 30-50 kvalitných backlinkov.</b></p>
+    </div>
+
+    <div class="didyou">
+      <div class="didyou-ico">💡</div>
+      <div>
+        <h4>Vedel si že…</h4>
+        <p>Nie všetky backlinky sú rovnaké. <b>1 backlink z autoritného slovenského portálu</b> (DA 50+, sk doména) má hodnotu <b>50–100 obyčajných backlinkov</b>. Kvalita > kvantita.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNICAL -->
+  <h2 class="sect" id="technical"><span class="ico tech">⚙️</span>Technical SEO · Infrastructure pre Google</h2>
+  <div class="sect-sub">Backend a infraštruktúra ktorá zabezpečí, že Google <b>vie tvoju stránku načítať, indexovať a zobraziť</b>. Často oblasť ktorá rozhoduje, či SEO ostatných pilierov vôbec funguje.</div>
+
+  <div class="pillar tech">
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-h">❓ Čo to je</div>
+        <div class="what-card-b">Rýchlosť stránky (<b>Core Web Vitals</b>), indexácia, sitemap.xml, robots.txt, schema markup, canonical tags, hreflang, HTTPS, mobile-friendliness.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">🎯 Prečo na ňom záleží</div>
+        <div class="what-card-b">Aj najlepší obsah <b>nepomôže, ak Google nemôže stránku indexovať</b>. Pomalá stránka = ľudia odchádzajú + Google penalizuje ranking. Technické SEO je <b>foundation</b>.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">✅ Ako začať</div>
+        <div class="what-card-b">Spusti <b>Google PageSpeed Insights</b> na homepage + 3 top stránky. Skontroluj <b>GSC Coverage</b> report (problémy s indexáciou). Pridaj <b>schema markup</b> aspoň Product + Organization.</div>
+      </div>
+    </div>
+
+    <div class="tactics">
+      <div class="tactic-card"><div class="tactic-card-ico">⚡</div><div><b>Core Web Vitals</b><p>LCP &lt; 2,5 s, CLS &lt; 0,1, INP &lt; 200 ms. Optimalizovať obrázky, lazy load, defer JS.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🗺️</div><div><b>Sitemap.xml</b><p>Zoznam všetkých dôležitých URL pre Google. Submit cez GSC. Update keď pridáš obsah.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🤖</div><div><b>Robots.txt</b><p>Hovorí Google čo NEINDEXOVAŤ (admin, search results, duplikáty).</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🏷️</div><div><b>Schema markup</b><p>Štruktúrované dáta (Product, Offer, Review, FAQ, Breadcrumb). Pre rich snippets.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🔒</div><div><b>HTTPS</b><p>Povinné. Google penalizuje HTTP. Aj „nesensitive" eshop musí byť HTTPS.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📐</div><div><b>Canonical tags</b><p>Predchádzajú duplicate content (filter URLs, pagination, parametre).</p></div></div>
+    </div>
+
+    <div class="example">
+      <div class="example-l">💡 Príklad z dami-pracovne-odevy.sk</div>
+      <p><b>Pred:</b> LCP 3,8 s (pomalý hero obrázok 800 KB). Žiadne Product schema. 37 stránok neindexovaných v GSC.</p>
+      <p><b>Po technical SEO sprinte:</b> Hero obrázok kompresovaný na 80 KB + WebP formát → LCP 1,9 s. Product schema na 200+ produktoch → rich snippets s cenou + hodnotením v Google. 37 neindexovaných stránok auditované a opravené.</p>
+    </div>
+
+    <div class="didyou">
+      <div class="didyou-ico">💡</div>
+      <div>
+        <h4>Vedel si že…</h4>
+        <p>Google používa <b>mobile-first indexing</b> od 2021. To znamená že <b>Google pozerá najprv tvoju mobilnú verziu</b>, nie desktop. Ak je mobilná stránka horšia (chýba obsah, pomalšia), tvoj ranking trpí <b>aj pre desktop výsledky</b>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOCAL -->
+  <h2 class="sect" id="local"><span class="ico local">📍</span>Local SEO · Google Maps + lokálne hľadania</h2>
+  <div class="sect-sub">Pre <b>biznisy s fyzickou prevádzkou</b> (kamenné obchody, služby v meste). Cieľ: byť v <b>Google Maps Pack</b> (top 3 lokálnych výsledkov) keď niekto hľadá „pracovné odevy Piešťany".</div>
+
+  <div class="pillar local">
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-h">❓ Čo to je</div>
+        <div class="what-card-b">Optimalizácia pre <b>geo-špecifické hľadania</b>. Google Business Profile (GBP), lokálne backlinks, recenzie, NAP konzistencia (Name/Address/Phone).</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">🎯 Prečo na ňom záleží</div>
+        <div class="what-card-b">46 % vyhľadávaní v Google má <b>lokálny intent</b>. „Pracovné odevy Piešťany" = chce niekto z Piešťan. Local SEO ho dostane do tvojej predajne.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">✅ Ako začať</div>
+        <div class="what-card-b">Vytvor <b>Google Business Profile</b>. Pridaj presné NAP, fotky, opening hours. Zbieraj <b>recenzie</b> (cieľ 4,5+ hviezd, 50+ recenzií).</div>
+      </div>
+    </div>
+
+    <div class="tactics">
+      <div class="tactic-card"><div class="tactic-card-ico">📍</div><div><b>Google Business Profile</b><p>Bezplatný profil v Google Maps. Pridaj NAP, fotky, popis, kategórie. Update opening hours.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">⭐</div><div><b>Reviews & ratings</b><p>Pýtaj zákazníkov po nákupe. Odpovedaj na všetky recenzie (aj negatívne).</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📞</div><div><b>NAP konzistencia</b><p>Telefón, adresa, názov rovnako na webe, GBP, Facebook, katalógoch. Inkonzistencia = penalizácia.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🏷️</div><div><b>LocalBusiness schema</b><p>Štruktúrované dáta na webe — adresa, opening hours, kontakty.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🌆</div><div><b>City landing pages</b><p>„Pracovné odevy Piešťany", „Bratislava". Ak doručuješ / máš pobočky vo viacerých mestách.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🔗</div><div><b>Local backlinks</b><p>Mestské katalógy, regionálne portály, lokálne médiá. Geo-relevantné linky.</p></div></div>
+    </div>
+
+    <div class="example">
+      <div class="example-l">💡 Príklad z dami-pracovne-odevy.sk</div>
+      <p>Detektovali sme query <b>„pracovné odevy piešťany"</b> v GSC (71 impressions, pozícia 11,8). To znamená že niekto z Piešťan to hľadá, ale ty nie si v top 10. <b>Local SEO sprint:</b> vytvoriť dedikovanú stránku <code>/predajne/piestany</code> + Google Business Profile s adresou Piešťan + pýtať recenzie miestnych zákazníkov.</p>
+    </div>
+
+    <div class="didyou">
+      <div class="didyou-ico">💡</div>
+      <div>
+        <h4>Vedel si že…</h4>
+        <p><b>76 % ľudí</b>, ktorí robia local search z mobilu, navštívi obchod <b>do 24 hodín</b>. Ak nie si v Google Maps Pack, prichádzaš o vysoko-intent kupujúcich, ktorí sú už pripravení nakúpiť.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <h2 class="sect" id="content"><span class="ico content">✍️</span>Content SEO · Obsahový marketing</h2>
+  <div class="sect-sub">Tvorba <b>obsahu, ktorý priťahuje a vzdeláva</b> potenciálnych zákazníkov. Blog, guides, video, infografiky. Nie predajné stránky, ale informačné — zachytíš ľudí v <b>top-of-funnel</b>.</div>
+
+  <div class="pillar on">
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-h">❓ Čo to je</div>
+        <div class="what-card-b">Strategická tvorba <b>užitočného obsahu</b> okolo problémov a otázok tvojich zákazníkov. „Ako vybrať X", „Najlepšie Y v 2026", „Kompletný sprievodca Z".</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">🎯 Prečo na ňom záleží</div>
+        <div class="what-card-b">Predajné stránky cielene riešia <b>~10 % zákazníckej cesty</b> (rozhodnutie kúpiť). Content rieši <b>zvyšných 90 %</b> (problém, výskum, porovnanie).</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">✅ Ako začať</div>
+        <div class="what-card-b">Identifikuj <b>5 najčastejších otázok</b> tvojich zákazníkov (cez chat, email, GSC queries). Napíš jeden hodnotný článok pre každú. Aktualizuj ich raz ročne.</div>
+      </div>
+    </div>
+
+    <div class="tactics">
+      <div class="tactic-card"><div class="tactic-card-ico">📚</div><div><b>Pillar pages</b><p>Dlhý ultimate guide (2000+ slov) k téme. Linkuje na sub-články. Rankuje na general query.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📰</div><div><b>How-to articles</b><p>Konkrétne návody. „Ako vybrať pracovnú obuv pre vašu profesiu"</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🎥</div><div><b>Video content</b><p>YouTube video s návodom. Embedneš na blog. Dual SEO benefit (web + YouTube).</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📊</div><div><b>Comparison content</b><p>„Sundance vs Balea SPF — porovnanie". Bottom-funnel, vysoký konverzný intent.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📈</div><div><b>Trend pieces</b><p>„Pracovné odevy 2026 — trendy". Refresh raz ročne, ranking ostáva.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🎯</div><div><b>Topic clusters</b><p>5-10 článkov okolo jednej témy. Buduješ topical authority pre Google.</p></div></div>
+    </div>
+
+    <div class="example">
+      <div class="example-l">💡 Príklad z dami-pracovne-odevy.sk</div>
+      <p><b>Content plán pre 6 mesiacov:</b><br>
+      M1: „Kompletný sprievodca bezpečnostnou obuvou — S1, S1P, S3, S5" (pillar)<br>
+      M2: „Ako vybrať pracovné rukavice pre svoju profesiu" (how-to)<br>
+      M3: „Pracovné odevy pre kuchárov — HoReCa kompletný výber" (niche)<br>
+      M4: „Zimná pracovná výbava 2026 — top 10 produktov" (seasonal)<br>
+      M5: „Antikorová obuv: pre koho a kedy je nutná" (rising query)<br>
+      M6: „Bezpečnosť práce — checklist pre malé firmy" (B2B)</p>
+    </div>
+  </div>
+
+  <!-- MOBILE -->
+  <h2 class="sect" id="mobile"><span class="ico mobile">📱</span>Mobile SEO · Optimalizácia pre telefóny</h2>
+  <div class="sect-sub">Google od 2021 pracuje s <b>mobile-first indexing</b> — tvoj mobil je primárny zdroj rankingu. Mobile SEO nie je samostatná disciplína, ale <b>kritický prierez</b> cez technical a UX.</div>
+
+  <div class="pillar tech">
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-h">❓ Čo to je</div>
+        <div class="what-card-b">Optimalizácia stránky pre <b>malé obrazovky a touch interakciu</b>. Responsive design, rýchlosť na 4G, click targets (44 px+), žiadne pop-up interstitials.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">🎯 Prečo na ňom záleží</div>
+        <div class="what-card-b"><b>60-70 % retail trafficu</b> v SR je z mobilu. Google ti meria mobile výkon. Ak je mobile horšie ako desktop, ranking ide dole.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">✅ Ako začať</div>
+        <div class="what-card-b">Otestuj v <b>Google Mobile-Friendly Test</b>. Skontroluj <b>Core Web Vitals na mobile</b> (často horšie ako desktop). Audit pop-upov a CTA buttonov.</div>
+      </div>
+    </div>
+
+    <div class="tactics">
+      <div class="tactic-card"><div class="tactic-card-ico">📐</div><div><b>Responsive design</b><p>Jeden web, prispôsobuje sa obrazovke. Bez „m.example.com" subdomén.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">👆</div><div><b>Touch-friendly UI</b><p>Buttons min 44×44 px. Dostatok medzery medzi klik. cieľmi.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🚀</div><div><b>Mobile speed</b><p>4G/5G real-world speed. LCP &lt; 2,5 s. Optimalizovať pre slabšie siete.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🚫</div><div><b>No intrusive interstitials</b><p>Pop-up cez celú obrazovku = Google penalty. Banners len bottom strip max 15 % výšky.</p></div></div>
+    </div>
+  </div>
+
+  <!-- E-COMMERCE -->
+  <h2 class="sect" id="ecommerce"><span class="ico commerce">🛍️</span>E-commerce SEO · Špecifiká pre eshopy</h2>
+  <div class="sect-sub">Eshop má <b>tisíce produktov a kategórií</b> — iný challenge než blog. Špecifiká: <b>product pages</b>, faceted navigation, duplicate content, schema markup. Pre dami-pracovne-odevy.sk najrelevantnejšia kategória po On-page.</div>
+
+  <div class="pillar on">
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-h">❓ Čo to je</div>
+        <div class="what-card-b">SEO pre stránky s veľkým <b>katalogom produktov</b>. Optimalizácia kategórií, produktov, filtrov, vyhľadávania. Schema markup pre rich snippets s cenou.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">🎯 Prečo na ňom záleží</div>
+        <div class="what-card-b">Eshop má veľa „skoro rovnakých" stránok (rôzne farby/veľkosti rovnakého produktu). Bez správneho riešenia <b>duplicates kanibalizujú ranking</b>.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">✅ Ako začať</div>
+        <div class="what-card-b">Pridaj <b>Product schema</b> na všetky PDP. Riešiť <b>canonical tags</b> pre filtre. Optimalizovať <b>PLP descriptions</b> (text pod listingom).</div>
+      </div>
+    </div>
+
+    <div class="tactics">
+      <div class="tactic-card"><div class="tactic-card-ico">🏷️</div><div><b>Product schema</b><p>Cena, dostupnosť, hodnotenie — Google vie zobraziť priamo v SERP.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🍞</div><div><b>Breadcrumb schema</b><p>Cesta navigácie. Google to zobrazí v SERP. Lepšia UX + lepší ranking.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">🔍</div><div><b>Faceted navigation</b><p>Filtre (cena, farba, veľkosť) musia mať canonical → predchádza duplicate content.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📝</div><div><b>PLP descriptions</b><p>300+ slov pod product listing. Hovorí Googlu čo je kategória o.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">📦</div><div><b>Out-of-stock handling</b><p>Nemazať stránky. Ponechať s „nie je skladom" + alternatívami.</p></div></div>
+      <div class="tactic-card"><div class="tactic-card-ico">❓</div><div><b>FAQ na produktoch</b><p>5 najčastejších otázok ku každému produktu. FAQ schema → featured snippets.</p></div></div>
+    </div>
+  </div>
+
+  <!-- INTERNATIONAL -->
+  <h2 class="sect" id="intl"><span class="ico intl">🌍</span>International SEO · Viacjazyčný / viackrajinný web</h2>
+  <div class="sect-sub">Pre teba <b>zatiaľ nerelevantné</b> (predáš na SK trhu). Ale ak by ste raz expandovali do CZ alebo AT, tu sú základy.</div>
+
+  <div class="pillar off">
+    <div class="what-grid">
+      <div class="what-card">
+        <div class="what-card-h">❓ Čo to je</div>
+        <div class="what-card-b">Optimalizácia pre <b>viaceré jazyky / krajiny</b>. Hreflang tags, geo-targeting, výber medzi ccTLD (.cz) / subdomain (cz.dami...) / subdirectory (dami.../cz).</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">🎯 Prečo na ňom záleží</div>
+        <div class="what-card-b">Bez správneho hreflang Google ukazuje <b>SK verziu českému zákazníkovi</b> (alebo naopak). Konverzia padá.</div>
+      </div>
+      <div class="what-card">
+        <div class="what-card-h">✅ Kedy začať</div>
+        <div class="what-card-b">Až keď expanduješ. Predčasná internacionalizácia = rozptýlený SEO budget. Najprv dominuj jeden trh.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <h2 class="sect"><span class="ico content">📋</span>Súhrn · Ktorý druh kedy</h2>
+  <div class="sect-sub">Rýchla referenčná tabuľka — kedy investovať do akej disciplíny v rámci 12-mesačného plánu rastu.</div>
+
+  <div class="comp-table">
+    <div class="comp-row">
+      <div class="comp-cell">Disciplína</div>
+      <div class="comp-cell">Phase 1<br>(M1-2)</div>
+      <div class="comp-cell">Phase 2<br>(M2-4)</div>
+      <div class="comp-cell">Phase 3<br>(M4-12)</div>
+      <div class="comp-cell">ROI</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell label">📝 On-page</div>
+      <div class="comp-cell ico-cell">🟢</div>
+      <div class="comp-cell ico-cell">🟢</div>
+      <div class="comp-cell ico-cell">🟡</div>
+      <div class="comp-cell"><b style="color:var(--ok);">Najvyšší</b> · rýchly</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell label">⚙️ Technical</div>
+      <div class="comp-cell ico-cell">🟢</div>
+      <div class="comp-cell ico-cell">🟡</div>
+      <div class="comp-cell ico-cell">⚪</div>
+      <div class="comp-cell"><b style="color:var(--ok);">Vysoký</b> · foundation</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell label">🛍️ E-commerce</div>
+      <div class="comp-cell ico-cell">🟡</div>
+      <div class="comp-cell ico-cell">🟢</div>
+      <div class="comp-cell ico-cell">🟡</div>
+      <div class="comp-cell"><b style="color:var(--ok);">Vysoký</b> · pre eshop</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell label">✍️ Content</div>
+      <div class="comp-cell ico-cell">⚪</div>
+      <div class="comp-cell ico-cell">🟢</div>
+      <div class="comp-cell ico-cell">🟢</div>
+      <div class="comp-cell"><b>Stredný</b> · long-term</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell label">📍 Local</div>
+      <div class="comp-cell ico-cell">🟡</div>
+      <div class="comp-cell ico-cell">🟡</div>
+      <div class="comp-cell ico-cell">🟢</div>
+      <div class="comp-cell"><b>Stredný</b> · pre lokálne</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell label">📱 Mobile</div>
+      <div class="comp-cell ico-cell">🟢</div>
+      <div class="comp-cell ico-cell">⚪</div>
+      <div class="comp-cell ico-cell">⚪</div>
+      <div class="comp-cell"><b>Foundation</b> · spravíš raz</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell label">🔗 Off-page</div>
+      <div class="comp-cell ico-cell">⚪</div>
+      <div class="comp-cell ico-cell">🟡</div>
+      <div class="comp-cell ico-cell">🟢</div>
+      <div class="comp-cell"><b style="color:var(--warn);">Pomalý</b> · ale silný</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell label">🌍 International</div>
+      <div class="comp-cell ico-cell">⚪</div>
+      <div class="comp-cell ico-cell">⚪</div>
+      <div class="comp-cell ico-cell">⚪</div>
+      <div class="comp-cell">Zatiaľ nerelevantné</div>
+    </div>
+  </div>
+
+  <div style="font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.65;">
+    🟢 Primárny fokus · 🟡 Sekundárny · ⚪ Nie ešte alebo udržiavanie
+  </div>
+
+  <div class="ftr">
+    Pre konkrétny rastový plán pozri <a href="strategia.html">stratégiu</a> · Týždenné dáta a opportunity v <a href="dashboard.html">dashboarde</a>
+  </div>
+
+</div>
+</body>
+</html>

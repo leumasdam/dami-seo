@@ -329,11 +329,17 @@
       border-radius:16px;
       padding:24px 28px;
       box-shadow:0 20px 60px rgba(15,23,42,.25);
-      max-width:420px;width:90%;
+      max-width:640px;width:92%;
+      max-height:85vh;overflow-y:auto;
       z-index:1000;
       opacity:0;visibility:hidden;
       transition:opacity .2s ease,transform .2s ease,visibility .2s ease;
     }
+    .kpi-more-hint{
+      margin-left:auto;font-size:18px;opacity:.5;
+      transition:opacity .15s;flex-shrink:0;
+    }
+    .kpi:hover .kpi-more-hint{opacity:1;}
     .term-popup.active{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
     .term-popup-overlay{
       position:fixed;inset:0;
@@ -397,15 +403,17 @@
       </div>
     </div>
     <div style="display:flex;gap:10px;align-items:center;">
-      <button class="btn btn-ghost" onclick="window.print()">📄 Stiahnuť PDF</button>
-      <button class="btn" onclick="location.reload()">⟳ Obnoviť</button>
+      <a class="btn btn-ghost" href="learnbook.html" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">📖 Learnbook</a>
+      <a class="btn btn-ghost" href="strategia.html" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">📈 Stratégia</a>
+      <button class="btn btn-ghost" onclick="window.print()">📄 PDF</button>
+      <button class="btn" onclick="location.reload()">⟳</button>
     </div>
   </header>
 
   <!-- HOW TO READ -->
   <div class="how-card">
     <div class="how-eyebrow">📖 Ako čítať tento dashboard</div>
-    <div class="how-title">Týždenný prehľad pre netechnického majiteľa e-shopu</div>
+    <div class="how-title">Týždenný prehľad pre šéfinka</div>
     <div class="how-body">
       Dashboard ti každý <b>pondelok ráno</b> ukáže, čo sa na webe deje z pohľadu Google vyhľadávania. Žiadne grafy bez kontextu — pri každom čísle vysvetlím, čo znamená a čo s ním urobiť. Cieľom je <b>2–3 konkrétne akcie</b> na ďalší týždeň, ktoré ti privedú viac návštevníkov a viac objednávok.
     </div>
@@ -811,7 +819,7 @@
 
   <div class="ftr">
     Generované GitHub Action každý pondelok 06:00 UTC · GSC + GA4 + PageSpeed Insights · last update <span id="genTs">2026-05-25</span><br>
-    📈 Pre dlhodobý <a href="strategia.html" style="color:var(--orange-dark);font-weight:600;">strategický plán rastu →</a>
+    📈 <a href="strategia.html" style="color:var(--orange-dark);font-weight:600;">Strategický plán rastu</a> · 📖 <a href="learnbook.html" style="color:var(--orange-dark);font-weight:600;">SEO Learnbook</a>
   </div>
 </div>
 
@@ -953,13 +961,14 @@
       else if (d.fmt === 'pp') deltaStr = (d.delta > 0 ? '▲' : d.delta < 0 ? '▼' : '—') + ' ' + (d.delta >= 0 ? '+' : '') + fmtNum1(d.delta) + ' pp';
       else deltaStr = '— stabilné';
       return `
-        <div class="kpi">
+        <div class="kpi" data-kpi="${c.key}" style="cursor:pointer;">
           <div class="kpi-head">
             <div class="kpi-icon ${c.icoCls}">${c.icon}</div>
             <div class="kpi-meta">
               <div class="kpi-name">${c.label}</div>
               <div class="kpi-plain">${c.plain}</div>
             </div>
+            <div class="kpi-more-hint" title="Klikni pre detail">ℹ️</div>
           </div>
           <div class="kpi-stat">
             <span class="kpi-num">${d.val}</span>
@@ -971,8 +980,127 @@
             <div class="ex"><div class="ex-l">🎯 Prečo sledovať</div><div class="ex-b">${c.why}</div></div>
             <div class="ex"><div class="ex-l">✅ Ako reagovať</div><div class="ex-b">${c.how}</div></div>
           </div>
+          <div style="text-align:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);font-size:12px;color:var(--orange-dark);font-weight:600;">Klikni pre detailný rozpis →</div>
         </div>`;
     }).join('');
+
+    // Click handlers for KPI cards
+    document.querySelectorAll('[data-kpi]').forEach(el => {
+      el.addEventListener('click', () => showKpiDetail(el.dataset.kpi));
+    });
+  }
+
+  // === KPI deep-dive content ===
+  const KPI_DEEP = {
+    clicks: {
+      title: '🖱️ Kliky z Google',
+      subtitle: 'Najdôležitejšia metrika SEO úspechu',
+      sections: [
+        {h: 'Čo to presne meria', p: 'Koľkokrát používateľ <b>klikol z výsledku Google vyhľadávania</b> na tvoju stránku. Sleduje sa cez Google Search Console (GSC). Nie sú to všetky návštevy webu — iba tie z organického hľadania.'},
+        {h: 'Vzorec', p: '<code>Kliky</code> = priamy údaj z GSC za zvolené obdobie. Pre nás: posledných 28 dní.'},
+        {h: 'Príklad z tvojich dát', p: 'Web má <b>19 klikov za 28 dní</b> = cca <b>5 klikov týždenne</b> = <b>0,7 klikov denne</b>. To znamená že každý deň prichádza zhruba 1 návštevník cez Google.'},
+        {h: 'Benchmark pre podobné weby', p: 'Malý SK retail eshop bez aktívneho SEO: 10–50 klikov / 28 dní. Stredný eshop s aktívnym SEO: 200–800 klikov / 28 dní. Veľký etablovaný eshop: 2000+ klikov / 28 dní.'},
+        {h: 'Ako to zlepšiť', p: '<b>1.</b> Zvýš pozíciu vyhláseného slova (pos 5 → pos 2 = 3× viac klikov). <b>2.</b> Zvýš CTR cez lepší title (CTR 1,5 % → 3 % = 2× viac klikov pri rovnakej pozícii). <b>3.</b> Vyhraj na viacerých queries (rozšír obsah).'},
+        {h: 'Bežný omyl', p: 'Kliky ≠ návštevy v GA4 vždy presne sedia. GA4 deduplikuje botov a viacnásobné kliky, GSC nie. Rozdiel <b>10–20 %</b> medzi GSC kliky a GA4 sessions je normálny.'}
+      ]
+    },
+    impressions: {
+      title: '👀 Zobrazenia v Google',
+      subtitle: 'Tvoja viditeľnosť vo výsledkoch hľadania',
+      sections: [
+        {h: 'Čo to presne meria', p: 'Koľkokrát sa tvoja stránka <b>objavila vo výsledkoch Google</b> — aj keď používateľ neklikol. Stačí, že tvoj výsledok bol viditeľný na obrazovke (alebo by bol, keby používateľ scrolloval k tvojej pozícii).'},
+        {h: 'Príklad z tvojich dát', p: 'Web má <b>1 242 impressions za 28 dní</b> = cca <b>44 impressions denne</b>. To je solídna základná viditeľnosť — Google ťa ukazuje, len ľudia málokto klikne.'},
+        {h: 'Rastúce impressions sú dobré znamenie', p: 'Znamená že Google ťa indexuje na <b>viac slov</b> alebo tvoje stránky vychádzajú vyššie pri už existujúcich queries. Ak impressions rastú, ale kliky nie, problém je v <b>CTR</b> (title/meta).'},
+        {h: 'Klesajúce impressions = alarm', p: 'Buď Google ťa indexuje na menej slov (možno content drift), tvoja pozícia klesá, alebo Google zmenil SERP layout (pridal feature snippet, ads, mapy). Skontroluj GSC „Performance" report po queries.'},
+        {h: 'Bežný omyl', p: 'Vysoké impressions <b>nezaručujú</b> kvalitnú návštevnosť. Stránka môže mať 10 000 impressions na irelevantné queries (napr. „dami menu" keď si workwear eshop). Treba sledovať aj <b>kvalitu queries</b>.'}
+      ]
+    },
+    position: {
+      title: '📍 Priemerná pozícia v Google',
+      subtitle: 'Kde sa nachádzaš vo výsledkoch hľadania',
+      sections: [
+        {h: 'Čo to presne meria', p: 'Priemerná pozícia tvojich URL vo výsledkoch Google naprieč všetkými queries. <b>1 = absolútny vrchol</b>, 100 = na desiatej strane (prakticky neviditeľný).'},
+        {h: 'Pozor: nižšie je lepšie', p: 'Šípka <b>dole</b> (↓) znamená že priemerná pozícia <b>klesla</b> z 9,3 na 8,5 = <b>zlepšila sa</b> (si vyššie v Google). Šípka hore = horšia pozícia.'},
+        {h: 'Príklad z tvojich dát', p: 'Priemerná pozícia <b>9,3</b> znamená že väčšina tvojich URL je na hranici 1. a 2. strany výsledkov. Drobné zlepšenie (pos 9 → pos 6) môže výrazne zvýšiť kliky.'},
+        {h: 'Distribúcia klikov podľa pozície', p: '<b>Pozícia 1:</b> ~28 % CTR · <b>Pozícia 2:</b> ~16 % · <b>Pozícia 3:</b> ~11 % · <b>Pozícia 5:</b> ~7 % · <b>Pozícia 10:</b> ~2,5 % · <b>Pozícia 11–20:</b> &lt;2 %. Posun z 10. na 3. pozíciu = ~5× viac klikov.'},
+        {h: 'Ako sa to vypočíta', p: 'GSC počíta vážený priemer všetkých zobrazení. Ak si na query A pos 1 (1000 impr) a query B pos 20 (10 impr), váž. priemer = ~1,2. Outliers (vysoké pozície na malých queries) nemajú veľký vplyv.'},
+        {h: 'Bežný omyl', p: '„Priemerná pozícia 12" neznamená že si na 12. pozícii. Sú to <b>vážený priemer</b> rôznych pozícií na rôznych queries. Niektoré majú pozíciu 3, iné 30. Lepšie je sledovať pozíciu na konkrétnych top queries.'}
+      ]
+    },
+    ctr: {
+      title: '🎯 CTR · click-through rate',
+      subtitle: 'Z koľkých zobrazení ľudia kliknú',
+      sections: [
+        {h: 'Čo to presne meria', p: 'CTR = <code>Kliky ÷ Zobrazenia × 100 %</code>. Hovorí, ako veľmi tvoj title a meta description <b>zaujmú</b> v Google výsledkoch.'},
+        {h: 'Príklad z tvojich dát', p: 'CTR <b>1,53 %</b> znamená že zo 100 ľudí, ktorí ťa vidia v Google, klikne 1,5. Pre retail eshop je priemer 3–5 %. <b>Si pod priemerom</b> — title nezaujme.'},
+        {h: 'Očakávaný CTR podľa pozície', p: '<b>Pos 1:</b> ~28 % · <b>Pos 2:</b> ~16 % · <b>Pos 3:</b> ~11 % · <b>Pos 5:</b> ~7 % · <b>Pos 10:</b> ~2,5 %. Ak si na pos 5 a máš CTR 2 %, je problém v title (mal by si mať 7 %).'},
+        {h: 'Ako CTR zlepšiť', p: '<b>1.</b> Pridaj číslo do title (2026, top 10). <b>2.</b> Pridaj výhody (Doprava zadarmo, Skladom, do 24 h). <b>3.</b> Použi power words (najlepšie, overené, profesionálne). <b>4.</b> Cez meta description „predaj klik" — povedz čo používateľ získa.'},
+        {h: 'Sleduj sa proti benchmarku', p: 'GSC ti ukazuje pozíciu + CTR. Ak ranking ide hore (pos 7 → pos 4) ale CTR ostáva podpriemerný, robíš dobrý SEO ale slabý copywriting.'},
+        {h: 'Bežný omyl', p: 'Nárast CTR pri konštantnej pozícii = lepší title. <b>Pokles</b> CTR pri konštantnej pozícii = konkurent v SERP vyzerá lepšie, alebo Google pridal feature (mapy, ads) ktoré odoberajú kliky.'}
+      ]
+    },
+    sessions: {
+      title: '👥 Organické návštevy (GA4)',
+      subtitle: 'Skutočné návštevy z Google podľa Google Analytics',
+      sections: [
+        {h: 'Čo to presne meria', p: 'Počet návštev (sessions) tvojho webu, ktoré GA4 atribuuje k organickému Google vyhľadávaniu. Iné zdroje (direct, paid, social, referral) sú samostatne.'},
+        {h: 'Príklad z tvojich dát', p: '<b>70 organic sessions za 28 dní</b> = cca <b>2,5 návštevy denne</b> z Google. To je málo, ale rastie smerom k cieľu (1 500 sessions / 28 dní za rok).'},
+        {h: 'Sessions vs Kliky z GSC', p: 'GSC kliky a GA4 sessions <b>nesedia presne</b> — rozdiel ~10–20 % je normálny. GA4 deduplikuje botov, GSC nie. Plus GA4 počíta až keď sa stránka úspešne načíta.'},
+        {h: 'Čo všetko je v jednej session', p: 'Session začína keď používateľ príde na web, končí <b>po 30 min neaktivity</b> alebo zatvorením tabu. Jedna session môže obsahovať X stránok, X klikov, X scrollov.'},
+        {h: 'Ako návštevy interpretovať', p: 'Rastúce organic sessions pri stagnujúcich klikoch v GSC = problém v trackingu. Klesajúce sessions pri rastúcich klikoch = používatelia nedosiahnu cieľ (môže byť tech problém, 404, redirect chain).'},
+        {h: 'Bežný omyl', p: '„Vysoký počet sessions" sám o sebe nezaručuje úspech. Sleduj aj <b>bounce rate</b> (koľko hneď odíde) a <b>conversion rate</b> (koľko kúpi). Tí 70 ľudí — koľko z nich naozaj niečo urobilo?'}
+      ]
+    },
+    conv: {
+      title: '🛒 Konverzia návštev',
+      subtitle: 'Z koľkých návštev sa stane objednávka',
+      sections: [
+        {h: 'Čo to presne meria', p: 'Conversion rate = <code>Objednávky ÷ Sessions × 100 %</code>. Ukazuje aké efektívne tvoj web premieta návštevníkov na kupujúcich.'},
+        {h: 'Príklad z tvojich dát', p: 'Konverzia <b>0 %</b> = zo 70 návštev nikto nekúpil v tomto okne. To môže byť: (1) malý sample size, (2) UX problém na stránke, (3) drahé alebo neatraktívne produkty pre organic návštevníkov.'},
+        {h: 'Retail benchmark', p: '<b>SK retail eshop:</b> priemer 1,5–2,5 %. <b>Workwear/B2B niche:</b> 2–4 % (kupujúci viac premyslení, ale akonáhle nakúpia, robia to s vyšším AOV).'},
+        {h: 'Cieľ 1,5 % konverzia by znamenala', p: 'Pri 70 sessions = ~1 objednávka / 28 dní. Pri 500 sessions = ~7,5 objednávok / 28 dní. Pri 1500 sessions = ~22 objednávok / 28 dní.'},
+        {h: 'Ako zlepšiť konverziu (CRO)', p: '<b>1.</b> Jasné CTA buttons. <b>2.</b> Social proof (recenzie, zákazníci). <b>3.</b> Urgencia (skladom, posledné kusy, doprava zadarmo do X). <b>4.</b> Rýchla stránka (Core Web Vitals). <b>5.</b> Mobile-friendly checkout.'},
+        {h: 'Bežný omyl', p: 'Optimalizovať len SEO bez CRO = privedieš viac návštevníkov, ale stále nepredáš. Pri 70 návštevách a 0 % konverzii: viac návštev nepomôže, ak stránka nepresvedčí kúpiť.'}
+      ]
+    },
+    revenue: {
+      title: '💰 Atribuovaný výnos',
+      subtitle: 'Reálne tržby z organic návštevníkov',
+      sections: [
+        {h: 'Čo to presne meria', p: 'Suma všetkých objednávok kde GA4 atribuovala <b>posledný klik pred nákupom</b> ako Google organic. Tovar pridaný cez direct alebo paid sa sem nepočíta.'},
+        {h: 'Príklad z tvojich dát', p: '<b>0 € za 28 dní</b> z organic. To je výsledok 0 % konverzie + 70 sessions. Zvýšenie konverzie + sessions = revenue. Najrýchlejší dopad ma <b>konverzia</b>, lebo aj malé % má veľký multiplier.'},
+        {h: 'Ako sa to počíta', p: '<code>Revenue = Sessions × Conversion × AOV</code>. Príklad: 1500 sess × 2 % × 60 € AOV = <b>1 800 € / 28 dní</b> = ~700 € pri 60 % organic mix.'},
+        {h: 'Realistická 12-mes. projekcia', p: 'Phase 1 (M1-2): 0 → 15 € / mes. Phase 2 (M3-4): 45 → 90 €. Phase 3 (M6-12): 220 → <b>1 200 €</b>. <b>Plus B2B leads</b> (workwear má biznis segment) +300-1000 € / mes v M9+.'},
+        {h: 'Atribúcia má svoje obmedzenia', p: 'GA4 atribuuje posledný klik. Ak používateľ <b>najprv prišiel z Google, vrátil sa direct a kúpil</b>, atribuuje to ako direct. Reálne SEO revenue je často <b>vyššie ako atribuovaný</b>.'},
+        {h: 'Bežný omyl', p: 'Hodnotenie SEO len cez „atribuovaný revenue" je nepresné. Sleduj aj asistované konverzie (Multi-channel funnels v GA4) — koľko nákupov SEO „pomohlo".'}
+      ]
+    },
+    indexed: {
+      title: '📚 Indexované stránky',
+      subtitle: 'Koľko stránok Google pozná a môže ich zobraziť',
+      sections: [
+        {h: 'Čo to presne meria', p: 'Počet URL z tvojho webu ktoré <b>Google indexuje</b> (má ich vo svojej databáze a môže ich ukázať vo výsledkoch). Z GSC „Coverage" report.'},
+        {h: 'Vs sitemap', p: 'V <b>sitemap.xml</b> hovoríš Google čo má indexovať. <b>Reálne indexované</b> môže byť menej (Google preskočil duplicate, thin content, alebo to neuznal za hodnotné). Cieľ: 95 %+ sitemap stránok indexovaných.'},
+        {h: 'Príklad z tvojich dát', p: 'Stránky neindexované = priestor na riešenie. Pridať internal linky na ne, zlepšiť obsah, odstrániť duplicate.'},
+        {h: 'Ako sa indexácia rieši', p: '<b>1.</b> GSC „URL inspection" → submit individual URLs. <b>2.</b> Skontroluj robots.txt a meta robots tags. <b>3.</b> Skontroluj canonical tags. <b>4.</b> Submit sitemap. <b>5.</b> Buduj internal linky z dôležitých stránok.'},
+        {h: 'Nezáleží na kvantite', p: '1 000 indexovaných stránok nie je samo o sebe dobré. <b>10 dobre rankujúcich stránok > 1 000 zabudnutých</b>. Ak máš veľa starých kategórií čo nepredávajú, zvážiť 301 redirect alebo noindex.'},
+        {h: 'Bežný omyl', p: 'Indexácia ≠ ranking. Stránka môže byť indexovaná, ale na pozícii 90. Indexácia je <b>nutná, ale nestačí</b>. Potom príde optimalizácia obsahu, internal linking, backlinks.'}
+      ]
+    }
+  };
+
+  function showKpiDetail(key) {
+    const k = KPI_DEEP[key];
+    if (!k) return;
+    let html = `<div style="margin-bottom:8px;font-size:13px;color:var(--muted);">${k.subtitle}</div>`;
+    k.sections.forEach(s => {
+      html += `<div style="margin-top:18px;"><div style="font-size:13px;font-weight:800;color:var(--orange-dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">${s.h}</div><div style="font-size:14px;line-height:1.7;color:var(--navy-3);">${s.p}</div></div>`;
+    });
+    document.getElementById('termTag').textContent = 'Hlavná metrika';
+    document.getElementById('termTitle').textContent = k.title;
+    document.getElementById('termBody').innerHTML = html;
+    document.getElementById('termPopup').classList.add('active');
+    document.getElementById('termOverlay').classList.add('active');
   }
 
   // === Bar chart ===
