@@ -1,0 +1,18 @@
+# Service account credentials — NIKDY do gitu
+service-account.json
+sa-*.json
+dami-seo-*.json
+*credentials*.json
+*-sa.json
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
