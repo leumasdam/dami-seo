@@ -207,6 +207,109 @@
     .audit-val.warn{color:var(--warn);}
     .audit-val.bad{color:var(--bad);}
 
+    /* === Growth banner (12-month plan teaser) === */
+    .growth-banner{
+      background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
+      color:#fff;
+      padding:24px 30px;border-radius:20px;
+      margin:24px 0;position:relative;overflow:hidden;
+      transition:transform .15s ease,box-shadow .15s ease;
+      box-shadow:0 8px 28px rgba(15,23,42,.12);
+    }
+    .growth-banner:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(15,23,42,.2);}
+    .growth-pattern{
+      position:absolute;top:0;right:0;bottom:0;width:50%;
+      background:
+        radial-gradient(circle at 90% 20%,var(--orange-glow) 0%,transparent 60%),
+        radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);
+      background-size:100% 100%,28px 28px;
+      pointer-events:none;
+    }
+    .growth-content{position:relative;z-index:1;}
+    .growth-eyebrow{
+      font-size:11px;font-weight:800;letter-spacing:.14em;
+      color:var(--orange);text-transform:uppercase;margin-bottom:10px;
+    }
+    .growth-title{
+      font-size:26px;font-weight:900;letter-spacing:-.03em;
+      margin-bottom:10px;line-height:1.2;color:#fff;
+    }
+    .growth-sub{font-size:14.5px;color:rgba(255,255,255,.8);line-height:1.65;margin-bottom:18px;max-width:780px;}
+    .growth-sub b{color:var(--orange);font-weight:700;}
+    .growth-stats{
+      display:flex;align-items:center;gap:14px;
+      flex-wrap:wrap;margin-bottom:18px;
+    }
+    .g-stat{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;
+      padding:11px 18px;backdrop-filter:blur(6px);
+    }
+    .g-stat-lbl{font-size:10.5px;font-weight:800;letter-spacing:.06em;color:rgba(255,255,255,.6);text-transform:uppercase;margin-bottom:4px;}
+    .g-stat-val{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.02em;}
+    .g-stat-arrow{color:rgba(255,255,255,.4);font-size:20px;font-weight:600;}
+    .growth-cta{
+      display:inline-flex;align-items:center;
+      background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);
+      color:#fff;padding:10px 20px;border-radius:11px;
+      font-weight:700;font-size:13.5px;
+      box-shadow:0 4px 14px var(--orange-glow);
+    }
+
+    /* === Plan tab content === */
+    .plan-section{margin-bottom:32px;}
+    .plan-tldr{
+      background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
+      color:#fff;padding:32px 36px;border-radius:22px;
+      margin-bottom:32px;position:relative;overflow:hidden;
+      background-image:
+        radial-gradient(circle at 92% 15%,var(--orange-glow) 0%,transparent 55%),
+        radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px),
+        linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);
+      background-size:100% 100%,32px 32px,100% 100%;
+    }
+    .plan-tldr-title{font-size:28px;font-weight:900;letter-spacing:-.03em;margin-bottom:14px;line-height:1.2;}
+    .plan-tldr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;}
+    .plan-tldr-cell{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 20px;}
+    .plan-tldr-cell-h{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+    .plan-tldr-cell-h.now{color:#94A3B8;}
+    .plan-tldr-cell-h.target{color:var(--orange);}
+    .plan-tldr-cell-h.path{color:var(--ok);}
+    .plan-tldr-cell-b{font-size:22px;font-weight:800;margin-bottom:4px;letter-spacing:-.02em;}
+    .plan-tldr-cell-s{font-size:12px;color:rgba(255,255,255,.65);line-height:1.5;}
+
+    .phase-mini{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:18px;padding:24px 28px;margin-bottom:14px;
+      position:relative;overflow:hidden;
+    }
+    .phase-mini::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;}
+    .phase-mini.p1::before{background:linear-gradient(90deg,var(--orange) 0%,var(--orange-dark) 100%);}
+    .phase-mini.p2::before{background:linear-gradient(90deg,#0EA5E9 0%,#0284C7 100%);}
+    .phase-mini.p3::before{background:linear-gradient(90deg,var(--purple) 0%,#7C3AED 100%);}
+    .phase-mini-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap;}
+    .phase-mini-num{color:#fff;width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;flex-shrink:0;}
+    .phase-mini.p1 .phase-mini-num{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);box-shadow:0 4px 14px var(--orange-glow);}
+    .phase-mini.p2 .phase-mini-num{background:linear-gradient(135deg,#0EA5E9 0%,#0284C7 100%);box-shadow:0 4px 14px rgba(14,165,233,.3);}
+    .phase-mini.p3 .phase-mini-num{background:linear-gradient(135deg,var(--purple) 0%,#7C3AED 100%);box-shadow:0 4px 14px rgba(139,92,246,.3);}
+    .phase-mini-info{flex:1;min-width:200px;}
+    .phase-mini-info h4{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.02em;}
+    .phase-mini-info .pm-time{font-size:12.5px;color:var(--muted);margin-top:2px;}
+    .phase-mini-impact{background:var(--ok-soft);color:var(--ok);padding:6px 14px;border-radius:10px;font-size:13px;font-weight:800;white-space:nowrap;}
+    .phase-mini-desc{font-size:13.5px;color:var(--navy-3);line-height:1.65;margin-bottom:12px;}
+    .phase-mini-tactics{font-size:13px;color:var(--navy-3);line-height:1.7;}
+    .phase-mini-tactics b{color:var(--navy);}
+
+    /* Mini financial chart */
+    .fin-mini{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 28px;}
+    .fin-mini-bars{display:flex;gap:8px;height:180px;align-items:flex-end;margin-top:14px;}
+    .fin-mini-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+    .fin-mini-bar-val{font-size:11px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums;}
+    .fin-mini-bar-shape{width:100%;background:linear-gradient(180deg,var(--orange) 0%,var(--orange-dark) 100%);border-radius:6px 6px 2px 2px;min-height:6px;}
+    .fin-mini-bar-shape.future{background:linear-gradient(180deg,rgba(249,115,22,.35) 0%,rgba(234,88,12,.35) 100%);border:1px dashed var(--orange);}
+    .fin-mini-bar-label{font-size:10.5px;color:var(--muted);font-weight:600;}
+
     /* === Tooltip system === */
     .term{
       display:inline-block;
@@ -339,9 +442,37 @@
     </div>
   </div>
 
+  <!-- GROWTH PLAN BANNER -->
+  <div class="growth-banner" onclick="document.querySelector('.tabs button[data-tab=plan]').click();window.scrollTo({top:0,behavior:'smooth'});" style="cursor:pointer;">
+    <div class="growth-pattern"></div>
+    <div class="growth-content">
+      <div class="growth-eyebrow">📈 12-mesačný plán rastu</div>
+      <h3 class="growth-title">Z 19 klikov týždenne na 500+ za rok</h3>
+      <div class="growth-sub">Realistický plán postavený na tvojich GSC dátach. Quick wins (8 h práce) → Content (40 h) → Authority (60 h). Cieľ revenue <b>700–1 500 € / mesiac</b> za rok.</div>
+      <div class="growth-stats">
+        <div class="g-stat">
+          <div class="g-stat-lbl">📍 Teraz</div>
+          <div class="g-stat-val">19 klikov</div>
+        </div>
+        <div class="g-stat-arrow">→</div>
+        <div class="g-stat">
+          <div class="g-stat-lbl">📈 Cieľ M6</div>
+          <div class="g-stat-val">250 klikov</div>
+        </div>
+        <div class="g-stat-arrow">→</div>
+        <div class="g-stat">
+          <div class="g-stat-lbl">🎯 Cieľ M12</div>
+          <div class="g-stat-val">500+ klikov</div>
+        </div>
+      </div>
+      <div class="growth-cta">Otvoriť celý plán →</div>
+    </div>
+  </div>
+
   <!-- TABS -->
   <div class="tabs" id="tabs">
     <button class="active" data-tab="overview">📊 Prehľad</button>
+    <button data-tab="plan" style="background:linear-gradient(135deg,rgba(249,115,22,.18) 0%,rgba(249,115,22,.06) 100%);color:var(--orange-dark);font-weight:800;">📈 Plán rastu</button>
     <button data-tab="actions">🎯 Akcie</button>
     <button data-tab="quickwins">🚀 Rýchle výhry</button>
     <button data-tab="ctr">📝 CTR</button>
@@ -380,6 +511,128 @@
     <h2 class="sect"><span class="sect-icon">🎯</span>Top 3 priority tento týždeň</h2>
     <div class="sect-sub">Najlepší pomer prínosu k času. Klikni „Akcie" pre celý zoznam 5 priorít.</div>
     <div class="actions" id="topActionsPreview"></div>
+  </div>
+
+  <!-- TAB: Plan rastu -->
+  <div class="tab-pane" id="tab-plan">
+
+    <!-- TL;DR -->
+    <div class="plan-tldr">
+      <div style="font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--orange);text-transform:uppercase;margin-bottom:12px;">⚡ 12-mesačný plán rastu · Stručne</div>
+      <div class="plan-tldr-title">Z 19 klikov týždenne na 500+ za rok — realistický plán</div>
+      <p style="font-size:15px;line-height:1.7;max-width:880px;color:rgba(255,255,255,.85);">
+        Tvoj web má <b style="color:var(--orange);">solídnu viditeľnosť</b> v Google (1 242 zobrazení za 28 dní), ale <b style="color:var(--orange);">slabú konverziu klikov</b> (CTR 1,53 % vs retail priemer 3–5 %). Pri 3 fázach optimalizácie a investícii <b style="color:var(--orange);">~3 hodín týždenne</b> sa dá za rok dosiahnuť organic revenue <b style="color:var(--orange);">700–1 500 € mesačne</b>.
+      </p>
+      <div class="plan-tldr-grid">
+        <div class="plan-tldr-cell">
+          <div class="plan-tldr-cell-h now">📍 Teraz</div>
+          <div class="plan-tldr-cell-b">19 klikov</div>
+          <div class="plan-tldr-cell-s">28 dní · 70 sessions · 0 € · pozícia 9,3</div>
+        </div>
+        <div class="plan-tldr-cell">
+          <div class="plan-tldr-cell-h target">🎯 Cieľ 12 mes.</div>
+          <div class="plan-tldr-cell-b">500+ klikov</div>
+          <div class="plan-tldr-cell-s">~1 500 sess · 700–1 500 € / mes · poz. 5–6</div>
+        </div>
+        <div class="plan-tldr-cell">
+          <div class="plan-tldr-cell-h path">🛣️ Cesta</div>
+          <div class="plan-tldr-cell-b">3 fázy</div>
+          <div class="plan-tldr-cell-s">Quick wins → Content → Authority</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 Phases -->
+    <h2 class="sect"><span class="sect-icon">🛣️</span>3-fázový plán</h2>
+    <div class="sect-sub">Postupný plán optimalizácie. Každá fáza stavia na predošlej. Detailný rozpis taktík nájdeš v <a href="strategia.html" style="color:var(--orange-dark);font-weight:600;">celom strategickom dokumente</a>.</div>
+
+    <div class="phase-mini p1">
+      <div class="phase-mini-head">
+        <div class="phase-mini-num">1</div>
+        <div class="phase-mini-info">
+          <h4>Quick Wins · Rýchle optimalizácie</h4>
+          <div class="pm-time">⏱ Mesiac 1–2 · 8–12 hodín spolu</div>
+        </div>
+        <div class="phase-mini-impact">+400–500 % klikov</div>
+      </div>
+      <div class="phase-mini-desc">Rýchle využitie existujúcej viditeľnosti. Stránky čo už rankujú v top 20 dostanú push do top 5. Title rewrites priťahajú viac klikov pri rovnakých zobrazeniach.</div>
+      <div class="phase-mini-tactics">
+        <b>Hlavné tactics:</b> Title rewrite homepage (15 min, +50 klikov/mes) · Push „dami" + „dami menu" do top 3 (30 min každý) · Optimalizácia „pracovné odevy piešťany" (2 h) · Audit padajúcej pracovnej obuvi (1,5 h) · Internal linking audit (2–3 h)<br>
+        <b>Výsledok:</b> 19 → 80–120 klikov / 28 dní
+      </div>
+    </div>
+
+    <div class="phase-mini p2">
+      <div class="phase-mini-head">
+        <div class="phase-mini-num">2</div>
+        <div class="phase-mini-info">
+          <h4>Content Expansion · Rozšírenie obsahu</h4>
+          <div class="pm-time">⏱ Mesiac 2–4 · 25–40 hodín spolu</div>
+        </div>
+        <div class="phase-mini-impact">2–3× viac klikov</div>
+      </div>
+      <div class="phase-mini-desc">Po quick wins potrebujeme nový obsah pre nové queries. Rising queries (antikorová obuv pre kuchárov, termoaktívne tričká) sú prázdne pre konkurenciu — first mover advantage.</div>
+      <div class="phase-mini-tactics">
+        <b>Hlavné tactics:</b> Long-form text na top 8 kategóriach (8 h) · Schema markup Product+Offer+Review (4–6 h) · FAQ sekcie na top 10 PDPs (5 h) · Nové podkategórie pre rising queries (6–8 h) · Blog/Guide 1 článok / 2 týždne<br>
+        <b>Výsledok:</b> 80–120 → 250–450 klikov / 28 dní
+      </div>
+    </div>
+
+    <div class="phase-mini p3">
+      <div class="phase-mini-head">
+        <div class="phase-mini-num">3</div>
+        <div class="phase-mini-info">
+          <h4>Authority Building · Budovanie autority</h4>
+          <div class="pm-time">⏱ Mesiac 4–12 · 60–100 hodín za 8 mesiacov</div>
+        </div>
+        <div class="phase-mini-impact">+1 000+ klikov</div>
+      </div>
+      <div class="phase-mini-desc">Long-term práca. Backlinks, brand awareness, reviews a partnerships. Tu sa rozhoduje, či sa dostaneš nad konkurentov (ramirent, pracovne-odevy.sk), alebo zostaneš v ich tieni.</div>
+      <div class="phase-mini-tactics">
+        <b>Hlavné tactics:</b> Backlink outreach 3–5 mentions/mes (6 h/mes) · PR a partnerstvá s priemyselnými školami · Reviews acquisition system (1 h setup) · B2B landing pages (8 h) · YouTube + Instagram content<br>
+        <b>Výsledok:</b> 250–450 → 500–1 200+ klikov / 28 dní
+      </div>
+    </div>
+
+    <!-- Financial projection -->
+    <h2 class="sect"><span class="sect-icon">💰</span>Finančná projekcia · 12 mesiacov</h2>
+    <div class="sect-sub">Konzervatívny odhad organic revenue. Predpoklady: AOV <b>60 €</b>, konverzia <b>1,5–2,5 %</b> (rastie s CRO prácou), 75 % click-to-session rate.</div>
+
+    <div class="fin-mini">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;">
+        <div style="font-size:14px;font-weight:700;color:var(--navy);">Mesačný organic revenue · očakávaná trajektória</div>
+        <div style="font-size:12px;color:var(--muted);">Plné = Phase 1+2 · Čiarkované = Phase 3 projekcia</div>
+      </div>
+      <div class="fin-mini-bars">
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">0 €</span><div class="fin-mini-bar-shape" style="height:1%;"></div><span class="fin-mini-bar-label">M1</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">15 €</span><div class="fin-mini-bar-shape" style="height:3%;"></div><span class="fin-mini-bar-label">M2</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">45 €</span><div class="fin-mini-bar-shape" style="height:8%;"></div><span class="fin-mini-bar-label">M3</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">90 €</span><div class="fin-mini-bar-shape" style="height:16%;"></div><span class="fin-mini-bar-label">M4</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">140 €</span><div class="fin-mini-bar-shape future" style="height:25%;"></div><span class="fin-mini-bar-label">M5</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">220 €</span><div class="fin-mini-bar-shape future" style="height:38%;"></div><span class="fin-mini-bar-label">M6</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">320 €</span><div class="fin-mini-bar-shape future" style="height:54%;"></div><span class="fin-mini-bar-label">M7</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">450 €</span><div class="fin-mini-bar-shape future" style="height:72%;"></div><span class="fin-mini-bar-label">M8</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">600 €</span><div class="fin-mini-bar-shape future" style="height:80%;"></div><span class="fin-mini-bar-label">M9</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">780 €</span><div class="fin-mini-bar-shape future" style="height:88%;"></div><span class="fin-mini-bar-label">M10</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">980 €</span><div class="fin-mini-bar-shape future" style="height:94%;"></div><span class="fin-mini-bar-label">M11</span></div>
+        <div class="fin-mini-bar-col"><span class="fin-mini-bar-val">1200 €</span><div class="fin-mini-bar-shape future" style="height:100%;"></div><span class="fin-mini-bar-label">M12</span></div>
+      </div>
+
+      <div style="margin-top:18px;padding:14px 16px;background:var(--soft);border-radius:10px;font-size:12.5px;color:var(--navy-3);line-height:1.65;">
+        <b style="color:var(--navy);">📌 Plus B2B leads navyše:</b> workwear má silný biznis segment. Pri Phase 3 očakávame 1–3 B2B inquiries / mesiac z organic. Jeden lead = <b>500–2 000 €</b>. Konzervatívne <b>+300–1 000 € / mesiac</b> v M9+.
+      </div>
+    </div>
+
+    <!-- CTA to full strategy -->
+    <div style="background:linear-gradient(135deg,var(--orange-soft) 0%,#fff 100%);border:2px solid var(--orange);border-radius:18px;padding:24px 28px;margin-top:24px;text-align:center;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--orange-dark);text-transform:uppercase;margin-bottom:8px;">📖 Detailný plán</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:10px;">Kompletný strategický dokument</h3>
+      <p style="font-size:14px;color:var(--navy-3);line-height:1.7;margin-bottom:16px;max-width:680px;margin-left:auto;margin-right:auto;">
+        Konkrétne taktiky každej fázy, KPI tracking, riziká a predpoklady, financie detailne s tabuľkou.
+      </p>
+      <a href="strategia.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);color:#fff;padding:12px 24px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 4px 14px var(--orange-glow);">Otvoriť celý plán →</a>
+    </div>
+
   </div>
 
   <!-- TAB: ACTIONS -->
