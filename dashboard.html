@@ -841,7 +841,8 @@
     const tab = e.target.dataset.tab;
     document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    // Po kliku zachovaj filter v top viewportu, content sa zobrazí pod ním
+    document.getElementById('tabs').scrollIntoView({behavior:'smooth', block:'start'});
   });
 
   // === Formatters ===
