@@ -92,21 +92,24 @@ def query_gsc(service, start_date: str, end_date: str, dimensions=None, row_limi
 
 
 def fetch_weeks():
-    """Vráti GSC dáta za posledný + predošlý týždeň."""
+    """Vráti GSC dáta za posledných N dní + predošlých N dní (N podľa WINDOW_DAYS env)."""
     service = get_service()
     if not service:
         return None
 
+    window = int(os.environ.get("WINDOW_DAYS", "28"))
     today = date.today()
-    cur_end = today - timedelta(days=1)
-    cur_start = today - timedelta(days=7)
-    prev_end = today - timedelta(days=8)
-    prev_start = today - timedelta(days=14)
+    # Posledné 2-3 dni v GSC bývajú s lagom — posunieme okno o 3 dni dozadu
+    lag = int(os.environ.get("GSC_LAG_DAYS", "3"))
+    cur_end = today - timedelta(days=lag)
+    cur_start = today - timedelta(days=lag + window)
+    prev_end = today - timedelta(days=lag + window + 1)
+    prev_start = today - timedelta(days=lag + 2*window + 1)
 
-    print(f"  → GSC fetch: {cur_start} → {cur_end} (current)")
-    cur = query_gsc(service, cur_start.isoformat(), cur_end.isoformat())
-    print(f"  → GSC fetch: {prev_start} → {prev_end} (previous)")
-    prev = query_gsc(service, prev_start.isoformat(), prev_end.isoformat())
+    print(f"  → GSC fetch: {cur_start} → {cur_end} ({window} dní · current)")
+    cur = query_gsc(service, cur_start.isoformat(), cur_end.isoformat(), row_limit=5000)
+    print(f"  → GSC fetch: {prev_start} → {prev_end} ({window} dní · previous)")
+    prev = query_gsc(service, prev_start.isoformat(), prev_end.isoformat(), row_limit=5000)
 
     if not cur or not prev:
         return None

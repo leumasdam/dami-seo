@@ -1,58 +1,173 @@
 {
-  "lastUpdated": "2026-05-25",
-  "week": "KW 21 · 18.5.–24.5.2026",
+  "lastUpdated": "2026-05-26",
+  "week": "KW 22 · 2026-05-19 → 2026-05-26",
   "site": "dami-pracovne-odevy.sk",
-  "source": "GSC + GA4 · auto-update Mondays 06:00 UTC (mock data — credentials pending)",
+  "source": "GSC + GA4 + PSI · auto-update Mondays 06:00 UTC",
   "_meta": {
-    "gsc_status": "pending_credentials",
-    "ga4_status": "pending_credentials",
+    "gsc_status": "live",
+    "ga4_status": "live",
     "psi_status": "pending_credentials",
     "ai_provider": "template-fallback"
   },
   "kpi": {
-    "clicks": {"value": 1247, "wow_pct": 14.2},
-    "impressions": {"value": 38420, "wow_pct": 8.1},
-    "avg_position": {"value": 12.3, "wow_delta": -0.8},
-    "ctr": {"value": 3.24, "wow_delta": 0.18},
-    "sessions_organic": {"value": 1184, "wow_pct": 12.8},
-    "conversion_rate": {"value": 2.11, "wow_delta": -0.3},
-    "revenue_eur": {"value": 4380, "wow_pct": 9.4}
+    "clicks": {
+      "value": 19,
+      "wow_pct": -54.8
+    },
+    "impressions": {
+      "value": 1242,
+      "wow_pct": -26.8
+    },
+    "avg_position": {
+      "value": 9.3,
+      "wow_delta": 0.2
+    },
+    "ctr": {
+      "value": 1.53,
+      "wow_delta": -0.95
+    },
+    "sessions_organic": {
+      "value": 70,
+      "wow_pct": 1.4
+    },
+    "conversion_rate": {
+      "value": 0.0,
+      "wow_delta": -1.45
+    },
+    "revenue_eur": {
+      "value": 0,
+      "wow_pct": -100.0
+    }
   },
   "ai_summary": {
-    "sk": "Týždeň priniesol <b>+14 % klikov</b> a <b>+9 % výnos</b>, ale konverzia mierne klesla o <b>0,3 pp</b>. Najsilnejší rast: query <i>zimné montérky pánske</i> (pos 6 → impressions +180). Najväčší risk: stránka <code>/produkt/m43-bunda</code> stratila <b>42 % klikov</b> WoW. Tri priority na tento týždeň: push quick win na zimné montérky, prepis title pre kategóriu rukavice (CTR 1,2 % @ pos 2), audit prepadnutej M43 bundy."
+    "sk": "Malý objem za sledované obdobie (<b>19 klikov</b>, <b>1242 zobrazení</b>). Priemerná pozícia <b>9.3</b> — viditeľnosť je, ale CTR <b>1.53 %</b> ukazuje že title/snippet potrebujú prácu. Najsilnejšia príležitosť: query <i>dami</i> na pozícii 5.2 s <b>133</b> zobrazeniami — push do top 3 môže priniesť ~<b>+14 klikov</b>. Risk: stránka <code>https://www.dami-pracovne-odevy.sk/pracovna-obuv/</code> stratila <b>80 %</b> klikov vs predošlé obdobie — odporúčam audit."
   },
   "quick_wins": [
-    {"query": "zimné montérky pánske", "page": "/kategoria/zimne-monterky", "position": 6.2, "impressions": 412, "clicks": 18, "ctr": 4.4, "wow_impressions": 180, "wow_position": -1.4, "potential_clicks": 82, "priority": 95, "action": "Pridať 200 slov technického popisu + 3 interné linky z najsilnejších stránok"},
-    {"query": "pracovné rukavice kožené", "page": "/kategoria/pracovne-rukavice", "position": 7.8, "impressions": 298, "clicks": 9, "ctr": 3.0, "wow_impressions": 95, "wow_position": -0.6, "potential_clicks": 58, "priority": 88, "action": "FAQ sekcia (typy kože, certifikácie EN 388) + product schema"},
-    {"query": "reflexné vesty", "page": "/kategoria/reflexne-vesty", "position": 9.4, "impressions": 245, "clicks": 6, "ctr": 2.4, "wow_impressions": 62, "wow_position": -2.1, "potential_clicks": 48, "priority": 82, "action": "Bullet list noriem EN ISO 20471, filtre podľa triedy reflexnosti"},
-    {"query": "letné montérky", "page": "/kategoria/letne-monterky", "position": 11.7, "impressions": 220, "clicks": 4, "ctr": 1.8, "wow_impressions": 88, "wow_position": -3.2, "potential_clicks": 44, "priority": 79, "action": "H2 'Letné montérky pre rok 2026' + interný link z homepage hero"},
-    {"query": "bezpečnostná obuv s1p", "page": "/kategoria/pracovna-obuv", "position": 8.5, "impressions": 178, "clicks": 5, "ctr": 2.8, "wow_impressions": 41, "wow_position": -0.8, "potential_clicks": 36, "priority": 74, "action": "Samostatná podkategória pre S1P + schema BreadcrumbList"},
-    {"query": "ochranné okuliare na sklo", "page": "/kategoria/ochranne-okuliare", "position": 13.2, "impressions": 156, "clicks": 2, "ctr": 1.3, "wow_impressions": 35, "wow_position": -1.1, "potential_clicks": 31, "priority": 68, "action": "Long-form porovnanie s 5 modelmi"},
-    {"query": "pracovné nohavice s vreckami", "page": "/kategoria/pracovne-nohavice", "position": 10.1, "impressions": 142, "clicks": 4, "ctr": 2.8, "wow_impressions": 28, "wow_position": -0.4, "potential_clicks": 28, "priority": 65, "action": "Filter podľa počtu vreciek + product schema features"},
-    {"query": "gumáky pracovné pánske", "page": "/kategoria/gumaky", "position": 12.4, "impressions": 124, "clicks": 3, "ctr": 2.4, "wow_impressions": 22, "wow_position": -0.7, "potential_clicks": 25, "priority": 61, "action": "H1 audit + interný link z zimné montérky"}
+    {
+      "query": "dami",
+      "page": "https://www.dami-pracovne-odevy.sk/",
+      "position": 5.2,
+      "impressions": 133,
+      "clicks": 0,
+      "ctr": 0,
+      "wow_impressions": -44,
+      "wow_position": -0.0,
+      "potential_clicks": 14,
+      "priority": 20,
+      "action": "Pridať 200 slov + interné linky z najsilnejších stránok, optimalizovať H2/H3"
+    },
+    {
+      "query": "dami menu",
+      "page": "https://www.dami-pracovne-odevy.sk/",
+      "position": 4.6,
+      "impressions": 79,
+      "clicks": 0,
+      "ctr": 0,
+      "wow_impressions": -29,
+      "wow_position": 0.1,
+      "potential_clicks": 8,
+      "priority": 11,
+      "action": "Pridať 200 slov + interné linky z najsilnejších stránok, optimalizovať H2/H3"
+    },
+    {
+      "query": "pracovné odevy piešťany",
+      "page": "https://www.dami-pracovne-odevy.sk/kontakt/",
+      "position": 11.8,
+      "impressions": 71,
+      "clicks": 0,
+      "ctr": 0,
+      "wow_impressions": -30,
+      "wow_position": 0.3,
+      "potential_clicks": 7,
+      "priority": 10,
+      "action": "Pridať 300+ slov technického obsahu + 3 interné linky z autoritných stránok"
+    }
   ],
   "ctr_underperformers": [
-    {"query": "pracovné odevy", "page": "/", "position": 2.1, "ctr": 1.18, "expected_ctr": 14.8, "impressions": 2840, "current_title": "Dami pracovné odevy — kvalitné montérky a doplnky", "suggested_title": "Pracovné odevy a montérky | Doprava zadarmo nad 50 € | Dami", "potential_clicks": 388, "priority": 98},
-    {"query": "pracovné rukavice", "page": "/kategoria/pracovne-rukavice", "position": 2.8, "ctr": 1.92, "expected_ctr": 10.4, "impressions": 1020, "current_title": "Pracovné rukavice — Dami", "suggested_title": "Pracovné rukavice 2026 — Skladom · Doručenie do 24 h", "potential_clicks": 87, "priority": 91},
-    {"query": "pracovná obuv", "page": "/kategoria/pracovna-obuv", "position": 3.4, "ctr": 2.5, "expected_ctr": 8.1, "impressions": 780, "current_title": "Pracovná obuv — kategória", "suggested_title": "Pracovná obuv S1P / S3 / S5 — všetky bezpečnostné triedy", "potential_clicks": 44, "priority": 84},
-    {"query": "montérky pánske", "page": "/kategoria/monterky-panske", "position": 4.2, "ctr": 3.1, "expected_ctr": 6.4, "impressions": 612, "current_title": "Pánske montérky — Dami workwear", "suggested_title": "Pánske montérky | XS–XXXL · skladom · Dami workwear", "potential_clicks": 20, "priority": 71}
+    {
+      "query": "pracovné odevy piešťany",
+      "page": "https://www.dami-pracovne-odevy.sk/",
+      "position": 1.5,
+      "ctr": 12.99,
+      "expected_ctr": 21.9,
+      "impressions": 77,
+      "current_title": "—",
+      "suggested_title": "Pracovné odevy piešťany | Doprava zadarmo nad 50 €",
+      "potential_clicks": 6,
+      "priority": 3
+    },
+    {
+      "query": "dami menu",
+      "page": "https://www.dami-pracovne-odevy.sk/",
+      "position": 4.6,
+      "ctr": 0,
+      "expected_ctr": 7.5,
+      "impressions": 79,
+      "current_title": "—",
+      "suggested_title": "Dami menu | Doprava zadarmo nad 50 €",
+      "potential_clicks": 5,
+      "priority": 2
+    }
   ],
   "falling_pages": [
-    {"page": "/produkt/m43-bunda", "clicks_now": 14, "clicks_prev": 24, "wow_pct": -41.7, "position_now": 8.4, "position_prev": 6.1, "likely_cause": "Pozícia padla 2,3 miest — možný content drift alebo nový competitor", "action": "Pozrieť SERP pre 'm43 bunda', porovnať s top 3 výsledkami, doplniť chýbajúci obsah"},
-    {"page": "/kategoria/zimne-rukavice", "clicks_now": 8, "clicks_prev": 14, "wow_pct": -42.9, "position_now": 11.2, "position_prev": 9.1, "likely_cause": "Sezónny pokles — máj nie je peak pre zimné rukavice. Normálne, ale neza polovicu mesiaca čakaj rebound.", "action": "Monitorovať, nie urgentná akcia. V auguste content refresh."},
-    {"page": "/produkt/reflexna-bunda-pro", "clicks_now": 5, "clicks_prev": 12, "wow_pct": -58.3, "position_now": 14.8, "position_prev": 10.4, "likely_cause": "Skoková zmena — buď indexing issue alebo aktualizovaný SERP", "action": "Skontrolovať GSC Coverage, manual fetch + reindex"}
+    {
+      "page": "https://www.dami-pracovne-odevy.sk/pracovna-obuv/",
+      "clicks_now": 1,
+      "clicks_prev": 5,
+      "wow_pct": -80.0,
+      "position_now": 23.7,
+      "position_prev": 8.7,
+      "likely_cause": "Pozícia padla 15.0 miest — možný content drift alebo nový competitor",
+      "action": "Pozrieť SERP, porovnať s top 3, doplniť chýbajúci obsah"
+    },
+    {
+      "page": "https://www.dami-pracovne-odevy.sk/",
+      "clicks_now": 14,
+      "clicks_prev": 32,
+      "wow_pct": -56.2,
+      "position_now": 7.2,
+      "position_prev": 6.0,
+      "likely_cause": "Mierny pokles pozície, sledovať trend",
+      "action": "Pozrieť SERP, porovnať s top 3, doplniť chýbajúci obsah"
+    },
+    {
+      "page": "https://www.dami-pracovne-odevy.sk/pracovne-odevy/",
+      "clicks_now": 2,
+      "clicks_prev": 3,
+      "wow_pct": -33.3,
+      "position_now": 12.7,
+      "position_prev": 17.2,
+      "likely_cause": "Pozícia stabilná, ale clicks padajú — možno SERP feature alebo seasonal",
+      "action": "Pozrieť SERP, porovnať s top 3, doplniť chýbajúci obsah"
+    }
   ],
   "rising_queries": [
-    {"query": "pracovný overal jednorázový", "impressions_now": 84, "impressions_prev": 12, "growth_pct": 600, "page_ranked": "—", "action": "Nová stránka alebo blog post pre tento query — nepokrývaš"},
-    {"query": "antikorová obuv pre kuchárov", "impressions_now": 56, "impressions_prev": 0, "growth_pct": null, "page_ranked": "—", "action": "Niche query, zvážiť produktovú kategóriu Kuchár/HoReCa"},
-    {"query": "termoaktívne tričko pracovné", "impressions_now": 48, "impressions_prev": 18, "growth_pct": 167, "page_ranked": "/kategoria/pracovne-tricka", "action": "Pridať H2 'Termoaktívne pracovné tričká' + filter materiálu"},
-    {"query": "ochrana sluchu na stavbu", "impressions_now": 41, "impressions_prev": 9, "growth_pct": 356, "page_ranked": "—", "action": "Kategória 'Ochrana sluchu' chýba, alebo iba produkty bez kategórie"}
+    {
+      "query": "bezpečnostná obuv s1",
+      "impressions_now": 18,
+      "impressions_prev": 2,
+      "growth_pct": 800,
+      "page_ranked": "https://www.dami-pracovne-odevy.sk/s1-s1p-s3-ocelovou-vystuzou/",
+      "action": "Pridať obsah optimalizovaný na tento query na existujúcu stránku"
+    },
+    {
+      "query": "krajcirstvo piestany",
+      "impressions_now": 17,
+      "impressions_prev": 1,
+      "growth_pct": 1600,
+      "page_ranked": "https://www.dami-pracovne-odevy.sk/",
+      "action": "Pridať obsah optimalizovaný na tento query na existujúcu stránku"
+    },
+    {
+      "query": "čapice",
+      "impressions_now": 16,
+      "impressions_prev": 6,
+      "growth_pct": 166,
+      "page_ranked": "https://www.dami-pracovne-odevy.sk/capice-siltovky/",
+      "action": "Pridať obsah optimalizovaný na tento query na existujúcu stránku"
+    }
   ],
-  "cro_opportunities": [
-    {"page": "/kategoria/pracovne-rukavice", "sessions": 312, "bounce_rate": 68, "conv_rate": 1.4, "avg_session_sec": 42, "issue": "Vysoká bounce (68 % vs site avg 51 %)", "hypothesis": "Návštevník nevidí jasné filtre (typ, ochrana, veľkosť). Filter UI hore + sticky CTA 'Filtrovať'.", "expected_lift": "+0,8 pp konv. = ~10 € týždenne"},
-    {"page": "/kategoria/zimne-monterky", "sessions": 184, "bounce_rate": 54, "conv_rate": 0.9, "avg_session_sec": 78, "issue": "Sessions stúpajú, ale konverzia pod sériovým priemerom 2,1 %", "hypothesis": "Sezónny záujem, ale chýba urgencia. Pridať 'Skladom · Zostáva X kusov' + recenzie nad fold.", "expected_lift": "+0,6 pp konv. = ~7 € týždenne"},
-    {"page": "/kategoria/pracovna-obuv", "sessions": 247, "bounce_rate": 71, "conv_rate": 1.1, "avg_session_sec": 38, "issue": "Najvyššia bounce z top kategórií", "hypothesis": "Komplexný výber (S1, S1P, S2, S3, S5) — nikto nevie čo potrebuje. Pridať 'Pomôžeme vybrať' kvíz alebo decision tree.", "expected_lift": "+1,2 pp konv. = ~22 € týždenne"}
-  ],
+  "cro_opportunities": [],
   "technical": {
     "core_web_vitals": {
       "lcp_p75_ms": 2840,
@@ -62,31 +177,46 @@
       "cls_status": "good",
       "inp_status": "good"
     },
-    "indexed_pages": 1247,
-    "sitemap_pages": 1284,
-    "not_indexed": 37,
-    "duplicate_titles": 14,
-    "missing_meta_desc": 28,
-    "missing_h1": 6,
-    "missing_product_schema": 42
+    "indexed_pages": 0,
+    "sitemap_pages": 0,
+    "not_indexed": 0,
+    "duplicate_titles": 0,
+    "missing_meta_desc": 0,
+    "missing_h1": 0,
+    "missing_product_schema": 0
   },
   "top_actions_this_week": [
-    {"priority": 1, "type": "quick_win", "title": "Zimné montérky pánske — push na pos 1-3", "impact": "+82 klikov/týždeň", "effort": "1 h", "details": "Pridať 200 slov technického popisu na /kategoria/zimne-monterky + 3 interné linky z najsilnejších stránok (homepage, montérky-panske)"},
-    {"priority": 2, "type": "ctr_rewrite", "title": "Title rewrite — homepage", "impact": "+388 klikov/týždeň (potential)", "effort": "10 min", "details": "Súčasný title má CTR 1,2 % @ pos 2 (benchmark 14,8 %). Nový návrh: 'Pracovné odevy a montérky | Doprava zadarmo nad 50 € | Dami'"},
-    {"priority": 3, "type": "falling_audit", "title": "Audit M43 bunda — clicks ↓42 % WoW", "impact": "Stop ďalšieho prepadu + návrat ~10 klikov", "effort": "30 min", "details": "Pozícia padla 6,1 → 8,4. Pravdepodobne content drift alebo nový competitor. Porovnať s top 3 SERP výsledkami, doplniť chýbajúci obsah."},
-    {"priority": 4, "type": "cro", "title": "Pracovná obuv — pridať 'Pomôžeme vybrať' kvíz", "impact": "+22 € týždenne (najlepší ROI z CRO)", "effort": "2 h", "details": "Najvyššia bounce 71 %, návštevník nevie vybrať medzi S1/S1P/S3/S5 triedami. Decision tree alebo 3-otázkový kvíz na vrchu kategórie."},
-    {"priority": 5, "type": "new_content", "title": "Nový obsah — antikorová obuv pre kuchárov", "impact": "Niche query, no competition", "effort": "3 h (research + page + 800 slov)", "details": "Query 'antikorová obuv pre kuchárov' má 56 impressions z 0 minulý týždeň. HoReCa segment opportunity."}
-  ],
-  "site_audit_snippet": {
-    "checked_at": "2026-05-25 06:00 UTC",
-    "duplicate_titles_sample": [
-      {"title": "Pracovné odevy — Dami", "pages": ["/kategoria/blogy", "/blog/test-2025"]},
-      {"title": "Kontakt", "pages": ["/kontakt", "/kontakt-bratislava", "/kontakt-kosice"]}
-    ],
-    "missing_h1_pages": [
-      "/produkt/m43-bunda-velkost-l",
-      "/blog/co-pri-vybere-monteriek",
-      "/o-nas"
-    ]
-  }
+    {
+      "priority": 1,
+      "type": "quick_win",
+      "title": "dami — push na pos 1-3",
+      "impact": "+14 klikov/týždeň",
+      "effort": "1 h",
+      "details": "Pridať 200 slov + interné linky z najsilnejších stránok, optimalizovať H2/H3"
+    },
+    {
+      "priority": 2,
+      "type": "ctr_rewrite",
+      "title": "Title rewrite — https://www.dami-pracovne-odevy.sk/",
+      "impact": "+6 klikov/týždeň (potential)",
+      "effort": "10 min",
+      "details": "Súčasný CTR 12.99 % @ pos 1.5 (benchmark 21.9 %). Nový návrh: 'Pracovné odevy piešťany | Doprava zadarmo nad 50 €'"
+    },
+    {
+      "priority": 3,
+      "type": "falling_audit",
+      "title": "Audit https://www.dami-pracovne-odevy.sk/pracovna-obuv/ — clicks -80.0 % WoW",
+      "impact": "Stop ďalšieho prepadu",
+      "effort": "30 min",
+      "details": "Pozícia padla 15.0 miest — možný content drift alebo nový competitor. Pozrieť SERP, porovnať s top 3, doplniť chýbajúci obsah"
+    },
+    {
+      "priority": 5,
+      "type": "new_content",
+      "title": "Nový obsah — bezpečnostná obuv s1",
+      "impact": "Optimize existing",
+      "effort": "3 h",
+      "details": "Pridať obsah optimalizovaný na tento query na existujúcu stránku"
+    }
+  ]
 }

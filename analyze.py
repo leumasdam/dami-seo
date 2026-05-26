@@ -43,7 +43,7 @@ def diff_queries(cur: list, prev: list):
 
 # === Detekčné pravidlá ===
 
-def find_quick_wins(gsc_diff, min_impressions=80, min_pos=4, max_pos=15):
+def find_quick_wins(gsc_diff, min_impressions=30, min_pos=4, max_pos=20):
     """Queries na pozícii 4-15 s rastom — dajú sa pushnúť do top 3."""
     wins = []
     for (query, page), (cur, prev) in gsc_diff.items():
@@ -84,11 +84,11 @@ def find_quick_wins(gsc_diff, min_impressions=80, min_pos=4, max_pos=15):
     return sorted(wins, key=lambda x: -x["priority"])[:10]
 
 
-def find_ctr_underperformers(gsc_diff, max_pos=3, ctr_threshold_pct=0.7):
-    """Queries na top 3 pozíciach s CTR pod 70% benchmarku."""
+def find_ctr_underperformers(gsc_diff, max_pos=5, ctr_threshold_pct=0.6):
+    """Queries na top 5 pozíciach s CTR pod 60% benchmarku."""
     out = []
     for (query, page), (cur, prev) in gsc_diff.items():
-        if not cur or cur["impressions"] < 100:
+        if not cur or cur["impressions"] < 40:
             continue
         if cur["position"] > max_pos:
             continue
@@ -110,7 +110,7 @@ def find_ctr_underperformers(gsc_diff, max_pos=3, ctr_threshold_pct=0.7):
     return sorted(out, key=lambda x: -x["priority"])[:8]
 
 
-def find_falling_pages(gsc_diff, min_drop_pct=15, min_prev_clicks=8):
+def find_falling_pages(gsc_diff, min_drop_pct=20, min_prev_clicks=3):
     """Stránky čo stratili >15% klikov WoW."""
     page_cur = defaultdict(lambda: {"clicks": 0, "impressions": 0, "positions": []})
     page_prev = defaultdict(lambda: {"clicks": 0, "impressions": 0, "positions": []})
@@ -146,7 +146,7 @@ def find_falling_pages(gsc_diff, min_drop_pct=15, min_prev_clicks=8):
     return sorted(out, key=lambda x: x["wow_pct"])[:5]
 
 
-def find_rising_queries(gsc_diff, min_growth_pct=100, min_now=30):
+def find_rising_queries(gsc_diff, min_growth_pct=80, min_now=15):
     """Queries s rastom >100% WoW."""
     out = []
     for (query, page), (cur, prev) in gsc_diff.items():
@@ -174,7 +174,7 @@ def find_cro_opportunities(ga4_cur, top_n=5):
     """Stránky s vysokým traffic ale konv. pod priemerom."""
     out = []
     for r in ga4_cur:
-        if r["sessions"] < 100:
+        if r["sessions"] < 20:
             continue
         conv_rate = (r["conversions"] / r["sessions"] * 100) if r["sessions"] > 0 else 0
         if conv_rate < CONV_BENCHMARK and r["bounce_rate"] > BOUNCE_BENCHMARK:

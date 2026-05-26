@@ -27,26 +27,20 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Write Google service account credentials
-        # GOOGLE_SA_JSON tajomstvo obsahuje celý service account JSON.
-        # Zapíšeme ho do súboru a nastavíme GOOGLE_APPLICATION_CREDENTIALS.
-        env:
-          GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
-        run: |
-          if [[ -n "$GOOGLE_SA_JSON" ]]; then
-            echo "$GOOGLE_SA_JSON" > /tmp/google-sa.json
-            echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/google-sa.json" >> $GITHUB_ENV
-          else
-            echo "ℹ GOOGLE_SA_JSON nie je nastavený — generate_dashboard použije mock dáta"
-          fi
-
       - name: Generate weekly dashboard
         continue-on-error: true
         env:
+          # OAuth — JSON content of oauth-token.json as a single-line secret
+          OAUTH_TOKEN_JSON: ${{ secrets.OAUTH_TOKEN_JSON }}
+          # Required: GSC property URL + GA4 property ID
           GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          # Optional: PageSpeed Insights API key (raises rate limit)
           PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
+          # Optional: Claude API for AI summary
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Default 28-day rolling window
+          WINDOW_DAYS: '28'
         run: python generate_dashboard.py
 
       - name: Commit & push if data.json changed

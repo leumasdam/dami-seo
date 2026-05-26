@@ -156,26 +156,49 @@ def _aggregate_kpi(gsc, ga4):
 
 
 def _generate_summary(kpi, quick_wins, falling, top_actions):
-    """Template-based 3-sentence summary v SK. Voliteľne Claude API ak je key."""
+    """Adaptívny template-based 3-vetný summary v SK. Voliteľne Claude API."""
     api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if api_key:
         ai = _claude_summary(kpi, quick_wins, falling, top_actions, api_key)
         if ai:
             return ai
 
-    # Template fallback
+    # Template fallback — adaptívne podľa veľkosti webu
     clicks = kpi.get("clicks", {}).get("value", 0)
+    impressions = kpi.get("impressions", {}).get("value", 0)
+    ctr = kpi.get("ctr", {}).get("value", 0)
+    position = kpi.get("avg_position", {}).get("value", 0)
+    sessions = kpi.get("sessions_organic", {}).get("value", 0)
+    revenue = kpi.get("revenue_eur", {}).get("value", 0)
     clicks_delta = kpi.get("clicks", {}).get("wow_pct", 0)
-    top_qw = quick_wins[0] if quick_wins else None
-    top_fall = falling[0] if falling else None
+    sessions_delta = kpi.get("sessions_organic", {}).get("wow_pct", 0)
 
-    sk = f"Týždeň priniesol <b>{clicks_delta:+.0f} % klikov</b> ({clicks} total). "
-    if top_qw:
-        sk += f"Najsilnejšia opportunity: <i>{top_qw['query']}</i> (pos {top_qw['position']}, +{top_qw['potential_clicks']} potential klikov). "
-    if top_fall:
-        sk += f"Najväčší risk: <code>{top_fall['page']}</code> stratila <b>{top_fall['wow_pct']:.0f} %</b> klikov WoW. "
-    sk += "Pozri Akcie tento týždeň pre konkrétny todo-list."
-    return {"sk": sk}
+    # Veta 1: stav webu
+    if clicks == 0 and impressions > 50:
+        v1 = f"Web má dobrú viditeľnosť (<b>{impressions} zobrazení</b>) ale <b>žiadne kliky</b> v tomto okne — Google ťa ukazuje, ale titulky nezaujmú. CTR <b>{ctr:.2f} %</b> je výrazne pod retail benchmarkom (3-5 %)."
+    elif clicks > 0 and clicks < 50:
+        v1 = f"Malý objem za sledované obdobie (<b>{clicks} klikov</b>, <b>{impressions} zobrazení</b>). Priemerná pozícia <b>{position:.1f}</b> — viditeľnosť je, ale CTR <b>{ctr:.2f} %</b> ukazuje že title/snippet potrebujú prácu."
+    else:
+        sign = "+" if clicks_delta > 0 else ""
+        v1 = f"Web stabilný: <b>{clicks} klikov</b> ({sign}{clicks_delta:.0f} % vs predošlé obdobie), <b>{impressions} zobrazení</b>, priemerná pozícia <b>{position:.1f}</b>."
+
+    # Veta 2: najsilnejšia opportunity
+    if quick_wins:
+        q = quick_wins[0]
+        v2 = f"Najsilnejšia príležitosť: query <i>{q['query']}</i> na pozícii {q['position']:.1f} s <b>{q['impressions']}</b> zobrazeniami — push do top 3 môže priniesť ~<b>+{q['potential_clicks']} klikov</b>."
+    else:
+        v2 = "Žiadne jasné quick-win príležitosti v tomto okne — možno je potrebné rozšíriť content alebo zacieliť na nové queries."
+
+    # Veta 3: risk alebo CRO
+    if falling:
+        f = falling[0]
+        v3 = f"Risk: stránka <code>{f['page']}</code> stratila <b>{abs(f['wow_pct']):.0f} %</b> klikov vs predošlé obdobie — odporúčam audit."
+    elif revenue == 0 and sessions > 0:
+        v3 = f"Organic návštev je <b>{sessions}</b>, ale <b>žiadny atribuovaný nákup</b> — uvažuj nad CRO: pridanie social proof, jasnejšie CTA, decision tree pre kategórie."
+    else:
+        v3 = 'Pre konkrétne akcie pozri tab Akcie - todo-list zoradený podľa impact/effort.'
+
+    return {"sk": f"{v1} {v2} {v3}"}
 
 
 def _claude_summary(kpi, quick_wins, falling, top_actions, api_key):

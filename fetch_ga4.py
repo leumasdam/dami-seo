@@ -116,15 +116,16 @@ def fetch_weeks():
     if not client:
         return None
 
+    window = int(os.environ.get("WINDOW_DAYS", "28"))
     today = date.today()
     cur_end = today - timedelta(days=1)
-    cur_start = today - timedelta(days=7)
-    prev_end = today - timedelta(days=8)
-    prev_start = today - timedelta(days=14)
+    cur_start = today - timedelta(days=window)
+    prev_end = today - timedelta(days=window + 1)
+    prev_start = today - timedelta(days=2*window + 1)
 
-    print(f"  → GA4 fetch: {cur_start} → {cur_end} (current)")
+    print(f"  → GA4 fetch: {cur_start} → {cur_end} ({window} dní · current)")
     cur = run_report(client, cur_start.isoformat(), cur_end.isoformat())
-    print(f"  → GA4 fetch: {prev_start} → {prev_end} (previous)")
+    print(f"  → GA4 fetch: {prev_start} → {prev_end} ({window} dní · previous)")
     prev = run_report(client, prev_start.isoformat(), prev_end.isoformat())
 
     return {"current_week": cur, "previous_week": prev}
