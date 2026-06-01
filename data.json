@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-05-26",
-  "week": "KW 22 · 2026-05-19 → 2026-05-26",
+  "lastUpdated": "2026-06-01",
+  "week": "KW 23 · 2026-05-25 → 2026-06-01",
   "site": "dami-pracovne-odevy.sk",
   "source": "GSC + GA4 + PSI · auto-update Mondays 06:00 UTC",
   "_meta": {
@@ -11,28 +11,28 @@
   },
   "kpi": {
     "clicks": {
-      "value": 19,
-      "wow_pct": -54.8
+      "value": 21,
+      "wow_pct": -47.5
     },
     "impressions": {
-      "value": 1242,
+      "value": 1241,
       "wow_pct": -26.8
     },
     "avg_position": {
-      "value": 9.3,
-      "wow_delta": 0.2
+      "value": 10.2,
+      "wow_delta": 1.2
     },
     "ctr": {
-      "value": 1.53,
-      "wow_delta": -0.95
+      "value": 1.69,
+      "wow_delta": -0.67
     },
     "sessions_organic": {
-      "value": 70,
-      "wow_pct": 1.4
+      "value": 69,
+      "wow_pct": 7.8
     },
     "conversion_rate": {
       "value": 0.0,
-      "wow_delta": -1.45
+      "wow_delta": -1.56
     },
     "revenue_eur": {
       "value": 0,
@@ -40,130 +40,124 @@
     }
   },
   "ai_summary": {
-    "sk": "Malý objem za sledované obdobie (<b>19 klikov</b>, <b>1242 zobrazení</b>). Priemerná pozícia <b>9.3</b> — viditeľnosť je, ale CTR <b>1.53 %</b> ukazuje že title/snippet potrebujú prácu. Najsilnejšia príležitosť: query <i>dami</i> na pozícii 5.2 s <b>133</b> zobrazeniami — push do top 3 môže priniesť ~<b>+14 klikov</b>. Risk: stránka <code>https://www.dami-pracovne-odevy.sk/pracovna-obuv/</code> stratila <b>80 %</b> klikov vs predošlé obdobie — odporúčam audit."
+    "sk": "Malý objem za sledované obdobie (<b>21 klikov</b>, <b>1241 zobrazení</b>). Priemerná pozícia <b>10.2</b> — viditeľnosť je, ale CTR <b>1.69 %</b> ukazuje že title/snippet potrebujú prácu. Najsilnejšia príležitosť: query <i>dami</i> na pozícii 4.8 s <b>117</b> zobrazeniami — push do top 3 môže priniesť ~<b>+12 klikov</b>. Risk: stránka <code>https://www.dami-pracovne-odevy.sk/pracovna-obuv/</code> stratila <b>60 %</b> klikov vs predošlé obdobie — odporúčam audit."
   },
   "quick_wins": [
     {
       "query": "dami",
       "page": "https://www.dami-pracovne-odevy.sk/",
-      "position": 5.2,
-      "impressions": 133,
+      "position": 4.8,
+      "impressions": 117,
       "clicks": 0,
       "ctr": 0,
-      "wow_impressions": -44,
-      "wow_position": -0.0,
-      "potential_clicks": 14,
-      "priority": 20,
+      "wow_impressions": -61,
+      "wow_position": -0.7,
+      "potential_clicks": 12,
+      "priority": 24,
       "action": "Pridať 200 slov + interné linky z najsilnejších stránok, optimalizovať H2/H3"
     },
     {
       "query": "dami menu",
       "page": "https://www.dami-pracovne-odevy.sk/",
-      "position": 4.6,
-      "impressions": 79,
+      "position": 4.7,
+      "impressions": 106,
       "clicks": 0,
       "ctr": 0,
-      "wow_impressions": -29,
-      "wow_position": 0.1,
-      "potential_clicks": 8,
-      "priority": 11,
+      "wow_impressions": -4,
+      "wow_position": 0.2,
+      "potential_clicks": 11,
+      "priority": 16,
       "action": "Pridať 200 slov + interné linky z najsilnejších stránok, optimalizovať H2/H3"
     },
     {
       "query": "pracovné odevy piešťany",
       "page": "https://www.dami-pracovne-odevy.sk/kontakt/",
-      "position": 11.8,
-      "impressions": 71,
-      "clicks": 0,
-      "ctr": 0,
-      "wow_impressions": -30,
-      "wow_position": 0.3,
-      "potential_clicks": 7,
-      "priority": 10,
+      "position": 12.0,
+      "impressions": 65,
+      "clicks": 1,
+      "ctr": 1.5,
+      "wow_impressions": -34,
+      "wow_position": 0.6,
+      "potential_clicks": 6,
+      "priority": 9,
       "action": "Pridať 300+ slov technického obsahu + 3 interné linky z autoritných stránok"
     }
   ],
   "ctr_underperformers": [
     {
+      "query": "dami",
+      "page": "https://www.dami-pracovne-odevy.sk/",
+      "position": 4.8,
+      "ctr": 0,
+      "expected_ctr": 7.3,
+      "impressions": 117,
+      "current_title": "—",
+      "suggested_title": "Dami | Doprava zadarmo nad 50 €",
+      "potential_clicks": 8,
+      "priority": 4
+    },
+    {
       "query": "pracovné odevy piešťany",
       "page": "https://www.dami-pracovne-odevy.sk/",
       "position": 1.5,
-      "ctr": 12.99,
-      "expected_ctr": 21.9,
-      "impressions": 77,
+      "ctr": 10.67,
+      "expected_ctr": 21.7,
+      "impressions": 75,
       "current_title": "—",
       "suggested_title": "Pracovné odevy piešťany | Doprava zadarmo nad 50 €",
-      "potential_clicks": 6,
-      "priority": 3
+      "potential_clicks": 8,
+      "priority": 4
     },
     {
       "query": "dami menu",
       "page": "https://www.dami-pracovne-odevy.sk/",
-      "position": 4.6,
+      "position": 4.7,
       "ctr": 0,
-      "expected_ctr": 7.5,
-      "impressions": 79,
+      "expected_ctr": 7.4,
+      "impressions": 106,
       "current_title": "—",
       "suggested_title": "Dami menu | Doprava zadarmo nad 50 €",
-      "potential_clicks": 5,
-      "priority": 2
+      "potential_clicks": 7,
+      "priority": 3
     }
   ],
   "falling_pages": [
     {
       "page": "https://www.dami-pracovne-odevy.sk/pracovna-obuv/",
-      "clicks_now": 1,
+      "clicks_now": 2,
       "clicks_prev": 5,
-      "wow_pct": -80.0,
-      "position_now": 23.7,
-      "position_prev": 8.7,
-      "likely_cause": "Pozícia padla 15.0 miest — možný content drift alebo nový competitor",
+      "wow_pct": -60.0,
+      "position_now": 19.8,
+      "position_prev": 9.0,
+      "likely_cause": "Pozícia padla 10.8 miest — možný content drift alebo nový competitor",
       "action": "Pozrieť SERP, porovnať s top 3, doplniť chýbajúci obsah"
     },
     {
       "page": "https://www.dami-pracovne-odevy.sk/",
       "clicks_now": 14,
-      "clicks_prev": 32,
-      "wow_pct": -56.2,
-      "position_now": 7.2,
-      "position_prev": 6.0,
+      "clicks_prev": 34,
+      "wow_pct": -58.8,
+      "position_now": 7.1,
+      "position_prev": 6.1,
       "likely_cause": "Mierny pokles pozície, sledovať trend",
-      "action": "Pozrieť SERP, porovnať s top 3, doplniť chýbajúci obsah"
-    },
-    {
-      "page": "https://www.dami-pracovne-odevy.sk/pracovne-odevy/",
-      "clicks_now": 2,
-      "clicks_prev": 3,
-      "wow_pct": -33.3,
-      "position_now": 12.7,
-      "position_prev": 17.2,
-      "likely_cause": "Pozícia stabilná, ale clicks padajú — možno SERP feature alebo seasonal",
       "action": "Pozrieť SERP, porovnať s top 3, doplniť chýbajúci obsah"
     }
   ],
   "rising_queries": [
     {
       "query": "bezpečnostná obuv s1",
-      "impressions_now": 18,
-      "impressions_prev": 2,
-      "growth_pct": 800,
+      "impressions_now": 21,
+      "impressions_prev": 0,
+      "growth_pct": null,
       "page_ranked": "https://www.dami-pracovne-odevy.sk/s1-s1p-s3-ocelovou-vystuzou/",
       "action": "Pridať obsah optimalizovaný na tento query na existujúcu stránku"
     },
     {
-      "query": "krajcirstvo piestany",
+      "query": "reflexné pracovné odevy",
       "impressions_now": 17,
-      "impressions_prev": 1,
-      "growth_pct": 1600,
-      "page_ranked": "https://www.dami-pracovne-odevy.sk/",
-      "action": "Pridať obsah optimalizovaný na tento query na existujúcu stránku"
-    },
-    {
-      "query": "čapice",
-      "impressions_now": 16,
-      "impressions_prev": 6,
-      "growth_pct": 166,
-      "page_ranked": "https://www.dami-pracovne-odevy.sk/capice-siltovky/",
+      "impressions_prev": 0,
+      "growth_pct": null,
+      "page_ranked": "https://www.dami-pracovne-odevy.sk/reflexne-odevy/",
       "action": "Pridať obsah optimalizovaný na tento query na existujúcu stránku"
     }
   ],
@@ -190,7 +184,7 @@
       "priority": 1,
       "type": "quick_win",
       "title": "dami — push na pos 1-3",
-      "impact": "+14 klikov/týždeň",
+      "impact": "+12 klikov/týždeň",
       "effort": "1 h",
       "details": "Pridať 200 slov + interné linky z najsilnejších stránok, optimalizovať H2/H3"
     },
@@ -198,17 +192,17 @@
       "priority": 2,
       "type": "ctr_rewrite",
       "title": "Title rewrite — https://www.dami-pracovne-odevy.sk/",
-      "impact": "+6 klikov/týždeň (potential)",
+      "impact": "+8 klikov/týždeň (potential)",
       "effort": "10 min",
-      "details": "Súčasný CTR 12.99 % @ pos 1.5 (benchmark 21.9 %). Nový návrh: 'Pracovné odevy piešťany | Doprava zadarmo nad 50 €'"
+      "details": "Súčasný CTR 0 % @ pos 4.8 (benchmark 7.3 %). Nový návrh: 'Dami | Doprava zadarmo nad 50 €'"
     },
     {
       "priority": 3,
       "type": "falling_audit",
-      "title": "Audit https://www.dami-pracovne-odevy.sk/pracovna-obuv/ — clicks -80.0 % WoW",
+      "title": "Audit https://www.dami-pracovne-odevy.sk/pracovna-obuv/ — clicks -60.0 % WoW",
       "impact": "Stop ďalšieho prepadu",
       "effort": "30 min",
-      "details": "Pozícia padla 15.0 miest — možný content drift alebo nový competitor. Pozrieť SERP, porovnať s top 3, doplniť chýbajúci obsah"
+      "details": "Pozícia padla 10.8 miest — možný content drift alebo nový competitor. Pozrieť SERP, porovnať s top 3, doplniť chýbajúci obsah"
     },
     {
       "priority": 5,
