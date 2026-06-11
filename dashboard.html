@@ -13,8 +13,9 @@
     :root{
       color-scheme: only light;
       --ink:#16140E; --ink-2:#3B382E; --mut:#7C7869;
-      --paper:#F2EFE6; --panel:#FFFFFF; --panel-2:#FAF8F1;
-      --line:#16140E; --line-soft:#DCD6C4; --shadow:#E1DBC8;
+      --paper:#F0EAD9; --panel:#FFFDF7; --panel-2:#F8F2E2;
+      --khaki:#E6DEC4; --saf-band:#F6E0C6; --olive:#6E6A4E;
+      --line:#16140E; --line-soft:#D8D0B6; --shadow:#DCD2B0;
       --saf:#FF5400; --saf-deep:#C94300; --saf-soft:#FFE9DB;
       --ok:#1E7F3C; --ok-soft:#E2F1E1;
       --warn:#B97D00; --warn-soft:#FCF1D2;
@@ -23,12 +24,49 @@
       --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
       --sans:'Archivo',-apple-system,sans-serif;
     }
+    @view-transition{navigation:auto}
+    .topbar{view-transition-name:topbar;}
     *{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;scroll-padding-top:96px;}
-    body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;}
+    body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    /* papierový grain cez celú stránku */
+    body::after{content:"";position:fixed;inset:0;z-index:2000;pointer-events:none;mix-blend-mode:multiply;opacity:.55;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="240" height="240" filter="url(%23n)" opacity="0.07"/></svg>');
+      background-size:240px 240px;}
     ::selection{background:var(--saf);color:#fff;}
     a{color:var(--saf-deep);}
-    .wrap{max-width:1280px;margin:0 auto;padding:0 32px 90px;}
+    .wrap{max-width:1280px;margin:0 auto;padding:0 32px;}
+
+    /* duotone foto komponent (ink → orange) */
+    .duo{background:var(--ink);overflow:hidden;position:relative;}
+    .duo img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(1.02);mix-blend-mode:screen;}
+    .duo::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,var(--saf) 0%,#D14500 100%);mix-blend-mode:multiply;}
+
+    /* full-bleed tonálne pásy */
+    .band{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding-left:calc(50vw - 50%);padding-right:calc(50vw - 50%);}
+    .band-khaki{background:var(--khaki);padding-bottom:60px;}
+    .band-saf{background:var(--saf-band);padding-bottom:60px;}
+    .band-ink{background:var(--ink);padding-bottom:64px;}
+    .band-ink .sec-title{color:#fff;}
+    .band-ink .sec-rule{background:rgba(255,255,255,.3);}
+    .band-ink .sec-sub{color:rgba(255,255,255,.72);}
+    .band-ink .sec-sub b{color:var(--saf);}
+
+    /* ghost číslice sekcií */
+    .sec{position:relative;}
+    .sec::before{content:attr(data-ghost);position:absolute;top:-4px;right:0;font-family:var(--mono);font-weight:700;
+      font-size:clamp(110px,15vw,200px);line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(22,20,14,.09);
+      pointer-events:none;z-index:0;}
+    .band-ink.sec::before{-webkit-text-stroke-color:rgba(255,255,255,.12);}
+    .sec>*{position:relative;z-index:1;}
+
+    /* scroll-reveal */
+    .rv{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.3,1);}
+    .rv.vis{opacity:1;transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      .rv{opacity:1 !important;transform:none !important;transition:none !important;}
+      html{scroll-behavior:auto;}
+    }
 
     /* utility */
     .mono{font-family:var(--mono);}
@@ -54,6 +92,7 @@
     .top-links{display:flex;align-items:center;gap:8px;padding:14px 0;margin-left:auto;}
     .top-btn{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:transparent;border:1.5px solid rgba(255,255,255,.3);padding:9px 14px;cursor:pointer;text-decoration:none;transition:all .12s;}
     .top-btn:hover{background:var(--saf);border-color:var(--saf);color:var(--ink);}
+    .top-btn.act{background:var(--saf);border-color:var(--saf);color:var(--ink);font-weight:700;}
 
     /* ============ SECTION NAV (sticky, scroll-spy) ============ */
     .secnav{position:sticky;top:0;z-index:80;background:var(--paper);border-bottom:2px solid var(--ink);}
@@ -64,10 +103,29 @@
     .secnav a:hover{color:var(--ink);}
     .secnav a.on{color:var(--ink);border-bottom-color:var(--saf);background:linear-gradient(180deg,transparent 70%,var(--saf-soft) 100%);}
 
+    /* ============ HERO · známka týždňa ============ */
+    .hero{background:var(--ink);color:#fff;position:relative;overflow:hidden;}
+    .hero-in{max-width:1280px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1.25fr 1fr;align-items:stretch;gap:0;}
+    .hero-l{padding:44px 40px 44px 0;display:flex;flex-direction:column;justify-content:center;gap:18px;}
+    .hero-l .lbl{color:rgba(255,255,255,.45);}
+    .hero-grade-row{display:flex;align-items:center;gap:28px;}
+    .grade-stamp{width:118px;height:118px;flex-shrink:0;background:var(--saf);color:var(--ink);border:3px solid var(--ink);
+      outline:2px solid var(--saf);display:flex;align-items:center;justify-content:center;
+      font-family:var(--mono);font-weight:700;font-size:64px;line-height:1;
+      transform:rotate(-4deg);box-shadow:6px 8px 0 rgba(0,0,0,.35);}
+    .grade-stamp.slam{animation:stamp .55s cubic-bezier(.2,1.6,.4,1);}
+    @keyframes stamp{0%{transform:rotate(-15deg) scale(1.6);}100%{transform:rotate(-4deg) scale(1);}}
+    .hero-verdict h1{font-size:clamp(26px,3.2vw,40px);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:1.05;}
+    .hero-verdict p{font-size:14.5px;color:rgba(255,255,255,.75);line-height:1.65;margin-top:10px;max-width:520px;}
+    .hero-verdict p b{color:var(--saf);}
+    .hero-photo{min-height:280px;border-left:3px solid var(--saf);}
+    .hero-photo img{position:absolute;inset:0;}
+    .hero-photo.duo{position:relative;}
+
     /* ============ SECTION HEADS ============ */
     .sec{padding-top:56px;}
     .sec-head{display:flex;align-items:flex-end;gap:18px;margin-bottom:8px;}
-    .sec-num{font-family:var(--mono);font-weight:700;font-size:15px;background:var(--saf);color:var(--ink);padding:8px 11px;line-height:1;flex-shrink:0;}
+    .sec-num{font-family:var(--mono);font-weight:700;font-size:15px;background:var(--saf);color:var(--ink);padding:8px 11px;line-height:1;flex-shrink:0;transform:rotate(-2deg);box-shadow:2px 3px 0 rgba(22,20,14,.25);}
     .sec-title{font-size:clamp(26px,3.4vw,36px);font-weight:900;letter-spacing:-.015em;text-transform:uppercase;line-height:1;}
     .sec-rule{flex:1;height:2px;background:var(--ink);margin-bottom:8px;min-width:40px;}
     .sec-sub{font-size:14.5px;color:var(--ink-2);max-width:820px;margin:10px 0 26px;line-height:1.65;}
@@ -76,6 +134,15 @@
     /* ============ CARD BASE ============ */
     .card{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--shadow);position:relative;}
     .card-pad{padding:22px 24px;}
+    /* dvojitý tieň — hard offset + mäkký ambient (hĺbka) */
+    .card,.kpi,.multi,.funnel,.scatter-card,.queries-card,.act,details.panel,.cwv,.audit,.phase,.fin,.brief-main{
+      box-shadow:6px 6px 0 var(--shadow),18px 26px 38px rgba(74,58,20,.13);}
+    /* duotone thumbnaily v tabuľkách */
+    .thumb{width:44px;height:44px;flex-shrink:0;border:1.5px solid var(--ink);}
+    .pgcell{display:flex;gap:10px;align-items:center;min-width:170px;}
+    .pgcell .pg{min-width:0;}
+    /* foto pásik vo fáze plánu */
+    .phase-img{height:92px;margin:-20px -22px 16px;border-bottom:2px solid var(--ink);}
 
     /* ============ S01 BRIEF ============ */
     .brief-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:22px;align-items:stretch;}
@@ -136,7 +203,7 @@
     .fun-lbl{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
     .fun-lbl small{display:block;font-weight:500;color:var(--mut);font-size:10px;letter-spacing:.04em;text-transform:none;margin-top:2px;}
     .fun-track{height:30px;background:var(--panel-2);border:1.5px solid var(--ink);position:relative;}
-    .fun-fill{height:100%;background:var(--saf);border-right:1.5px solid var(--ink);min-width:4px;transition:width .5s;}
+    .fun-fill{height:100%;background:var(--saf);border-right:1.5px solid var(--ink);min-width:4px;width:0;transition:width .9s cubic-bezier(.2,.7,.2,1);}
     .fun-fill.ink{background:var(--ink);}
     .fun-val{font-family:var(--mono);font-size:16px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums;}
     .fun-gap{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center;}
@@ -149,7 +216,7 @@
     .qbar-row{display:grid;grid-template-columns:200px 1fr 70px;gap:14px;align-items:center;padding:7px 0;font-size:13px;}
     .qbar-label{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
     .qbar-track{height:16px;background:var(--panel-2);border:1.5px solid var(--ink);}
-    .qbar-fill{height:100%;background:var(--saf);border-right:1.5px solid var(--ink);min-width:3px;}
+    .qbar-fill{height:100%;background:var(--saf);border-right:1.5px solid var(--ink);min-width:3px;width:0;transition:width .8s cubic-bezier(.2,.7,.2,1);}
     .qbar-val{font-family:var(--mono);font-weight:700;font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums;}
 
     /* ============ S04 AKCIE ============ */
@@ -173,7 +240,7 @@
     details.panel summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:16px;padding:18px 24px;user-select:none;}
     details.panel summary::-webkit-details-marker{display:none;}
     details.panel[open] summary{border-bottom:2px solid var(--ink);}
-    .pan-code{font-family:var(--mono);font-size:11px;font-weight:700;background:var(--saf);color:var(--ink);padding:6px 9px;letter-spacing:.06em;flex-shrink:0;}
+    .pan-code{font-family:var(--mono);font-size:11px;font-weight:700;background:var(--saf);color:var(--ink);padding:6px 9px;letter-spacing:.06em;flex-shrink:0;transform:rotate(2deg);box-shadow:2px 2px 0 rgba(22,20,14,.2);}
     .pan-title{font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:-.005em;}
     .pan-title small{display:block;font-size:12px;font-weight:500;color:var(--mut);text-transform:none;letter-spacing:0;margin-top:2px;}
     .pan-count{margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:700;border:1.5px solid var(--ink);padding:5px 11px;flex-shrink:0;}
@@ -219,7 +286,7 @@
     .scale i.z-ok{background:var(--ok-soft);}
     .scale i.z-warn{background:var(--warn-soft);}
     .scale i.z-bad{background:var(--bad-soft);}
-    .scale .needle{position:absolute;top:-7px;bottom:-7px;width:3px;background:var(--ink);}
+    .scale .needle{position:absolute;top:-7px;bottom:-7px;width:3px;background:var(--ink);left:0;transition:left 1s cubic-bezier(.25,1.5,.4,1);}
     .needle::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--ink);}
     .cwv-exp{font-size:12px;color:var(--ink-2);line-height:1.6;border-top:1px solid var(--line-soft);padding-top:12px;}
     .cwv-exp b{color:var(--ink);}
@@ -282,9 +349,10 @@
     .term{border-bottom:2px dotted var(--saf);cursor:help;}
     .term:hover{color:var(--saf-deep);}
 
-    /* ============ FOOTER ============ */
-    .ftr{margin-top:70px;border-top:2px solid var(--ink);padding-top:20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--mut);text-transform:uppercase;}
-    .ftr a{color:var(--saf-deep);font-weight:700;text-decoration:none;}
+    /* ============ FOOTER (sedí na ink páse sekcie 07) ============ */
+    .ftr{background:var(--ink);margin-top:0;padding-top:22px;padding-bottom:26px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:rgba(255,255,255,.45);text-transform:uppercase;}
+    .ftr-in{border-top:1px solid rgba(255,255,255,.18);padding-top:20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;width:100%;}
+    .ftr a{color:var(--saf);font-weight:700;text-decoration:none;}
 
     /* ============ RESPONSIVE ============ */
     @media (max-width:1080px){
@@ -295,6 +363,10 @@
       .phases,.cwv-grid{grid-template-columns:1fr;}
       .howto-steps{grid-template-columns:repeat(2,1fr);}
       .howto-step{border-bottom:1px solid var(--line-soft);}
+      .hero-in{grid-template-columns:1fr;}
+      .hero-photo{min-height:200px;border-left:0;border-top:3px solid var(--saf);}
+      .hero-l{padding:36px 0 30px;}
+      .sec::before{font-size:96px;}
     }
     @media (max-width:720px){
       .wrap{padding:0 16px 70px;}
@@ -320,6 +392,11 @@
       .tb{min-width:640px;}
       .audit-row{grid-template-columns:1fr 70px 60px;padding:13px 16px;}
       .sec-title{font-size:22px;}
+      .grade-stamp{width:84px;height:84px;font-size:44px;}
+      .hero-grade-row{gap:18px;}
+      .sec::before{font-size:72px;opacity:.8;}
+      .pgcell{min-width:140px;}
+      .thumb{width:36px;height:36px;}
     }
     @media print{
       body{background:#fff;}
@@ -355,8 +432,9 @@
       </div>
     </div>
     <div class="top-links">
-      <a class="top-btn" href="learnbook.html">Learnbook</a>
+      <a class="top-btn act" href="dashboard.html">Dashboard</a>
       <a class="top-btn" href="strategia.html">Stratégia</a>
+      <a class="top-btn" href="learnbook.html">Learnbook</a>
       <button class="top-btn" onclick="window.print()">PDF</button>
     </div>
   </div>
@@ -376,10 +454,28 @@
   </div>
 </nav>
 
+<!-- ============ HERO · ZNÁMKA TÝŽDŇA ============ -->
+<header class="hero">
+  <div class="hero-in">
+    <div class="hero-l">
+      <span class="lbl">Známka týždňa · <span data-bind="week2">—</span></span>
+      <div class="hero-grade-row">
+        <div class="grade-stamp" id="gradeStamp">·</div>
+        <div class="hero-verdict">
+          <h1 id="gradeTitle">Načítavam…</h1>
+          <p id="gradeText"></p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-photo duo"><img src="assets/img/hero-welder.jpg" alt="Mechanik v montérkach pri práci" loading="eager"></div>
+  </div>
+</header>
+<div class="hazard thin"></div>
+
 <div class="wrap">
 
   <!-- ============ 01 SÚHRN ============ -->
-  <section class="sec" id="s1">
+  <section class="sec" id="s1" data-ghost="01">
     <div class="sec-head">
       <div class="sec-num">01</div>
       <h2 class="sec-title">Súhrn týždňa</h2>
@@ -410,7 +506,7 @@
   </section>
 
   <!-- ============ 02 ČÍSLA ============ -->
-  <section class="sec" id="s2">
+  <section class="sec band band-khaki" id="s2" data-ghost="02">
     <div class="sec-head">
       <div class="sec-num">02</div>
       <h2 class="sec-title">Hlavné čísla</h2>
@@ -422,7 +518,7 @@
   </section>
 
   <!-- ============ 03 LIEVIK ============ -->
-  <section class="sec" id="s3">
+  <section class="sec" id="s3" data-ghost="03">
     <div class="sec-head">
       <div class="sec-num">03</div>
       <h2 class="sec-title">Lievik &amp; queries</h2>
@@ -451,7 +547,7 @@
   </section>
 
   <!-- ============ 04 AKCIE ============ -->
-  <section class="sec" id="s4">
+  <section class="sec band band-saf" id="s4" data-ghost="04">
     <div class="sec-head">
       <div class="sec-num">04</div>
       <h2 class="sec-title">Akcie na týždeň</h2>
@@ -462,7 +558,7 @@
   </section>
 
   <!-- ============ 05 DIAGNOSTIKA ============ -->
-  <section class="sec" id="s5">
+  <section class="sec" id="s5" data-ghost="05">
     <div class="sec-head">
       <div class="sec-num">05</div>
       <h2 class="sec-title">Diagnostika</h2>
@@ -473,7 +569,7 @@
   </section>
 
   <!-- ============ 06 TECHNICKÉ ============ -->
-  <section class="sec" id="s6">
+  <section class="sec band band-khaki" id="s6" data-ghost="06">
     <div class="sec-head">
       <div class="sec-num">06</div>
       <h2 class="sec-title">Technické</h2>
@@ -485,7 +581,7 @@
   </section>
 
   <!-- ============ 07 PLÁN ============ -->
-  <section class="sec" id="s7">
+  <section class="sec band band-ink" id="s7" data-ghost="07">
     <div class="sec-head">
       <div class="sec-num">07</div>
       <h2 class="sec-title">Plán rastu</h2>
@@ -508,6 +604,7 @@
 
     <div class="phases">
       <div class="phase">
+        <div class="duo phase-img"><img src="assets/img/sparks.jpg" alt="" loading="lazy"></div>
         <span class="phase-no">Fáza 1 · M1–2 · 8–12 h</span>
         <h4>Quick wins</h4>
         <span class="ph-impact">+400–500 % klikov</span>
@@ -515,6 +612,7 @@
         <div class="ph-res">19 → 80–120 klikov / 28 dní</div>
       </div>
       <div class="phase">
+        <div class="duo phase-img"><img src="assets/img/cat-rukavice.jpg" alt="" loading="lazy"></div>
         <span class="phase-no">Fáza 2 · M2–4 · 25–40 h</span>
         <h4>Content</h4>
         <span class="ph-impact">2–3× viac klikov</span>
@@ -522,6 +620,7 @@
         <div class="ph-res">80–120 → 250–450 klikov / 28 dní</div>
       </div>
       <div class="phase">
+        <div class="duo phase-img"><img src="assets/img/cat-reflexne.jpg" alt="" loading="lazy"></div>
         <span class="phase-no">Fáza 3 · M4–12 · 60–100 h</span>
         <h4>Authority</h4>
         <span class="ph-impact">+1 000+ klikov</span>
@@ -539,10 +638,12 @@
     <a class="plan-cta" href="strategia.html">Otvoriť celý strategický dokument →</a>
   </section>
 
-  <!-- ============ FOOTER ============ -->
-  <div class="ftr">
-    <span>Generované GitHub Action · GSC + GA4 + PSI · update <span id="genTs">—</span></span>
-    <span><a href="strategia.html">Stratégia</a> · <a href="learnbook.html">Learnbook</a></span>
+  <!-- ============ FOOTER (pokračuje na ink páse) ============ -->
+  <div class="ftr band">
+    <div class="ftr-in">
+      <span>Generované GitHub Action · GSC + GA4 + PSI · update <span id="genTs">—</span></span>
+      <span><a href="dashboard.html">Dashboard</a> · <a href="strategia.html">Stratégia</a> · <a href="learnbook.html">Learnbook</a> · foto: Flickr CC (<a href="assets/img/CREDITS.md">kredity</a>)</span>
+    </div>
   </div>
 </div>
 
@@ -565,7 +666,19 @@
   const fmtNum2 = n => n.toFixed(2).replace('.',',');
   const fmtPct = n => (n>=0?'+':'') + n.toFixed(1).replace('.',',') + ' %';
   const fmtEur = n => fmtInt(n) + ' €';
+  const fmtDec = (n,dec) => dec===0 ? fmtInt(n) : dec===1 ? fmtNum1(n) : fmtNum2(n);
   const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // mapovanie URL → kategóriová fotka (duotone thumbnail)
+  function catImg(url){
+    const u = String(url||'').toLowerCase();
+    if(u.includes('obuv')) return 'assets/img/cat-obuv.jpg';
+    if(u.includes('rukavic')) return 'assets/img/cat-rukavice.jpg';
+    if(u.includes('reflexn')) return 'assets/img/cat-reflexne.jpg';
+    return 'assets/img/cat-odevy.jpg';
+  }
+  const pgCell = url => `<span class="pgcell"><span class="duo thumb"><img src="${catImg(url)}" loading="lazy" alt=""></span><span class="pg">${shortUrl(url)}</span></span>`;
 
   // ============ Sparkline (mono, industrial) ============
   function sparkline(values, color, w=200, h=40){
@@ -618,14 +731,14 @@
     const t = D.technical || {};
 
     const map = {
-      clicks:     {val:fmtInt(k.clicks?.value??0),                       delta:k.clicks?.wow_pct,        mode:'pct'},
-      impressions:{val:fmtInt(k.impressions?.value??0),                  delta:k.impressions?.wow_pct,   mode:'pct'},
-      position:   {val:fmtNum1(k.avg_position?.value??0),                delta:k.avg_position?.wow_delta,mode:'pos'},
-      ctr:        {val:fmtNum2(k.ctr?.value??0)+'<small> %</small>',     delta:k.ctr?.wow_delta,         mode:'pp'},
-      sessions:   {val:fmtInt(k.sessions_organic?.value??0),             delta:k.sessions_organic?.wow_pct, mode:'pct'},
-      conv:       {val:fmtNum2(k.conversion_rate?.value??0)+'<small> %</small>', delta:k.conversion_rate?.wow_delta, mode:'pp'},
-      revenue:    {val:fmtInt(k.revenue_eur?.value??0)+'<small> €</small>', delta:k.revenue_eur?.wow_pct, mode:'pct'},
-      indexed:    {val:t.indexed_pages?fmtInt(t.indexed_pages):'—',      delta:null,                     mode:'flat'}
+      clicks:     {raw:k.clicks?.value??0,          dec:0, suf:'',  delta:k.clicks?.wow_pct,        mode:'pct'},
+      impressions:{raw:k.impressions?.value??0,     dec:0, suf:'',  delta:k.impressions?.wow_pct,   mode:'pct'},
+      position:   {raw:k.avg_position?.value??0,    dec:1, suf:'',  delta:k.avg_position?.wow_delta,mode:'pos'},
+      ctr:        {raw:k.ctr?.value??0,             dec:2, suf:'%', delta:k.ctr?.wow_delta,         mode:'pp'},
+      sessions:   {raw:k.sessions_organic?.value??0,dec:0, suf:'',  delta:k.sessions_organic?.wow_pct, mode:'pct'},
+      conv:       {raw:k.conversion_rate?.value??0, dec:2, suf:'%', delta:k.conversion_rate?.wow_delta, mode:'pp'},
+      revenue:    {raw:k.revenue_eur?.value??0,     dec:0, suf:'€', delta:k.revenue_eur?.wow_pct,   mode:'pct'},
+      indexed:    {raw:t.indexed_pages||null,       dec:0, suf:'',  delta:null,                     mode:'flat'}
     };
 
     document.getElementById('kpiGrid').innerHTML = kpiConfig.map((c,i)=>{
@@ -634,9 +747,11 @@
       const better = c.key==='position' ? (d.delta<0) : (d.delta>0);
       const sparkColor = d.delta==null ? '#7C7869' : better ? '#1E7F3C' : '#C42E1C';
       const spark = series ? `<div class="kpi-spark"><span class="lbl">Trend · ${series.length} týž.</span>${sparkline(series, sparkColor)}</div>` : '';
+      const numHtml = d.raw==null ? '—'
+        : `<span class="cnt" data-raw="${d.raw}" data-dec="${d.dec}">${fmtDec(0,d.dec)}</span>${d.suf?`<small> ${d.suf}</small>`:''}`;
       return `<div class="kpi" data-kpi="${c.key}">
         <div class="kpi-name">${String(i+1).padStart(2,'0')} · ${c.label}</div>
-        <div class="kpi-num">${d.val}</div>
+        <div class="kpi-num">${numHtml}</div>
         ${deltaTag(d.delta, d.mode)}
         <div class="kpi-plain">${c.plain}</div>
         ${spark}
@@ -728,7 +843,7 @@
       const w=Math.max(Math.sqrt(s.val)/maxSqrt*100, s.val>0?3:0.8);
       return `<div class="fun-row">
         <div class="fun-lbl">${s.label}<small>${s.sub}</small></div>
-        <div class="fun-track"><div class="fun-fill${s.ink?' ink':''}" style="width:${w.toFixed(1)}%;"></div></div>
+        <div class="fun-track"><div class="fun-fill${s.ink?' ink':''}" data-w="${w.toFixed(1)}"></div></div>
         <div class="fun-val">${s.disp}</div>
       </div>`;
     }).join('');
@@ -777,7 +892,7 @@
     const max=Math.max(...top.map(q=>q.val));
     host.innerHTML=top.map((q,i)=>`<div class="qbar-row">
       <span class="qbar-label"><span class="mono" style="color:var(--mut);font-size:10px;">${String(i+1).padStart(2,'0')}</span> ${esc(q.label)}</span>
-      <div class="qbar-track"><div class="qbar-fill" style="width:${(q.val/max*100).toFixed(1)}%;"></div></div>
+      <div class="qbar-track"><div class="qbar-fill" data-w="${(q.val/max*100).toFixed(1)}"></div></div>
       <span class="qbar-val">${fmtInt(q.val)}</span>
     </div>`).join('');
   }
@@ -849,7 +964,7 @@
       <tr><th>Query</th><th>Stránka</th><th>Pos</th><th>Impr</th><th>Potenciál</th><th>Akcia</th></tr>
       ${qw.map(q=>`<tr>
         <td class="q">${esc(q.query)}</td>
-        <td class="pg">${shortUrl(q.page)}</td>
+        <td>${pgCell(q.page)}</td>
         <td class="n">${fmtNum1(q.position)}</td>
         <td class="n">${fmtInt(q.impressions)}</td>
         <td><span class="tag ok">+${q.potential_clicks} klikov</span></td>
@@ -869,7 +984,7 @@
     const fallT = fall.length ? `<div class="tb-scroll"><table class="tb">
       <tr><th>Stránka</th><th>Δ klikov</th><th>Pozícia</th><th>Príčina + akcia</th></tr>
       ${fall.map(f=>`<tr>
-        <td class="pg" style="font-size:12px;">${shortUrl(f.page)}</td>
+        <td>${pgCell(f.page)}</td>
         <td><span class="tag bad">${f.wow_pct.toFixed(0)} %</span><div class="mono" style="font-size:10px;color:var(--mut);margin-top:4px;">${f.clicks_prev} → ${f.clicks_now}</div></td>
         <td class="n">${fmtNum1(f.position_now)} <span style="color:var(--mut);font-weight:400;">(bola ${fmtNum1(f.position_prev)})</span></td>
         <td class="axn"><b>${esc(f.likely_cause)}</b><br>${esc(f.action)}</td>
@@ -881,7 +996,7 @@
         <td class="q">${esc(r.query)}</td>
         <td class="n">${fmtInt(r.impressions_now)}</td>
         <td><span class="tag ok">${r.growth_pct?'+'+fmtInt(r.growth_pct)+' %':'NOVÝ'}</span><div class="mono" style="font-size:10px;color:var(--mut);margin-top:4px;">${r.impressions_prev} → ${r.impressions_now}</div></td>
-        <td class="pg">${r.page_ranked?shortUrl(r.page_ranked):'— bez stránky'}</td>
+        <td>${r.page_ranked?pgCell(r.page_ranked):'<span class="pg">— bez stránky</span>'}</td>
         <td class="axn">${esc(r.action)}</td>
       </tr>`).join('')}</table></div>` : '<div class="empty-row">Žiadne nové rastúce queries.</div>';
 
@@ -951,7 +1066,7 @@
         <div class="cwv-val">${d.disp}</div>
         <div class="scale">
           <i class="z-ok" style="width:${z1}%;"></i><i class="z-warn" style="width:${z2}%;"></i><i class="z-bad" style="width:${z3}%;"></i>
-          <span class="needle" style="left:${pct}%;"></span>
+          <span class="needle" data-x="${pct.toFixed(1)}"></span>
         </div>
         <div class="cwv-exp">${d.what}</div>
         <div class="cwv-tip">${d.tip}</div>
@@ -984,6 +1099,90 @@
       <div class="fin-bar${d[2]?' future':''}" style="height:${d[1]}%;"></div>
       <span class="fin-m">M${i+1}</span>
     </div>`).join('');
+  }
+
+  // ============ Známka týždňa (A–E) ============
+  function renderGrade(D){
+    const k = D.kpi||{};
+    const stamp = document.getElementById('gradeStamp');
+    const title = document.getElementById('gradeTitle');
+    const text = document.getElementById('gradeText');
+    document.querySelector('[data-bind="week2"]').textContent = D.week || '—';
+    if(!k.clicks){ stamp.textContent='—'; title.textContent='Čakám na dáta'; return; }
+
+    const cw=k.clicks?.wow_pct??0, iw=k.impressions?.wow_pct??0, pd=k.avg_position?.wow_delta??0,
+          cd=k.ctr?.wow_delta??0, sw=k.sessions_organic?.wow_pct??0,
+          rev=k.revenue_eur?.value??0, conv=k.conversion_rate?.value??0, sess=k.sessions_organic?.value??0;
+    let s=0;
+    s += cw>=10?2 : cw>0?1 : cw<=-30?-2 : cw<0?-1 : 0;
+    s += cd>=0.3?1.5 : cd>0?0.5 : cd<=-0.5?-1.5 : cd<0?-0.5 : 0;
+    s += pd<=-0.5?1.5 : pd<0?0.5 : pd>=1?-1.5 : pd>0?-0.5 : 0;
+    s += sw>0?0.5 : sw<0?-0.5 : 0;
+    s += iw>0?0.5 : iw<0?-0.5 : 0;
+    if(rev>0) s+=1; else if(conv===0 && sess>30) s-=0.5;
+
+    const grade = s>=3?'A' : s>=1.5?'B' : s>=0?'C' : s>=-2.5?'D' : 'E';
+    const titles = {A:'Výborný týždeň',B:'Dobrý týždeň',C:'Priemerný týždeň',D:'Slabší týždeň',E:'Zlý týždeň'};
+
+    const movers = [
+      {score:cw,    lbl:`kliky ${fmtPct(cw)}`},
+      {score:iw,    lbl:`zobrazenia ${fmtPct(iw)}`},
+      {score:cd*25, lbl:`CTR ${(cd>=0?'+':'')+fmtNum2(cd)} pp`},
+      {score:-pd*12,lbl:pd>0?`pozícia horšia o ${fmtNum1(pd)}`:`pozícia lepšia o ${fmtNum1(Math.abs(pd))}`},
+      {score:sw,    lbl:`návštevy ${fmtPct(sw)}`}
+    ];
+    const best = movers.filter(m=>m.score>0).sort((a,b)=>b.score-a.score)[0];
+    const worst = movers.filter(m=>m.score<0).sort((a,b)=>a.score-b.score)[0];
+    let t='';
+    if(best&&worst) t=`Najlepšie: <b>${best.lbl}</b>. Najviac bolí: <b>${worst.lbl}</b>.`;
+    else if(best)   t=`Rastie všetko podstatné — na čele <b>${best.lbl}</b>.`;
+    else if(worst)  t=`Týždeň bez svetlých miest — <b>${worst.lbl}</b>.`;
+    else            t='Bez výrazných pohybov.';
+    t += ' Čo s tým: <a href="#s4" style="color:var(--saf);font-weight:700;">04 Akcie</a>.';
+
+    stamp.textContent = grade;
+    if(!REDUCE) stamp.classList.add('slam');
+    title.textContent = titles[grade];
+    text.innerHTML = t;
+  }
+
+  // ============ Scroll-reveal + animácie ============
+  function animateIn(el, instant){
+    el.querySelectorAll('.cnt[data-raw]').forEach(c=>{
+      if(c.dataset.done) return; c.dataset.done='1';
+      const raw=parseFloat(c.dataset.raw), dec=+c.dataset.dec;
+      if(instant || REDUCE || !isFinite(raw)){ c.textContent=fmtDec(raw||0,dec); return; }
+      const t0=performance.now(), dur=750;
+      const tick=t=>{
+        const p=Math.min((t-t0)/dur,1), e=1-Math.pow(1-p,3);
+        c.textContent=fmtDec(raw*e,dec);
+        if(p<1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    el.querySelectorAll('.fun-fill[data-w],.qbar-fill[data-w]').forEach(f=>{
+      if(instant||REDUCE){f.style.transition='none';}
+      requestAnimationFrame(()=>f.style.width=f.dataset.w+'%');
+    });
+    el.querySelectorAll('.needle[data-x]').forEach(n=>{
+      if(instant||REDUCE){n.style.transition='none';}
+      requestAnimationFrame(()=>n.style.left=n.dataset.x+'%');
+    });
+  }
+  function initReveal(){
+    const SEL='.sec-head,.sec-sub,.brief-main,.side-cell,details.howto,.kpi,.multi,.trend-note,.funnel,.scatter-card,.queries-card,.act,details.panel,.cwv,.audit,.plan-strip,.phase,.fin,.plan-cta';
+    const els=[...document.querySelectorAll(SEL)];
+    els.forEach(el=>{
+      el.classList.add('rv');
+      const sibs=[...el.parentElement.children].filter(x=>x.classList.contains('rv'));
+      el.style.transitionDelay=((sibs.indexOf(el)%6)*70)+'ms';
+    });
+    const activate=el=>{el.classList.add('vis');animateIn(el,false);};
+    if(REDUCE){ els.forEach(el=>{el.classList.add('vis');animateIn(el,true);}); return; }
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(en=>{ if(en.isIntersecting){activate(en.target);io.unobserve(en.target);} });
+    },{threshold:.12,rootMargin:'0px 0px -30px 0px'});
+    els.forEach(el=>io.observe(el));
   }
 
   // ============ Scroll-spy ============
@@ -1133,6 +1332,7 @@
     }
     document.getElementById('aiProviderLbl').textContent = (D._meta&&D._meta.ai_provider==='template-fallback')?'rule-based':'Claude AI';
     if(D.lastUpdated) document.getElementById('genTs').textContent=D.lastUpdated;
+    renderGrade(D);
     renderBrief(D);
     renderKPI(D);
     renderFunnel(D);
@@ -1143,6 +1343,7 @@
     renderTech(D);
     renderFin();
     initSpy();
+    initReveal();
     setTimeout(wrapTerms,80);
   }
 
@@ -1157,8 +1358,11 @@
     }
   })();
 
-  // print: rozbaľ všetky panely
-  window.addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(d=>d.open=true));
+  // print: rozbaľ všetky panely + dokonči animácie
+  window.addEventListener('beforeprint',()=>{
+    document.querySelectorAll('details').forEach(d=>d.open=true);
+    document.querySelectorAll('.rv').forEach(el=>{el.classList.add('vis');animateIn(el,true);});
+  });
 </script>
 </body>
 </html>
