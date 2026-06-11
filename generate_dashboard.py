@@ -57,7 +57,15 @@ def main() -> int:
 
     # === Ak chýbajú dáta, nechaj mock ===
     if gsc is None and ga4 is None:
-        print("\nℹ Žiadne live dáta nedostupné — data.json zostáva nezmenený (mock).")
+        creds_configured = bool(os.environ.get("OAUTH_TOKEN_JSON", "").strip())
+        if creds_configured:
+            # Credentials existujú, ale fetch zlyhal (typicky expirovaný OAuth token)
+            # → zhoď beh, nech je v Actions červený a príde notifikácia.
+            print("\n✗ Credentials sú nastavené, ale GSC aj GA4 fetch zlyhali — "
+                  "pravdepodobne expirovaný OAuth token. Spusti oauth_setup.py "
+                  "a aktualizuj GitHub secret OAUTH_TOKEN_JSON.", file=sys.stderr)
+            return 1
+        print("\nℹ Žiadne credentials — data.json zostáva nezmenený (mock).")
         return 0
 
     # === Analyze ===

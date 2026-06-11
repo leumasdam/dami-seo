@@ -87,6 +87,7 @@
     .stamp{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1.5px solid;padding:5px 12px;display:inline-flex;align-items:center;gap:7px;}
     .stamp.live{color:#62E08A;border-color:#62E08A;}
     .stamp.mock{color:#FFC53D;border-color:#FFC53D;}
+    .stamp.stale{color:#FF8A70;border-color:#FF8A70;}
     .stamp .dot{width:7px;height:7px;border-radius:50%;background:currentColor;animation:blink 2.2s infinite;}
     @keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
     .top-links{display:flex;align-items:center;gap:8px;padding:14px 0;margin-left:auto;}
@@ -1325,7 +1326,11 @@
     if(D.week) document.querySelector('[data-bind="week"]').textContent=D.week;
     if(D.ai_summary&&D.ai_summary.sk) document.querySelector('[data-bind="aiSummary"]').innerHTML=D.ai_summary.sk.replaceAll('https://www.dami-pracovne-odevy.sk','');
     const pill=document.getElementById('statusPill');
-    if(D._meta&&D._meta.gsc_status==='live'){
+    const ageDays = D.lastUpdated ? Math.floor((Date.now()-new Date(D.lastUpdated).getTime())/86400e3) : null;
+    if(ageDays!==null && ageDays>8){
+      pill.innerHTML=`<span class="dot"></span>DÁTA ZASTARANÉ · ${ageDays} DNÍ`; pill.className='stamp stale';
+      pill.title='Posledný úspešný update je starší ako týždeň — skontroluj GitHub Actions (pravdepodobne expirovaný OAuth token).';
+    } else if(D._meta&&D._meta.gsc_status==='live'){
       pill.innerHTML='<span class="dot"></span>LIVE · GSC + GA4'; pill.className='stamp live';
     } else {
       pill.innerHTML='<span class="dot"></span>MOCK · čaká credentials'; pill.className='stamp mock';
