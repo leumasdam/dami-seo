@@ -50,6 +50,17 @@
       "sessions": 70,
       "conv": 0.0,
       "revenue": 0
+    },
+    {
+      "week": "KW 23",
+      "date": "2026-06-01",
+      "clicks": 21,
+      "impressions": 1241,
+      "position": 10.2,
+      "ctr": 1.69,
+      "sessions": 69,
+      "conv": 0.0,
+      "revenue": 0
     }
   ],
   "ai_summary": {
