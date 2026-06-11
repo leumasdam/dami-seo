@@ -39,6 +39,19 @@
       "wow_pct": -100.0
     }
   },
+  "history": [
+    {
+      "week": "KW 22",
+      "date": "2026-05-26",
+      "clicks": 19,
+      "impressions": 1242,
+      "position": 9.3,
+      "ctr": 1.53,
+      "sessions": 70,
+      "conv": 0.0,
+      "revenue": 0
+    }
+  ],
   "ai_summary": {
     "sk": "Malý objem za sledované obdobie (<b>21 klikov</b>, <b>1241 zobrazení</b>). Priemerná pozícia <b>10.2</b> — viditeľnosť je, ale CTR <b>1.69 %</b> ukazuje že title/snippet potrebujú prácu. Najsilnejšia príležitosť: query <i>dami</i> na pozícii 4.8 s <b>117</b> zobrazeniami — push do top 3 môže priniesť ~<b>+12 klikov</b>. Risk: stránka <code>https://www.dami-pracovne-odevy.sk/pracovna-obuv/</code> stratila <b>60 %</b> klikov vs predošlé obdobie — odporúčam audit."
   },

@@ -82,6 +82,9 @@ def main() -> int:
     # === Aggregate KPIs ===
     kpi = _aggregate_kpi(gsc, ga4)
 
+    # === History (12+ týždňové trendy pre dashboard sparklines) ===
+    history = _update_history(kpi, today, week_no)
+
     # === Build report ===
     report = {
         "lastUpdated": today.isoformat(),
@@ -95,6 +98,7 @@ def main() -> int:
             "ai_provider": "claude-opus-4-7" if os.environ.get("ANTHROPIC_API_KEY") else "template-fallback",
         },
         "kpi": kpi,
+        "history": history,
         "ai_summary": _generate_summary(kpi, quick_wins, falling, top_actions),
         "quick_wins": quick_wins,
         "ctr_underperformers": ctr_under,
@@ -117,6 +121,32 @@ def main() -> int:
     DATA_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"\n✓ data.json updated · {len(quick_wins)} quick wins · {len(top_actions)} top actions")
     return 0
+
+
+def _update_history(kpi, today, week_no):
+    """Pripojí aktuálny KPI snapshot do history (max 26 týždňov, dedupe podľa dátumu)."""
+    history = []
+    try:
+        old = json.loads(DATA_PATH.read_text(encoding="utf-8"))
+        history = old.get("history", []) or []
+    except Exception:
+        pass
+
+    snapshot = {
+        "week": f"KW {week_no:02d}",
+        "date": today.isoformat(),
+        "clicks": kpi.get("clicks", {}).get("value", 0),
+        "impressions": kpi.get("impressions", {}).get("value", 0),
+        "position": kpi.get("avg_position", {}).get("value", 0),
+        "ctr": kpi.get("ctr", {}).get("value", 0),
+        "sessions": kpi.get("sessions_organic", {}).get("value", 0),
+        "conv": kpi.get("conversion_rate", {}).get("value", 0),
+        "revenue": kpi.get("revenue_eur", {}).get("value", 0),
+    }
+    history = [h for h in history if h.get("date") != snapshot["date"]]
+    history.append(snapshot)
+    history.sort(key=lambda h: h.get("date", ""))
+    return history[-26:]
 
 
 def _aggregate_kpi(gsc, ga4):
