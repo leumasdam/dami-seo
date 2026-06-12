@@ -935,6 +935,7 @@
         if(!cb.checked) d=d.filter(x=>x!==t);
         localStorage.setItem(storeKey,JSON.stringify(d));
         cb.closest('.act').classList.toggle('done',cb.checked);
+        renderGrade(D); // známka započítava odrobenú prácu naživo
       });
     });
   }
@@ -1105,6 +1106,15 @@
   }
 
   // ============ Známka týždňa (A–E) ============
+  // Hybrid: výsledky (WoW pohyb metrík) + práca (odškrtnuté akcie tohto týždňa).
+  // Práca vie známku potiahnuť až o +2,5 bodu — ale A bez reálnych výsledkov nevyklikáš.
+  const actionsDone = D => {
+    const total = (D.top_actions_this_week||[]).length;
+    let done = 0;
+    try{ done = JSON.parse(localStorage.getItem('dami-actions-'+(D.week||'x'))||'[]').length; }catch(e){}
+    return {done: Math.min(done,total), total};
+  };
+
   function renderGrade(D){
     const k = D.kpi||{};
     const stamp = document.getElementById('gradeStamp');
@@ -1124,7 +1134,12 @@
     s += iw>0?0.5 : iw<0?-0.5 : 0;
     if(rev>0) s+=1; else if(conv===0 && sess>30) s-=0.5;
 
-    const grade = s>=3?'A' : s>=1.5?'B' : s>=0?'C' : s>=-2.5?'D' : 'E';
+    // zložka PRÁCA — pomer splnených akcií tohto týždňa
+    const a = actionsDone(D);
+    const workBonus = a.total>0 ? (a.done/a.total)*2.5 : 0;
+    const final = s + workBonus;
+
+    const grade = final>=3?'A' : final>=1.5?'B' : final>=0?'C' : final>=-2.5?'D' : 'E';
     const titles = {A:'Výborný týždeň',B:'Dobrý týždeň',C:'Priemerný týždeň',D:'Slabší týždeň',E:'Zlý týždeň'};
 
     const movers = [
@@ -1141,10 +1156,22 @@
     else if(best)   t=`Rastie všetko podstatné — na čele <b>${best.lbl}</b>.`;
     else if(worst)  t=`Týždeň bez svetlých miest — <b>${worst.lbl}</b>.`;
     else            t='Bez výrazných pohybov.';
-    t += ' Čo s tým: <a href="#s4" style="color:var(--saf);font-weight:700;">04 Akcie</a>.';
+
+    // veta o práci — známka reaguje na odškrtnuté akcie naživo
+    if(a.total>0){
+      if(a.done===0)        t += ` Práca: <b>0/${a.total} akcií</b> — odškrtni v <a href="#s4" style="color:var(--saf);font-weight:700;">04 Akcie</a>, známka ich započíta.`;
+      else if(a.done<a.total) t += ` Práca: <b>${a.done}/${a.total} akcií</b> splnených — drží známku hore, dokonči zvyšok.`;
+      else                  t += ` Práca: <b>všetkých ${a.total}/${a.total} akcií splnených</b> — výsledky sa ukážu v dátach o 1–4 týždne.`;
+    } else {
+      t += ' Čo s tým: <a href="#s4" style="color:var(--saf);font-weight:700;">04 Akcie</a>.';
+    }
 
     stamp.textContent = grade;
-    if(!REDUCE) stamp.classList.add('slam');
+    if(!REDUCE){
+      stamp.classList.remove('slam');
+      void stamp.offsetWidth; // restart animácie pri prepočte
+      stamp.classList.add('slam');
+    }
     title.textContent = titles[grade];
     text.innerHTML = t;
   }
