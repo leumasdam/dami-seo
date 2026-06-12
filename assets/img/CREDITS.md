@@ -9,3 +9,5 @@ Všetky fotky cez Openverse (CC licencie), duotone úprava CSS:
 - cat-rukavice.jpg — "Leather gloves" · Flickr · CC BY · https://live.staticflickr.com/898/41485368012_aa770d02b3_b.jpg
 - cat-odevy.jpg — "Midvale Company employee welding" · Flickr · CC BY · https://live.staticflickr.com/5088/5279847572_6eb61155d7_b.jpg
 - cat-reflexne.jpg — "Construction Workers" · Flickr · CC BY · https://live.staticflickr.com/8391/8583287676_f3c6c76ebc_b.jpg
+
+Logo: logo-dami-orig.png / logo-mark.png / logo-white.png — vlastníctvo klienta (dami-pracovne-odevy.sk), stiahnuté z ich webu.

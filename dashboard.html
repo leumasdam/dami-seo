@@ -78,7 +78,8 @@
     .topbar{background:var(--ink);color:#fff;}
     .topbar-in{max-width:1280px;margin:0 auto;padding:0 32px;display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
     .brand{display:flex;align-items:center;gap:16px;padding:20px 28px 20px 0;border-right:1px solid rgba(255,255,255,.16);}
-    .brand-mark{background:var(--saf);color:var(--ink);font-weight:900;font-size:26px;letter-spacing:-.02em;padding:8px 14px;line-height:1;}
+    .brand-mark{background:var(--saf);padding:6px 9px;line-height:0;}
+    .brand-mark img{height:36px;width:auto;display:block;}
     .brand-name{font-weight:900;font-size:21px;letter-spacing:.02em;text-transform:uppercase;line-height:1.1;}
     .brand-name small{display:block;font-family:var(--mono);font-weight:500;font-size:10.5px;letter-spacing:.18em;color:rgba(255,255,255,.55);margin-top:4px;text-transform:uppercase;}
     .top-meta{display:flex;align-items:center;gap:26px;padding:14px 0 14px 28px;flex:1;flex-wrap:wrap;}
@@ -415,7 +416,7 @@
 <div class="topbar">
   <div class="topbar-in">
     <div class="brand">
-      <div class="brand-mark">D</div>
+      <div class="brand-mark"><img src="assets/img/logo-mark.png" alt="Dami"></div>
       <div class="brand-name">Dami<small>SEO Report · dami-pracovne-odevy.sk</small></div>
     </div>
     <div class="top-meta">
@@ -641,6 +642,7 @@
 
   <!-- ============ FOOTER (pokračuje na ink páse) ============ -->
   <div class="ftr band">
+    <img src="assets/img/logo-white.png" alt="Dami pracovné odevy" style="height:54px;width:auto;opacity:.9;margin-bottom:18px;" loading="lazy">
     <div class="ftr-in">
       <span>Generované GitHub Action · GSC + GA4 + PSI · update <span id="genTs">—</span></span>
       <span><a href="dashboard.html">Dashboard</a> · <a href="strategia.html">Stratégia</a> · <a href="learnbook.html">Learnbook</a> · foto: Flickr CC (<a href="assets/img/CREDITS.md">kredity</a>)</span>
