@@ -114,9 +114,9 @@
     .grade-stamp{width:118px;height:118px;flex-shrink:0;background:var(--saf);color:var(--ink);border:3px solid var(--ink);
       outline:2px solid var(--saf);display:flex;align-items:center;justify-content:center;
       font-family:var(--mono);font-weight:700;font-size:64px;line-height:1;
-      transform:rotate(-4deg);box-shadow:6px 8px 0 rgba(0,0,0,.35);}
+      transform:rotate(var(--tilt,-4deg));box-shadow:6px 8px 0 rgba(0,0,0,.35);}
     .grade-stamp.slam{animation:stamp .55s cubic-bezier(.2,1.6,.4,1);}
-    @keyframes stamp{0%{transform:rotate(-15deg) scale(1.6);}100%{transform:rotate(-4deg) scale(1);}}
+    @keyframes stamp{0%{transform:rotate(calc(var(--tilt,-4deg) - 11deg)) scale(1.6);}100%{transform:rotate(var(--tilt,-4deg)) scale(1);}}
     .hero-verdict h1{font-size:clamp(26px,3.2vw,40px);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:1.05;}
     .hero-verdict p{font-size:14.5px;color:rgba(255,255,255,.75);line-height:1.65;margin-top:10px;max-width:520px;}
     .hero-verdict p b{color:var(--saf);}
@@ -1215,6 +1215,16 @@
     els.forEach(el=>io.observe(el));
   }
 
+  // ============ Náhodné natočenie pečiatok — každý refresh iné ============
+  function scatterStamps(){
+    const r=(a,b)=>(a+Math.random()*(b-a)).toFixed(2);
+    document.querySelectorAll('.sec-num').forEach(el=>el.style.transform=`rotate(${r(-3.5,2)}deg)`);
+    document.querySelectorAll('.pan-code').forEach(el=>el.style.transform=`rotate(${r(-3,3)}deg)`);
+    document.querySelectorAll('.thumb').forEach(el=>el.style.transform=`rotate(${r(-2.5,2.5)}deg)`);
+    const gs=document.getElementById('gradeStamp');
+    if(gs) gs.style.setProperty('--tilt', `${r(-7,-1.5)}deg`);
+  }
+
   // ============ Scroll-spy ============
   function initSpy(){
     const links=[...document.querySelectorAll('.secnav a')];
@@ -1376,6 +1386,7 @@
     renderPanels(D);
     renderTech(D);
     renderFin();
+    scatterStamps();
     initSpy();
     initReveal();
     setTimeout(wrapTerms,80);

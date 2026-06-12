@@ -449,6 +449,10 @@
 
 <script>
   (function(){
+    const rr=(a,b)=>(a+Math.random()*(b-a)).toFixed(2);
+    document.querySelectorAll('.sec-num,.toc-code,.tc-ico,.f-ico,.risk-ico,.didyou-ico').forEach(el=>{
+      el.style.transform=`rotate(${rr(-3.5,3)}deg)`;
+    });
     const els=[...document.querySelectorAll('.toc-link,.pillar,.sec-head,.comp')];
     els.forEach(el=>{
       el.classList.add('rv');
