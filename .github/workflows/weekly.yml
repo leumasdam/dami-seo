@@ -28,7 +28,6 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Generate weekly dashboard
-        continue-on-error: true
         env:
           # OAuth — JSON content of oauth-token.json as a single-line secret
           OAUTH_TOKEN_JSON: ${{ secrets.OAUTH_TOKEN_JSON }}
